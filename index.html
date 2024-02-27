@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resep Makanan</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<script src="script.js"></script>
 <body>
 
 <header>
@@ -25,6 +27,12 @@
   </nav>
 </header>
 
+<div class="banner">
+  <div class="container">
+    <h1> Get your recipe now!</h1>
+  </div>
+</div>
+
 <div class="content">
   <div class="recent">
     <h2>Recent</h2>
@@ -42,13 +50,57 @@
       <li class="pin__item">Resep 6</li>
     </ul>
   </div>
+  <div class="categories">
+    <ul class="categories__list">
+      <li class="categories__item" data-category="all">All</li>
+      <li class="categories__item" data-category="breakfast">Breakfast</li>
+      <li class="categories__item" data-category="lunch">Lunch</li>
+      <li class="categories__item" data-category="dinner">Dinner</li>
+      <li class="categories__item" data-category="snack">Snack</li>
+    </ul>
+  </div>
   <div class="other">
     <h2>Lainnya</h2>
-    <ul class="other__list">
-      <li class="other__item">Resep 7</li>
-      <li class="other__item">Resep 8</li>
-      <li class="other__item">Resep 9</li>
-    </ul>
+    <div class="card">
+      <img src="nasgor.png">
+      <h4>Nasi Goreng</h4>
+      <div class ="time row">
+        <div class="row">
+          <i class="fa fa-clock-o" style="font-size:20px">10 minutes</i>   <i class="fa fa-cutlery" style="font-size:20px">Lunch</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="pancake.png">
+      <h4>Pancake</h4>
+      <div class ="time row">
+        <div class="row">
+          <i class="fa fa-clock-o" style="font-size:20px">5 minutes</i>   <i class="fa fa-cutlery" style="font-size:20px">Breakfast</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="spaget.png">
+      <h4>Spaghetti Bolognese</h4>
+      <div class ="time row">
+        <div class="row">
+          <i class="fa fa-clock-o" style="font-size:20px">8 minutes</i>   <i class="fa fa-cutlery" style="font-size:20px">Dinner</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="pop.png">
+      <h4>Popcorn</h4>
+      <div class ="time row">
+        <div class="row">
+          <i class="fa fa-clock-o" style="font-size:20px">2 minutes</i>   <i class="fa fa-cutlery" style="font-size:20px">Snack</i>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 

@@ -1,7 +1,10 @@
-body {
-    font-family: Arial, sans-serif;
+  *{
     margin: 0;
     padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
   }
   
   header {
@@ -68,7 +71,30 @@ body {
   .navbar__search-button:hover {
     background-color: #555;
   }
-  
+
+  .banner {
+    background: url(banner.png) no-repeat;
+    background-position: relative ;
+    background-size: cover;
+    height: 550px;
+    width: 100%;
+    place-content: center;
+  }
+
+  .container {
+    position: absolute;
+    top: 50%;
+    left : 50%;
+    text-align: center;
+    font-weight: 700;
+    transform: translate(-50%, -50%);
+  }
+
+  .container h1{
+    margin: 0;
+    font-size: 60px;
+  }
+
   .content {
     justify-content: space-between;
     margin: 20px;
@@ -99,4 +125,84 @@ body {
   .recent__item:hover, .pin__item:hover, .other__item:hover {
     background-color: #f0f0f0;
   }
+
+  .categories {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .categories__list {
+    min-width: 99%;
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    gap: 10px;
+  }
+  
+  .categories__item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 50px;
+  }
+  
+  .categories__item:hover {
+    background-color: #e5dc32;
+  }
+  
+  .recipe-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .recipe-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .card {
+    width: 300px; /* Atur lebar kartu */
+    border: 1px solid #ccc; /* Tambahkan border */
+    border-radius: 10px; /* Tambahkan border-radius */
+ /* Tambahkan padding */
+    margin-bottom: 20px; /* Tambahkan margin bawah */
+  }
+  
+  .card img {
+    height: 200px;
+    width: 100%; /* Agar gambar mengisi lebar kartu */
+    border-top-left-radius: 10px; /* Tambahkan border-radius untuk sudut atas kiri */
+    border-top-right-radius: 10px; /* Tambahkan border-radius untuk gambar */
+  }
+  
+  .card h4 {
+    margin-left: 10px;
+    margin-top: 5px; /* Tambahkan margin atas */
+  }
+  
+  .card .time {
+    margin-left: 10px;
+    margin-top: 10px; /* Tambahkan margin atas untuk bagian waktu */
+  }
+  
+  .card .time .row {
+    display: flex; /* Gunakan flexbox untuk layout baris */
+    align-items: center; /* Pusatkan vertikal */
+    margin-bottom: 10px;
+  }
+  
+  .card .time .row i {
+    margin-right: 10px; /* Tambahkan margin kanan antara ikon dan teks */
+  }
+  
+  .card .time .row h5 {
+    margin-bottom: 10px;
+    margin-left: 5px; /* Tambahkan margin kiri untuk teks tag */
+  }
+  
   
