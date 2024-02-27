@@ -1,0 +1,166 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+header {
+  background-color: black;
+  padding: 20px 30px;
+  border-bottom: 1px solid grey;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar i {
+  margin-right: 10px;
+}
+
+.navbar__menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__item {
+  margin-right: 20px;
+}
+
+.navbar__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar__link:hover {
+  text-decoration: underline;
+  color: grey;
+}
+
+.navbar__search {
+  margin-left: auto;
+}
+
+.navbar__search-input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.navbar__search-button {
+  padding: 8px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbar__search-button:hover {
+  background-color: #555;
+}
+
+.content {
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.recent, .pin, .other {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.recent h2, .pin h2, .other h2 {
+  margin-top: 0;
+}
+
+.recent__list, .pin__list, .other__list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recent__item, .pin__item, .other__item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.recent__item:hover, .pin__item:hover, .other__item:hover {
+  background-color: #f0f0f0;
+}
+
+footer {
+  border-top: 1px solid grey;
+  background-color: black;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.footer-logo i {
+margin-right: 10px;
+}
+
+.footer-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.footer-links li:last-child {
+  margin-right: 0;
+}
+
+.footer-links li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links li a:hover {
+  text-decoration: underline;
+  color: grey;
+}
+
+
