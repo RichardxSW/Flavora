@@ -97,7 +97,10 @@
 
   .content {
     justify-content: space-between;
-    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
   }
   
   .recent, .pin, .other {
@@ -166,28 +169,31 @@
   }
   
   .card {
-    width: 300px; /* Atur lebar kartu */
-    border: 1px solid #ccc; /* Tambahkan border */
-    border-radius: 10px; /* Tambahkan border-radius */
- /* Tambahkan padding */
-    margin-bottom: 20px; /* Tambahkan margin bawah */
+    border: 1px solid #ccc;
+    margin: 1em; 
+    width: calc(100%/4);
+  }
+
+  .card-wrapper{
+    display: flex;
+    margin-left: 4em;
+    margin-right: 4em;
   }
   
   .card img {
-    height: 200px;
-    width: 100%; /* Agar gambar mengisi lebar kartu */
-    border-top-left-radius: 10px; /* Tambahkan border-radius untuk sudut atas kiri */
-    border-top-right-radius: 10px; /* Tambahkan border-radius untuk gambar */
+    height: 230px;
+    width: 100%; 
   }
   
-  .card h4 {
+  .card h5 {
+    font-weight: bold;
     margin-left: 10px;
     margin-top: 5px; /* Tambahkan margin atas */
   }
   
-  .card .time {
-    margin-left: 10px;
-    margin-top: 10px; /* Tambahkan margin atas untuk bagian waktu */
+  .card .time{
+    margin-left: 25px;
+    margin-top: 10px;
   }
   
   .card .time .row {
@@ -198,11 +204,11 @@
   
   .card .time .row i {
     margin-right: 10px; /* Tambahkan margin kanan antara ikon dan teks */
+    display: flex;
   }
   
-  .card .time .row h5 {
-    margin-bottom: 10px;
-    margin-left: 5px; /* Tambahkan margin kiri untuk teks tag */
+  .card .time .row p {
+    margin-left: 3px; /* Tambahkan margin kiri untuk teks tag */
   }
   
   
