@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <body>
 
-<header>
+<header class="sticky">
   <nav class="navbar">
     <a href="#" class="navbar__brand">Resep Makanan</a>
     <div class="navbar__container">
@@ -38,22 +38,21 @@
 </div>
 
 <div class="content">
-  <!-- <div class="recent">
-    <h2>Recent</h2>
-    <ul class="recent__list">
-      <li class="recent__item">Resep 1</li>
-      <li class="recent__item">Resep 2</li>
-      <li class="recent__item">Resep 3</li>
-    </ul>
+  <div class="recommended">
+    <div class="imgwrap">
+      <img src="banh mi.png">
+    </div>
+    <div class="text">
+      <h4>Recommended recipe</h4>
+      <h5>Banh mi</h5>
+      <p>An airy and crunchy French-style baguette, stuffed with an every varying combination of meats, vegetables, and sauces.</p>
+      <div class ="time row">
+        <div class="row">
+          <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="pin">
-    <h2>Pin</h2>
-    <ul class="pin__list">
-      <li class="pin__item">Resep 4</li>
-      <li class="pin__item">Resep 5</li>
-      <li class="pin__item">Resep 6</li>
-    </ul>
-  </div> -->
   <div class="categories">
     <ul class="categories__list">
       <li class="categories__item" data-category="all">All</li>
@@ -63,7 +62,7 @@
       <li class="categories__item" data-category="snack">Snack</li>
     </ul>
   </div>
-    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-ride="carousel">
+    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-ride="carousel" data-interval ="false">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <div class="card-wrapper">
