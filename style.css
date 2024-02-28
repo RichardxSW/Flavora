@@ -99,11 +99,11 @@
     justify-content: space-between;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 4em;
+    margin-right: 4em;
   }
   
-  .recent, .pin, .other {
+  /* .recent, .pin, .other {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
@@ -127,7 +127,7 @@
   
   .recent__item:hover, .pin__item:hover, .other__item:hover {
     background-color: #f0f0f0;
-  }
+  } */
 
   .categories {
     background-color: #f9f9f9;
@@ -210,5 +210,4 @@
   .card .time .row p {
     margin-left: 3px; /* Tambahkan margin kiri untuk teks tag */
   }
-  
   
