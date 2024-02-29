@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resep Makanan</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<script src="script.js"></script>
+<!-- <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script> -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body>
+
+<header class="sticky">
+  <nav class="navbar">
+    <a href="#" class="navbar__brand">Resep Makanan</a>
+    <div class="navbar__container">
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="#" class="navbar__link">Homepage</a></li>
+        <li class="navbar__item"><a href="#" class="navbar__link">Recent</a></li>
+        <li class="navbar__item"><a href="#" class="navbar__link">Pinned</a></li>
+      </ul>
+      <div class="navbar__search">
+        <input type="text" class="navbar__search-input" placeholder="Cari resep...">
+        <button class="navbar__search-button">Cari</button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="banner">
+  <div class="container">
+    <h1> Get your recipe now!</h1>
+  </div>
+</div>
+
+<div class="content">
+  <div class="recommended">
+    <div class="imgwrap">
+      <img src="banh mi.png">
+    </div>
+    <div class="text">
+      <h4>Recommended recipe</h4>
+      <h5>Banh mi</h5>
+      <p>An airy and crunchy French-style baguette, stuffed with an every varying combination of meats, vegetables, and sauces.</p>
+      <div class ="time row">
+        <div class="row">
+          <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="categories">
+    <ul class="categories__list">
+      <li class="categories__item" data-category="all">All</li>
+      <li class="categories__item" data-category="breakfast">Breakfast</li>
+      <li class="categories__item" data-category="lunch">Lunch</li>
+      <li class="categories__item" data-category="dinner">Dinner</li>
+      <li class="categories__item" data-category="snack">Snack</li>
+    </ul>
+  </div>
+    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-ride="carousel" data-interval ="false">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="card-wrapper">
+            <div class="card">
+              <img src="nasgor.png">
+              <h5>Nasi Goreng</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="pancake.png">
+              <h5>Pancake</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="spaget.png">
+              <h5>Spaghetti Bolognese</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="pancake.png">
+              <h5>Pancake</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="card-wrapper">
+            <div class="card">
+              <img src="pop.png">
+              <h5>Popcorn</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="pop.png">
+              <h5>Popcorn</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="pop.png">
+              <h5>Popcorn</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="nasgor.png">
+              <h5>Nasi Goreng</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>  
+                  <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="card-wrapper">
+            <div class="card">
+              <img src="nasgor.png">
+              <h5>Nasi Goreng</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="nasgor.png">
+              <h5>Nasi Goreng</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="nasgor.png">
+              <h5>Nasi Goreng</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>  
+                  <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="nasgor.png">
+              <h5>Nasi Goreng</h5>
+              <div class ="time row">
+                <div class="row">
+                  <i class="fa fa-clock-o" style="font-size:15px"><p>10 minutes</p></i>  
+                  <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  <!-- </div> -->
+</div>
+
+</body>
+</html>
