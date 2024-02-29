@@ -1,0 +1,270 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  z-index: 3000; /* Ubah nilai z-index menjadi lebih tinggi */
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.navbar__container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar__menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__item {
+  margin-right: 20px;
+}
+
+.navbar__link {
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar__search {
+  margin-left: auto;
+}
+
+.navbar__search-input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.navbar__search-button {
+  padding: 8px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbar__search-button:hover {
+  background-color: #555;
+}
+
+.banner {
+  background: url(banner.png) no-repeat;
+  background-position: relative ;
+  background-size: cover;
+  height: 700px;
+  width: 100%;
+  place-content: center;
+}
+
+.banner .container {
+  position: absolute;
+  top: 50%;
+  left : 50%;
+  text-align: center;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.banner .container h1{
+  margin: 0;
+  font-size: 60px;
+  z-index: 100;
+}
+
+.content {
+  justify-content: space-between;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+.recommended{
+  width: auto;
+  height: 500px;
+  margin-left: 4em;
+  margin-right: 4em;
+  display: flex;
+  align-items: center;
+}
+
+.recommended .imgwrap{
+  width: 100%;
+}
+
+.recommended .imgwrap img{
+  width: 100%;
+  height: 500px;
+}
+
+.recommended .text{
+  text-align: left;
+  width: 50%;
+}
+
+.recommended .text h5{
+  font-weight: 700;
+  margin-left: 17px;
+  margin-bottom: 5px;
+  font-size: 50px;
+}
+
+.recommended .text h4{
+  font-weight: 900;
+  font-size: 15px;
+  color: red;
+  margin-left: 20px;
+  margin-bottom: 0;
+}
+
+.recommended .text p{
+  font-weight: 400;
+  font-size: 20px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+
+.recommended .text .time{
+  margin-left: 35px;
+  margin-top: 10px;
+}
+
+ .text .time .row {
+  display: flex; /* Gunakan flexbox untuk layout baris */
+  align-items: center; /* Pusatkan vertikal */
+  margin-bottom: 10px;
+}
+
+ .text .time .row i {
+  color: black;
+  font-size: 15px;
+  font-weight: 0;
+  margin-right: 10px; /* Tambahkan margin kanan antara ikon dan teks */
+  display: flex;
+}
+
+ .text .time .row p {
+  color: black;
+  font-size: 15px;
+  font-weight: 0;
+  margin-left: 3px; /* Tambahkan margin kiri untuk teks tag */
+}
+
+.categories {
+  margin-top: 10px;
+  margin-left: 5em;
+  margin-right: 5em;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
+}
+
+.categories__list {
+  min-width: 99%;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  gap: 10px;
+  margin-bottom: 4px;;
+}
+
+.categories__item {
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 50px;
+  position: relative;
+}
+
+.categories__item:hover {
+  background-color: #e5dc32;
+}
+
+.recipe-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.recipe-card:hover {
+  background-color: #f0f0f0;
+}
+
+.card {
+  border: 1px solid #c0bfbf;
+  margin: 1em; 
+  width: calc(100%/4);
+}
+
+.card-wrapper{
+  display: flex;
+  align-content: center;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+.card img {
+  height: 230px;
+  width: 100%; 
+}
+
+.card h5 {
+  font-weight: bold;
+  margin-left: 10px;
+  margin-top: 5px; /* Tambahkan margin atas */
+}
+
+.card .time{
+  margin-left: 25px;
+  margin-top: 10px;
+}
+
+.card .time .row {
+  display: flex; /* Gunakan flexbox untuk layout baris */
+  align-items: center; /* Pusatkan vertikal */
+  margin-bottom: 10px;
+}
+
+.card .time .row i {
+  margin-right: 10px; /* Tambahkan margin kanan antara ikon dan teks */
+  display: flex;
+}
+
+.card .time .row p {
+  margin-left: 3px; /* Tambahkan margin kiri untuk teks tag */
+}
+
+.carousel-inner{
+  margin-left: 0;
+  margin-right: 0;
+}
