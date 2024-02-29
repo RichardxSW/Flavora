@@ -1,0 +1,166 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    z-index: 3000; /* Ubah nilai z-index menjadi lebih tinggi */
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+  
+  .navbar__container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar__brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .navbar__menu {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar__item {
+    margin-right: 20px;
+  }
+  
+  .navbar__link {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .navbar__search {
+    margin-left: auto;
+  }
+  
+  .navbar__search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .navbar__search-button {
+    padding: 8px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .navbar__search-button:hover {
+    background-color: #555;
+  }
+
+  .recipe {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0;
+}
+
+.recipe-image {
+    width: 30%;
+    height: auto;
+}
+
+.recipe-image img{
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.desc {
+    font-size: 20px;
+}
+
+.recipe-info {
+    margin-left: 50px;
+}
+
+.detail-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 20px;
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px;
+}
+
+.stats-item:not(:last-child) {
+    border-inline-end: 1px solid black;
+} 
+
+.detail-stats .stats-item .display-medium {
+    font-size: 30px;
+}
+
+.detail-stats .stats-item .label-medium {
+    color: red;
+    opacity: 0.6;
+}
+
+.ingr-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingr-title .label-medium {
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.ingr-list {
+    margin-block-start: 16px;
+    border-block-start: 1px solid black;
+    padding-block-start: 8px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 10px;
+}
+
+.ingr-item {
+    margin-block: 8px;
+    list-style-type: disc;
+    margin-inline-start: 24px;
+}
+
+.inst-list {
+    margin-block-start: 16px;
+    border-block-start: 1px solid black;
+    padding-block-start: 8px;
+    margin-bottom: 10px;
+}
+
+.inst-item {
+    margin-block: 8px;
+    margin-inline-start: 24px;
+}
