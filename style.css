@@ -222,9 +222,16 @@
   
   .card {
     border: 1px solid #c0bfbf;
-    margin: 1em; 
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 1em; 
     width: calc(100%/4);
   }
+
+  .card:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Bayangan merata di semua arah saat hover */
+  }  
 
   .card-wrapper{
     display: flex;
@@ -267,3 +274,61 @@
     margin-right: 0;
   }
   
+  .carousel .carousel-control-prev,
+  .carousel .carousel-control-next {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 50%;
+    border: 1px solid #c0bfbf;
+    top: 45%; /* Tengah vertikal */
+    transform: translateY(-50%); /* Geser ke atas sejauh setengah dari tinggi tombol */
+    opacity: .8;
+    background-color: white;
+  }
+
+  .carousel-control-next-icon,
+  .carousel-control-prev-icon /*, .carousel-indicators */ {
+      filter: invert(100%);
+  }
+
+  .carousel .carousel-control-prev {
+    left: -10px; /* Menempatkan tombol prev lebih kiri */
+    right: unset; /* Hapus nilai right agar tidak tumpang tindih */
+  }
+  
+  .carousel .carousel-control-next {
+    right: -10px; /* Menempatkan tombol next lebih kanan */
+    left: unset; /* Hapus nilai left agar tidak tumpang tindih */
+  }
+  
+  .featured{
+    margin-top: 10px;
+    margin-left: 5em;
+    margin-right: 5em;
+    border-bottom: 2px solid black;
+    margin-bottom: 3em;
+  }
+
+  .asian{
+    margin-top: 10px;
+    margin-left: 5em;
+    margin-right: 5em;
+    border-bottom: 2px solid black;
+    margin-bottom: 3em;
+  }
+
+  .western{
+    margin-top: 10px;
+    margin-left: 5em;
+    margin-right: 5em;
+    border-bottom: 2px solid black;
+    margin-bottom: 3em;
+  }
+
+  .under{
+    margin-top: 10px;
+    margin-left: 5em;
+    margin-right: 5em;
+    margin-bottom: 3em;
+  }
