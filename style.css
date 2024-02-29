@@ -229,8 +229,6 @@
   .card-wrapper{
     display: flex;
     align-content: center;
-    margin-left: 4em;
-    margin-right: 4em;
   }
   
   .card img {
