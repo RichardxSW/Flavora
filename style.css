@@ -11,16 +11,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px;
-  z-index: 3000; /* Ubah nilai z-index menjadi lebih tinggi */
+  padding: 15px 20px; /* Ubah nilai z-index menjadi lebih tinggi */
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
 }
 
-.sticky {
-  position: -webkit-sticky;
-  position: sticky;
+header{
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
+  transition: 0.6s;
+  z-index: 1000;
 }
 
 .navbar__container {
@@ -78,28 +80,24 @@ body {
 
 .banner {
   background: url(banner.png) no-repeat;
-  background-position: relative ;
+  background-position: center;
   background-size: cover;
-  height: 700px;
-  width: 100%;
-  place-content: center;
+  height: 100vh; /* Menggunakan 80% tinggi layar untuk memastikan tetap proporsional */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .banner .container {
-  position: absolute;
-  top: 50%;
-  left : 50%;
   text-align: center;
   font-weight: 700;
-  transform: translate(-50%, -50%);
-  z-index: 100;
 }
 
-.banner .container h1{
+.banner .container h1 {
   margin: 0;
   font-size: 60px;
-  z-index: 100;
 }
+
 
 .content {
   justify-content: space-between;
@@ -185,7 +183,7 @@ body {
   margin-left: 5em;
   margin-right: 5em;
   border-bottom: 2px solid black;
-  margin-bottom: 10px;
+  margin-bottom: 3em;
 }
 
 .categories__list {
@@ -251,13 +249,13 @@ body {
   
   .card .time{
     margin-left: 25px;
-    margin-top: 10px;
+    margin-top: 20px;
   }
   
   .card .time .row {
     display: flex; /* Gunakan flexbox untuk layout baris */
     align-items: center; /* Pusatkan vertikal */
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   
   .card .time .row i {
@@ -290,6 +288,7 @@ body {
   .carousel-control-next-icon,
   .carousel-control-prev-icon /*, .carousel-indicators */ {
       filter: invert(100%);
+      font-size: 0.8rem;
   }
 
   .carousel .carousel-control-prev {
