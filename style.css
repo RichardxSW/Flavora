@@ -1,10 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 *{
   margin: 0;
   padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
+  font-family: "Playfair Display", serif;
 }
 
 .navbar {
@@ -26,11 +25,13 @@ header{
 }
 
 .navbar__container {
+  margin-right: 5em;
   display: flex;
   align-items: center;
 }
 
 .navbar__brand {
+  margin-left: 5em;
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
@@ -110,8 +111,8 @@ header{
 .recommended{
   width: auto;
   height: 500px;
-  margin-left: 4em;
-  margin-right: 4em;
+  margin-left: 5em;
+  margin-right: 5em;
   display: flex;
   align-items: center;
 }
@@ -216,13 +217,20 @@ header{
   text-decoration: none;
 }
 
+.categories__item a:active,
+.categories__item a:focus {
+  background-color: #e5dc32;
+  border-radius: 50px;
+  padding: 8px;
+}
+
 .card {
   border: 1px solid #c0bfbf;
   margin-left: 0.5em;
   margin-top: 0.5em;
   margin-right: 0.5em;
   margin-bottom: 1em; 
-  width: calc(100%/4);
+  width: 300px;
   transition: transform 0.3s ease;
 }
 
