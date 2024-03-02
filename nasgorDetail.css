@@ -79,7 +79,7 @@
   .recipe {
     display: flex;
     justify-content: center;
-    margin: 100px 0;
+    margin: 60px 0;
 }
 
 .recipe-image {
@@ -94,6 +94,24 @@
 
 .desc {
     font-size: 20px;
+}
+
+.recipe-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+button.saved {
+  display: none;
+  border: none;
+  cursor: pointer;
+}
+
+button.unsaved {
+  border: none;
+  cursor: pointer;
 }
 
 .recipe-info {
@@ -126,6 +144,31 @@
     color: red;
     opacity: 0.6;
 }
+
+/* Style untuk kontainer tag-list */
+.tag-list {
+  display: flex; /* Menggunakan flexbox untuk penataan */
+  flex-wrap: wrap; /* Item akan meluncur ke baris baru jika tidak cukup ruang */
+}
+
+/* Style untuk setiap filter-chip */
+.filter-chip {
+  padding: 8px 12px; /* Padding di dalam filter chip */
+  margin-right: 8px; /* Jarak antara setiap filter chip */
+  margin-bottom: 8px; /* Jarak bawah setiap filter chip */
+  border: 1px solid #ccc; /* Garis tepi untuk filter chip */
+  border-radius: 16px; /* Sudut melengkung */
+  background-color: #f0f0f0; /* Warna latar belakang */
+  font-size: 14px; /* Ukuran teks */
+  line-height: 1.5; /* Tinggi baris */
+  cursor: pointer; /* Kursor akan berubah menjadi pointer saat diarahkan ke filter chip */
+}
+
+/* Style untuk filter chip yang sedang dihover */
+.filter-chip:hover {
+  background-color: #e0e0e0; /* Warna latar belakang saat dihover */
+}
+
 
 .ingr-title {
     display: flex;

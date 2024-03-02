@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Nasi Goreng</title>
     <link rel="stylesheet" href="nasgorDetail.css">
+    <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+    <script src="nasgorDetail.js"></script>
 </head>
 <body>
     <header class="sticky">
@@ -33,7 +35,25 @@
             </div>
 
             <div class="recipe-info">
-                <h2 class="recipe-title">Fried Rice</h2>
+                <div class="recipe-title">
+                    <h2 class="display-small">Fried Rice</h2>
+                    <!-- <button class="bookmark">
+                        <span class="saved"><i class="fa-regular fa-bookmark"></i></span>
+                        <span class="unsaved"><i class="fa-solid fa-bookmark"></i></span>
+                        <span class="save-text">Pin</span>
+                        <span class="unsaved-text">Unpin</span>
+                    </button> -->
+
+                    <button class="unsaved">
+                        <span class="iconUnsaved"><i class="fa-regular fa-bookmark"></i></span>
+                        <span class="save-text">Pin</span>
+                    </button>
+
+                    <button class="saved">
+                        <span class="iconSaved"><i class="fa-solid fa-bookmark"></i></span>
+                        <span class="unsaved-text">Unpin</span>
+                    </button>
+                </div>  
 
                 <div class="detail-stats">
 
@@ -55,6 +75,11 @@
                         <span class="label-medium">Calories</span>
                     </div>
 
+                </div>
+
+                <div class="tag-list">
+                    <div class="filter-chip">Lunch</div>
+                    <div class="filter-chip">Dinner</div>
                 </div>
 
                 <h3 class="title-medium ingr-title">Ingredients
