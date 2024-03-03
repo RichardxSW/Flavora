@@ -1,13 +1,12 @@
 "use strict";
 
-// Menginisialisasi AngularJS app
 var app = angular.module('myApp', []);
 
 // Mendefinisikan controller untuk navbar
 app.controller('myCtrl', function($scope) {
-    // Mendapatkan nilai username dari localStorage
+
     var username = localStorage.getItem('username');
-    // Menetapkan nilai username ke dalam scope
+
     $scope.username = username;
 });
 
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "Nasi Goreng",
             category: "Lunch",
             nationality: "Asian",
-            featured: "yes", // Ditambahkan properti featured
+            featured: "yes", 
             time: "10 Minutes",
             img: "nasgor.png",
             url: "nasgorDetail.html"
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "Pancake",
             category: "Breakfast",
             nationality: "Western",
-            featured: "yes", // Ditambahkan properti featured
+            featured: "yes", 
             time: "5 Minutes",
             img: "pancake.png",
             url: "nasgorDetail.html"
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "Popcorn",
             category: "Snack",
             nationality: "Western",
-            featured: "yes", // Ditambahkan properti featured
+            featured: "yes",
             time: "2 Minutes",
             img: "pop.png",
             url: "nasgorDetail.html"
@@ -166,7 +165,6 @@ function displayFoodData(food) {
         }
     }
 
-    // Menampilkan makanan berdasarkan asalnya
     displaySeparatedFoodData(foodData);
 
     // Pisahkan makanan berdasarkan waktu persiapannya
@@ -210,7 +208,6 @@ function displayFoodData(food) {
         }
     }
 
-    // Menampilkan makanan berdasarkan waktu persiapannya
     displaySeparatedTimeFoodData(foodData);
 
     // Pisahkan makanan berdasarkan properti featured
@@ -241,7 +238,5 @@ function displayFoodData(food) {
             document.querySelector("#carousel-2 .card-wrapper").innerHTML = featuredDisplayData.join("");
         }
     }
-
-    // Menampilkan makanan berdasarkan properti featured
     displayFeaturedFoodData(foodData);
 });

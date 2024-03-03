@@ -5,6 +5,7 @@
     font-weight: 600;
   }
   
+  /* Navbar  */
   .navbar {
     display: flex;
     align-items: center;
@@ -100,6 +101,8 @@
   .navbar_profile{
     padding: 20px;
   }
+
+  /* Konten  */
 
   .recipe {
     display: flex;
