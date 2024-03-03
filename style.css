@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap'); */
 
 *{
   margin: 0;
   padding: 0;
-  font-family: "Playfair Display", serif;
+  /* font-family: "Playfair Display", serif; */
+  font-family: Arial, sans-serif;
 }
 
 .navbar {
@@ -31,11 +32,22 @@ header{
 }
 
 .navbar__brand {
-  /* margin-left: 5em; */
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+    font-size: 36px; /* Ukuran font */
+    color: #ff7f50; /* Warna teks */
+    text-transform: uppercase; /* Merubah teks menjadi huruf kapital */
+    letter-spacing: 2px; /* Jarak antara huruf */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Bayangan teks */
+    padding: 20px; /* Padding untuk memberikan ruang */
+    text-align: center; 
+    transition: 0.6s ease;
+    display: inline-block;
+}
+
+.navbar__brand:hover {
+  background-color: brown;
   text-decoration: none;
+  color: gold;
+  border-radius: 100px;
 }
 
 .navbar__menu {
@@ -52,6 +64,15 @@ header{
 .navbar__link {
   color: #333;
   text-decoration: none;
+  padding: 5px;
+}
+
+.navbar__link:hover {
+  color:white;
+  text-decoration: none;
+  background-color: #555;
+  border-radius: 15px;
+  transition: 0.3s ease;
 }
 
 .navbar__search {
@@ -62,14 +83,14 @@ header{
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .navbar__search-button {
   padding: 8px 15px;
   font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: #333;
   color: #fff;
   cursor: pointer;
@@ -100,9 +121,16 @@ header{
 
 .banner .container h1 {
   margin: 0;
-  font-size: 60px;
+  font-size: 30px;
+  animation: blink 1s infinite;
+  text-shadow: 1px 1px 1px black;
 }
 
+@keyframes blink {
+  0% { color: #ff6b81; } 
+  50% { color: #ffd166; } 
+  100% { color: #8B4513; } 
+}
 
 .content {
   justify-content: space-between;
@@ -148,6 +176,13 @@ header{
   color: red;
   margin-left: 20px;
   margin-bottom: 0;
+  animation: recommendedfx 1s infinite;
+}
+
+@keyframes recommendedfx {
+  0% { opacity: 1; } 
+  50% { opacity: 0; } 
+  100% { opacity: 1; } 
 }
 
 .recommended .text p{
@@ -357,4 +392,47 @@ header{
   margin-left: 5em;
   margin-right: 5em;
   margin-bottom: 3em;
+}
+
+/* Footer  */
+.footer {
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer a {
+  color: lightblue;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer__brand {
+  font-size: 16px; /* Ukuran font */
+  color: #ff7f50; /* Warna teks */
+  text-transform: uppercase; /* Merubah teks menjadi huruf kapital */
+  letter-spacing: 2px; /* Jarak antara huruf */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Bayangan teks */
+  text-align: center; 
+  display: inline-block;
+}
+
+.footer p {
+  margin: 10px 0;
+}
+
+.footer .social-icons {
+  margin-top: 10px;
+}
+
+.footer .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 24px;
 }
