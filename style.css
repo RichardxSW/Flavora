@@ -25,13 +25,13 @@ header{
 }
 
 .navbar__container {
-  margin-right: 5em;
+  /* margin-right: 5em; */
   display: flex;
   align-items: center;
 }
 
 .navbar__brand {
-  margin-left: 5em;
+  /* margin-left: 5em; */
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
@@ -77,6 +77,10 @@ header{
 
 .navbar__search-button:hover {
   background-color: #555;
+}
+
+.navbar_profile{
+  padding: 20px;
 }
 
 .banner {
