@@ -6,7 +6,7 @@ var app = angular.module('myApp', []);
 // Mendefinisikan controller untuk navbar
 app.controller('myCtrl', function($scope) {
     // Mendapatkan nilai username dari localStorage
-    var username = localStorage.getItem('username') || 'Guest';
+    var username = localStorage.getItem('username');
     // Menetapkan nilai username ke dalam scope
     $scope.username = username;
 });

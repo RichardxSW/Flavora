@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Nasi Goreng</title>
     <link rel="stylesheet" href="nasgorDetail.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
     <script src="nasgorDetail.js"></script>
 </head>
-<body>
+
+<body ng-controller="myCtrl">
     <header>
         <nav class="navbar">
           <a href="#" class="navbar__brand">Resep Makanan</a>
@@ -22,6 +24,9 @@
               <input type="text" class="navbar__search-input" placeholder="Cari resep...">
               <button class="navbar__search-button">Cari</button>
             </div>
+            <div class="navbar_profile">
+                <span id="username">{{username}}</span>
+              </div>
           </div>
         </nav>
       </header>
