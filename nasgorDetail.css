@@ -1,10 +1,8 @@
 *{
     margin: 0;
     padding: 0;
-  }
-  
-  body {
     font-family: Arial, sans-serif;
+    font-weight: 600;
   }
   
   .navbar {
@@ -40,7 +38,6 @@
     text-align: center; 
     transition: 0.6s ease;
     display: inline-block;
-    text-decoration: none;
   }
 
   .navbar__brand:hover {
