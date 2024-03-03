@@ -237,21 +237,23 @@ header{
 
 .categories__item {
   padding: 8px;
-  background-color: #fff;
   border-radius: 50px;
   position: relative;
 }
 
-.categories__item a{
+.categories__item a {
   color: black;
   text-decoration: none;
 }
 
-.categories__item:hover {
+.categories__item:hover,
+.categories__item.active {
+  padding: 8px;
   background-color: #e5dc32;
 }
 
-.categories__item:hover a {
+.categories__item:hover a,
+.categories__item.active a {
   color: black;
   text-decoration: none;
 }
@@ -260,7 +262,6 @@ header{
 .categories__item a:focus {
   background-color: #e5dc32;
   border-radius: 50px;
-  padding: 8px;
 }
 
 .card {
