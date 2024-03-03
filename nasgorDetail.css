@@ -31,10 +31,23 @@
   }
   
   .navbar__brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 36px; 
+    color: #ff7f50; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    padding: 20px; 
+    text-align: center; 
+    transition: 0.6s ease;
+    display: inline-block;
     text-decoration: none;
+  }
+
+  .navbar__brand:hover {
+    background-color: brown;
+    text-decoration: none;
+    color: gold;
+    border-radius: 100px;
   }
   
   .navbar__menu {
@@ -51,6 +64,15 @@
   .navbar__link {
     color: #333;
     text-decoration: none;
+    padding: 5px;
+  }
+
+  .navbar__link:hover {
+    color:white;
+    text-decoration: none;
+    background-color: #555;
+    border-radius: 15px;
+    transition: 0.3s ease;
   }
   
   .navbar__search {
@@ -61,14 +83,14 @@
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 15px;
   }
   
   .navbar__search-button {
     padding: 8px 15px;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     background-color: #333;
     color: #fff;
     cursor: pointer;
@@ -78,10 +100,15 @@
     background-color: #555;
   }
 
+  .navbar_profile{
+    padding: 20px;
+  }
+
   .recipe {
     display: flex;
     justify-content: center;
-    margin: 100px 0;
+    margin-top: 150px;
+    margin-bottom: 30px;
 }
 
 .recipe-image {
@@ -160,7 +187,7 @@ button.unsaved {
   margin-bottom: 8px; /* Jarak bawah setiap filter chip */
   border: 1px solid #ccc; /* Garis tepi untuk filter chip */
   border-radius: 16px; /* Sudut melengkung */
-  background-color: #f0f0f0; /* Warna latar belakang */
+  background-color: #e5dc32; /* Warna latar belakang */
   font-size: 14px; /* Ukuran teks */
   line-height: 1.5; /* Tinggi baris */
   cursor: pointer; /* Kursor akan berubah menjadi pointer saat diarahkan ke filter chip */
@@ -208,4 +235,47 @@ button.unsaved {
 .inst-item {
     margin-block: 8px;
     margin-inline-start: 24px;
+}
+
+/* Footer  */
+.footer {
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer a {
+  color: lightblue;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer__brand {
+  font-size: 16px; /* Ukuran font */
+  color: #ff7f50; /* Warna teks */
+  text-transform: uppercase; /* Merubah teks menjadi huruf kapital */
+  letter-spacing: 2px; /* Jarak antara huruf */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Bayangan teks */
+  text-align: center; 
+  display: inline-block;
+}
+
+.footer p {
+  margin: 10px 0;
+}
+
+.footer .social-icons {
+  margin-top: 10px;
+}
+
+.footer .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 24px;
 }
