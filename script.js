@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const foodData = [
         {
             id: 1,
-            title: "Nasi Goreng",
+            title: "Fried Rice",
             category: "Lunch",
             nationality: "Asian",
             featured: "yes", 
