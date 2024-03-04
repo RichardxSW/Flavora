@@ -53,6 +53,7 @@ body{
 
 .input-box input::placeholder{
     color: #fff;
+    opacity: 0.4;
 }
 
 .input-box i{
