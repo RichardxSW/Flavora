@@ -1,17 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap'); */
 
 *{
   margin: 0;
   padding: 0;
-  font-family: "Playfair Display", serif;
+  font-family: Arial, sans-serif;
 }
+
+/* Navbar */
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px; /* Ubah nilai z-index menjadi lebih tinggi */
-  background-color: #f8f8f8;
+  padding: 5px 20px; 
+  background-color: lightgoldenrodyellow;
   border-bottom: 1px solid #ddd;
 }
 
@@ -22,25 +24,38 @@ header{
   width: 100%;
   transition: 0.6s;
   z-index: 1000;
+  font-weight:bold;
 }
 
 .navbar__container {
-  margin-right: 5em;
   display: flex;
   align-items: center;
 }
 
 .navbar__brand {
-  margin-left: 5em;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+    font-size: 36px; 
+    color: #ff7f50; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    padding: 0px 15px;
+    text-align: center; 
+    transition: 0.6s ease;
+    display: inline-block;
+    border-radius: 100px;
+}
+
+.navbar__brand:hover {
+  background-color: brown;
   text-decoration: none;
+  color: gold;
+  border-radius: 100px;
 }
 
 .navbar__menu {
   display: flex;
   list-style-type: none;
+  margin-top: 20px;
   margin: 0;
   padding: 0;
 }
@@ -52,6 +67,13 @@ header{
 .navbar__link {
   color: #333;
   text-decoration: none;
+  padding: 5px;
+}
+
+.navbar__link:hover {
+  color:red;
+  text-decoration: none;
+  transition: 0.3s ease;
 }
 
 .navbar__search {
@@ -62,28 +84,35 @@ header{
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .navbar__search-button {
   padding: 8px 15px;
   font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: #333;
   color: #fff;
   cursor: pointer;
 }
 
 .navbar__search-button:hover {
-  background-color: #555;
+  background-color: red;
+  transition: 0.5s ease;
 }
+
+.navbar_profile{
+  padding: 20px;
+}
+
+/* Banner */
 
 .banner {
   background: url(banner.png) no-repeat;
   background-position: center;
   background-size: cover;
-  height: 100vh; /* Menggunakan 80% tinggi layar untuk memastikan tetap proporsional */
+  height: 100vh; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,10 +125,18 @@ header{
 
 .banner .container h1 {
   margin: 0;
-  font-size: 60px;
+  font-size: 30px;
+  animation: blink 1s infinite;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
+@keyframes blink {
+  0% { color: #ff6b81; } 
+  50% { color: #ffd166; } 
+  100% { color: #8B4513; } 
+}
 
+/* Card  */
 .content {
   justify-content: space-between;
   margin-top: 100px;
@@ -144,6 +181,13 @@ header{
   color: red;
   margin-left: 20px;
   margin-bottom: 0;
+  animation: recommendedfx 1s infinite;
+}
+
+@keyframes recommendedfx {
+  0% { opacity: 1; } 
+  50% { opacity: 0; } 
+  100% { opacity: 1; } 
 }
 
 .recommended .text p{
@@ -159,8 +203,8 @@ header{
 }
 
  .text .time .row {
-  display: flex; /* Gunakan flexbox untuk layout baris */
-  align-items: center; /* Pusatkan vertikal */
+  display: flex; 
+  align-items: center; 
   margin-bottom: 10px;
 }
 
@@ -168,7 +212,7 @@ header{
   color: black;
   font-size: 15px;
   font-weight: 0;
-  margin-right: 10px; /* Tambahkan margin kanan antara ikon dan teks */
+  margin-right: 10px; 
   display: flex;
 }
 
@@ -176,7 +220,7 @@ header{
   color: black;
   font-size: 15px;
   font-weight: 0;
-  margin-left: 3px; /* Tambahkan margin kiri untuk teks tag */
+  margin-left: 3px;
 }
 
 .categories {
@@ -200,6 +244,7 @@ header{
   padding: 8px;
   border-radius: 50px;
   position: relative;
+  font-weight: 600;
 }
 
 .categories__item a {
@@ -246,7 +291,7 @@ header{
 }
 
 .card:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Bayangan merata di semua arah saat hover */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
   transform: scale(1.005);
 }  
 
@@ -258,17 +303,17 @@ header{
 .card img {
   height: 230px;
   width: 100%;
-  transition: transform 0.3s ease; /* Menambahkan transisi untuk efek zoom */
+  transition: transform 0.3s ease; 
 }
 
 .card:hover img {
-  transform: scale(1.005); /* Memperbesar gambar saat card di-hover */
+  transform: scale(1.005); 
 }
 
 .card h5 {
   font-weight: bold;
   margin-left: 10px;
-  margin-top: 5px; /* Tambahkan margin atas */
+  margin-top: 5px;
 }
 
 .card .time{
@@ -277,18 +322,20 @@ header{
 }
 
 .card .time .row {
-  display: flex; /* Gunakan flexbox untuk layout baris */
-  align-items: center; /* Pusatkan vertikal */
+  display: flex; 
+  align-items: center;
   margin-bottom: 5px;
 }
 
 .card .time .row i {
-  margin-right: 10px; /* Tambahkan margin kanan antara ikon dan teks */
+  margin-right: 10px; 
   display: flex;
+  font-weight: 600;
 }
 
 .card .time .row p {
-  margin-left: 3px; /* Tambahkan margin kiri untuk teks tag */
+  margin-left: 3px;
+  font-weight: 500; 
 }
 
 .carousel-inner{
@@ -303,26 +350,26 @@ header{
   padding: 5px;
   border-radius: 50%;
   border: 1px solid #c0bfbf;
-  top: 45%; /* Tengah vertikal */
-  transform: translateY(-50%); /* Geser ke atas sejauh setengah dari tinggi tombol */
+  top: 45%; 
+  transform: translateY(-50%); 
   opacity: .8;
   background-color: white;
 }
 
 .carousel-control-next-icon,
-.carousel-control-prev-icon /*, .carousel-indicators */ {
+.carousel-control-prev-icon{
     filter: invert(100%);
     font-size: 0.8rem;
 }
 
 .carousel .carousel-control-prev {
-  left: -10px; /* Menempatkan tombol prev lebih kiri */
-  right: unset; /* Hapus nilai right agar tidak tumpang tindih */
+  left: -10px; 
+  right: unset;
 }
 
 .carousel .carousel-control-next {
-  right: -10px; /* Menempatkan tombol next lebih kanan */
-  left: unset; /* Hapus nilai left agar tidak tumpang tindih */
+  right: -10px; 
+  left: unset; 
 }
 
 .featured{
@@ -333,12 +380,20 @@ header{
   margin-bottom: 3em;
 }
 
+.featured h3{
+  font-weight: 700;
+}
+
 .asian{
   margin-top: 10px;
   margin-left: 5em;
   margin-right: 5em;
   border-bottom: 2px solid black;
   margin-bottom: 3em;
+}
+
+.asian h3{
+  font-weight: 700;
 }
 
 .western{
@@ -349,9 +404,63 @@ header{
   margin-bottom: 3em;
 }
 
+.western h3{
+  font-weight: 700;
+}
+
 .under{
   margin-top: 10px;
   margin-left: 5em;
   margin-right: 5em;
   margin-bottom: 3em;
+}
+
+.under h3{
+  font-weight: 700;
+}
+
+/* Footer  */
+.footer {
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer a {
+  color: lightblue;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer__brand {
+  font-size: 16px; 
+  color: #ff7f50; 
+  text-transform: uppercase; 
+  letter-spacing: 2px; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center; 
+  display: inline-block;
+}
+
+.footer p {
+  margin: 10px 0;
+}
+
+.footer .social-icons {
+  margin-top: 10px;
+}
+
+.footer .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 24px;
 }

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Nasi Goreng</title>
     <link rel="stylesheet" href="nasgorDetail.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
     <script src="nasgorDetail.js"></script>
 </head>
-<body>
-    <header class="sticky">
+
+<body ng-controller="myCtrl">
+    <header>
         <nav class="navbar">
-          <a href="#" class="navbar__brand">Resep Makanan</a>
+          <a href="#" class="navbar__brand"><i class="fa-solid fa-kitchen-set"></i>Flavora</a>
           <div class="navbar__container">
             <ul class="navbar__menu">
               <li class="navbar__item"><a href="index.html" class="navbar__link">Home</a></li>
@@ -19,9 +21,12 @@
               <li class="navbar__item"><a href="#" class="navbar__link">Pinned</a></li>
             </ul>
             <div class="navbar__search">
-              <input type="text" class="navbar__search-input" placeholder="Cari resep...">
-              <button class="navbar__search-button">Cari</button>
+              <input type="text" class="navbar__search-input" placeholder="Search...">
+              <button class="navbar__search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
+            <div class="navbar_profile">
+                <span id="username">{{username}}</span>
+              </div>
           </div>
         </nav>
       </header>
@@ -37,12 +42,6 @@
             <div class="recipe-info">
                 <div class="recipe-title">
                     <h2 class="display-small">Fried Rice</h2>
-                    <!-- <button class="bookmark">
-                        <span class="saved"><i class="fa-regular fa-bookmark"></i></span>
-                        <span class="unsaved"><i class="fa-solid fa-bookmark"></i></span>
-                        <span class="save-text">Pin</span>
-                        <span class="unsaved-text">Unpin</span>
-                    </button> -->
 
                     <button class="unsaved">
                         <span class="iconUnsaved"><i class="fa-regular fa-bookmark"></i></span>
@@ -79,7 +78,6 @@
 
                 <div class="tag-list">
                     <div class="filter-chip">Lunch</div>
-                    <div class="filter-chip">Dinner</div>
                 </div>
 
                 <h3 class="title-medium ingr-title">Ingredients
@@ -105,5 +103,13 @@
                 </ol>
             </div>
         </div>
+
+        <div class="footer">
+            <p class="footer__brand"><i class="fa-solid fa-kitchen-set"></i>Flavora</p>
+            <p>Follow us on social media</p>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
 </body>
 </html>

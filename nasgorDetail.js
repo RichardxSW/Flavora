@@ -14,3 +14,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
 });
+
+var app = angular.module('myApp', []);
+
+app.controller('myCtrl', function($scope) {
+    var username = localStorage.getItem('username');
+    $scope.username = username;
+});

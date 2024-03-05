@@ -1,5 +1,15 @@
 "use strict";
 
+var app = angular.module('myApp', []);
+
+// Mendefinisikan controller untuk navbar
+app.controller('myCtrl', function($scope) {
+
+    var username = localStorage.getItem('username');
+
+    $scope.username = username;
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     // Mendapatkan data dari file JSON
     fetch("recipes.json")

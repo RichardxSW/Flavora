@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+</head>
+
+<body ng-controller="loginController">
+    <div class="wrapper">
+        <form ng-submit="login()">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" id="username" ng-model="username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="remember-forgot">
+                <label>
+                    <input type="checkbox">Remember me
+                </label>
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="regis.html">Register</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('loginController', function ($scope, $window) {
+            $scope.login = function () {
+                console.log('Login clicked');
+                // Store the username in localStorage
+                localStorage.setItem('username', $scope.username);
+                // Navigasi ke halaman index.html
+                $window.location.href = 'index.html';
+            };
+        });
+    </script>
+</body>
+</html>
