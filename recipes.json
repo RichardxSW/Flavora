@@ -37,5 +37,92 @@
         "time": "2 Minutes",
         "img": "pop.png",
         "url": "nasgorDetail.html"
+    },
+    {
+        "id": 5,
+        "title": "Nasi Goreng",
+        "category": "Lunch",
+        "nationality": "Asian",
+        "featured": "yes",
+        "time": "10 Minutes",
+        "img": "nasgor.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 6,
+        "title": "Pancake",
+        "category": "Breakfast",
+        "nationality": "Western",
+        "featured": "yes",
+        "time": "5 Minutes",
+        "img": "pancake.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 7,
+        "title": "Spaghetti Bolognese",
+        "category": "Dinner",
+        "nationality": "Western",
+        "time": "7 Minutes",
+        "img": "spaget.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 8,
+        "title": "Nasi Goreng",
+        "category": "Lunch",
+        "nationality": "Asian",
+        "featured": "yes",
+        "time": "10 Minutes",
+        "img": "nasgor.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 9,
+        "title": "Pancake",
+        "category": "Breakfast",
+        "nationality": "Western",
+        "featured": "yes",
+        "time": "5 Minutes",
+        "img": "pancake.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 10,
+        "title": "Spaghetti Bolognese",
+        "category": "Dinner",
+        "nationality": "Western",
+        "time": "7 Minutes",
+        "img": "spaget.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 11,
+        "title": "Nasi Goreng",
+        "category": "Lunch",
+        "nationality": "Asian",
+        "featured": "yes",
+        "time": "10 Minutes",
+        "img": "nasgor.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 12,
+        "title": "Pancake",
+        "category": "Breakfast",
+        "nationality": "Western",
+        "featured": "yes",
+        "time": "5 Minutes",
+        "img": "pancake.png",
+        "url": "nasgorDetail.html"
+    },
+    {
+        "id": 13,
+        "title": "Spaghetti Bolognese",
+        "category": "Dinner",
+        "nationality": "Western",
+        "time": "7 Minutes",
+        "img": "spaget.png",
+        "url": "nasgorDetail.html"
     }
 ]
