@@ -338,38 +338,19 @@ header{
   font-weight: 500; 
 }
 
-/* .carousel-inner{
-  margin-left: 0;
-  margin-right: 0;
+.card .time .row .bookmark {
+  margin-left: 10px;
+  cursor: pointer; /* Memberikan efek kursor pointer saat dihover */
 }
 
-.carousel .carousel-control-prev,
-.carousel .carousel-control-next {
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-  border-radius: 50%;
-  border: 1px solid #c0bfbf;
-  top: 45%; 
-  transform: translateY(-50%); 
-  opacity: .8;
-  background-color: white;
+.card .bookmark i {
+  font-size: 25px;
 }
 
-.carousel-control-next-icon,
-.carousel-control-prev-icon{
-    filter: invert(100%);
-    font-size: 0.8rem;
-}
-
-.carousel .carousel-control-prev {
-  left: -10px; 
-  right: unset;
-}
-
-.carousel .carousel-control-next {
-  right: -10px; 
-  left: unset; 
+/* .card .bookmark i:hover {
+  background-color: #ccc; 
+  border-radius: 50%; 
+  padding: 3px; 
 } */
 
 .swiper {

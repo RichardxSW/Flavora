@@ -17,60 +17,66 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
         const foodData = data;
 
-        // Memanggil displayFoodData dengan semua data makanan saat halaman dimuat pertama kali
-        displayFoodData(foodData);
+         // Memanggil fungsi displayFoodData dengan semua data makanan saat halaman dimuat pertama kali
+         displayFoodData(foodData);
 
-        // Inisialisasi Swiper untuk konten default saat halaman dimuat
-        initializeSwiper();
+         // Inisialisasi Swiper untuk konten default saat halaman dimuat
+         initializeSwiper();
 
-        // Array untuk menyimpan instance Swiper untuk setiap kategori
-        const links = document.querySelectorAll(".categories__item a");
-
-        links.forEach((link) => {
-            link.addEventListener("click", (e) => {
+        document.querySelectorAll(".categories__item a").forEach(function(link) {
+            link.addEventListener("click", function(e) {
                 e.preventDefault();
-                const category = e.target.dataset.id;
+                const category = this.getAttribute("data-id");
                 let filteredFood;
-
                 if (category === "All") {
-                    // Tampilkan semua data makanan jika kategori "All" dipilih
-                    displayFoodData(foodData); // Menampilkan semua data tanpa filter
+                    displayFoodData(foodData); 
                 } else {
-                    // Filter data berdasarkan kategori yang dipilih
-                    filteredFood = foodData.filter((item) => item.category === category);
+                    filteredFood = foodData.filter(function(item) {
+                        return item.category === category;
+                    });
                     displayFoodData(filteredFood);
                 }
             });
         });
-
+        
         function displayFoodData(food) {
-            let displayData = food.map((cat_items) => {
+            let displayData = food.map(function(cat_items) {
                 return `<div class="swiper-slide">
-                            <div class="card">
-                                <a href="${cat_items.url}" target="_blank">
-                                    <img src="${cat_items.img}">
-                                    <h5>${cat_items.title}</h5>
-                                    <div class="time row">
-                                        <div class="row">
-                                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                                        </div>
-                                    </div>
-                                </a>
+                <div class="card">
+                    <a href="${cat_items.url}" target="_blank">
+                        <img src="${cat_items.img}">
+                        <h5>${cat_items.title}</h5>
+                        <div class="time row">
+                            <div class="row">
+                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
                             </div>
-                        </div>`; 
+                        </div>
+                    </a>
+                </div>
+            </div>
+            `; 
             });
-            // Menampilkan data pada swiper
             swiperWrapper.innerHTML = displayData.join("");
         }
-
+        
         function initializeSwiper() {
-            var swiper = new Swiper(".mySwiper", {
+            var productSwiper = new Swiper(".swiper-product", {
                 slidesPerView: 4,
                 spaceBetween: 10,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
+                runCallbacksOnInit: true,
+                observer: true,
+                // updateOnImagesReady: true,
+            });
+        
+            // Update Swiper dan scrollbar
+            document.querySelectorAll(".categories__item").forEach(function(item) {
+                item.addEventListener("click", function() {
+                    productSwiper.slideTo(0);
+                });
             });
         }
         
@@ -78,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function separateByNationality(food) {
     const separatedFoods = {
         Western: [],
-        Asian: []
+        Asian: [],
     };
 
     food.forEach(item => {
@@ -131,29 +137,21 @@ function separateByNationality(food) {
                     document.querySelector(".western .swiper-wrapper").innerHTML = westernDisplayData.join("");
                 }
             }
+
+              // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
+              var swiper2 = new Swiper(".MySwiper", {
+                slidesPerView: 4,
+                spaceBetween: 10,
+            });
+
+            // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
+            var swiper3 = new Swiper(".MySwiper", {
+                slidesPerView: 4,
+                spaceBetween: 10,
+            });
             
             // Panggil fungsi displaySeparatedFoodData dengan menggunakan foodData
             displaySeparatedFoodData(foodData);
-
-            // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
-            var swiper2 = new Swiper(".asian .swiper", {
-                slidesPerView: 4,
-                spaceBetween: 10,
-                pagination: {
-                    el: ".asian .swiper-pagination",
-                    clickable: true,
-                },
-            });
-
-            // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
-            var swiper3 = new Swiper(".western .swiper", {
-                slidesPerView: 4,
-                spaceBetween: 10,
-                pagination: {
-                    el: ".western .swiper-pagination",
-                    clickable: true,
-                },
-            });
             
             // Pisahkan makanan berdasarkan waktu persiapannya
             function separateByTime(food) {
@@ -197,22 +195,15 @@ function separateByNationality(food) {
                     const swiperWrapper = document.querySelector(".under .swiper-wrapper");
                     swiperWrapper.innerHTML = quickPrepDisplayData.join("");
                 }
+                var swiper1 = new Swiper(".MySwiper", {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                });
             }
 
             // Panggil fungsi untuk menampilkan makanan berdasarkan waktu persiapan
             displaySeparatedTimeFoodData(foodData);
-
-            // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
-            var swiper1 = new Swiper(".under .swiper", {
-                slidesPerView: 4,
-                spaceBetween: 10,
-                pagination: {
-                    el: ".under .swiper-pagination",
-                    clickable: true,
-                },
-            });
             
-
            // Pisahkan makanan berdasarkan properti featured
 function separateByFeatured(food) {
     const featuredFoods = food.filter(item => item.featured === "yes");
@@ -242,20 +233,15 @@ function displayFeaturedFoodData(food) {
         const swiperWrapper = document.querySelector(".featured .swiper-wrapper");
         swiperWrapper.innerHTML = featuredDisplayData.join(""); // Menggunakan featuredDisplayData, bukan quickPrepDisplayData
     }
+    var swiperFeatured = new Swiper(".MySwiper", {
+        slidesPerView: 4,
+        spaceBetween: 10,
+    });
+
 }
 
 // Menampilkan makanan berdasarkan properti featured
 displayFeaturedFoodData(foodData);
-
-    var swiperFeatured = new Swiper(".featured .swiper", {
-        slidesPerView: 4,
-        spaceBetween: 10,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
-
         })
         .catch(error => console.log("Error fetching data:", error));
 });
