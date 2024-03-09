@@ -2,41 +2,122 @@
     {
         "id": 1,
         "title": "Nasi Goreng",
-        "category": "Lunch",
+        "category": ["Lunch"],
         "nationality": "Asian",
         "featured": "yes",
         "time": "10 Minutes",
         "img": "nasgor.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html",
+        "desc": "Delicious fried rice recipes are always perfect for breakfast, lunch or dinner. Topped with eggs, shredded chicken, prawns, beef meatballs and fish balls, make this special fried rice recipe your new family favorite.",
+        "serving": "1",
+        "length": "6",
+        "minutes": "10",
+        "calories": "267",
+        "bahan": ["Rice", "Garlic", "Egg", "Sweet Soy Sauce", "Salt", "White Pepper"],
+        "cara": [
+        "Heat oil over medium heat.",
+        "Saute spices until fragrant.",
+        "Add rice and egg, stir until smooth.",
+        "Add sweet soy sauce, stir again until smooth.",
+        "Remove from heat and serve with complementary fried rice."]
     },
     {
         "id": 2,
         "title": "Pancake",
-        "category": "Breakfast",
+        "category": ["Breakfast"],
         "nationality": "Western",
         "featured": "yes",
-        "time": "5 Minutes",
+        "time": "30 Minutes",
         "img": "pancake.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html",
+        "desc": "Pancakes or pancakes are cakes made from flour, eggs, sugar and milk. The ingredients are mixed with water to form a thick batter that is fried on a lightly greased flat pan. Once cooked, pancakes can be served while still warm or once cooled.",
+        "serving": "4",
+        "length": "7",
+        "minutes": "30",
+        "calories": "227",
+        "bahan": [
+            "100 gr of wheat flour",
+            "2 tbsp of Sugar",
+            "Salt",
+            "1 tsp of Baking Powder",
+            "1 Chicken Egg",
+            "100 ml of Cow's Milk",
+            "30 gr of Butter"],
+        "cara": [
+        "Mix the flour, sugar, salt, and baking powder. Mix well. Pour in egg mixture and liquid milk. Stir until the dough is well mixed and soft.",
+        "Add melted butter. Stir well.",
+        "Brush the pan with a little butter and heat it on the stove. Then pour 1 spoon of dough into the pan.",
+        "Cook the pancake until the dough on the inside of the pan is golden yellow or brownish yellow. The sign, we will see the shape of bubbles above the dough, then the dough must be turned slowly. cook for a while and remove."]
     },
     {
         "id": 3,
         "title": "Spaghetti Bolognese",
-        "category": "Dinner",
+        "category": ["Dinner"],
         "nationality": "Western",
-        "time": "7 Minutes",
+        "time": "45 Minutes",
         "img": "spaget.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html",
+        "desc": "Spaghetti bolognese is a popular classic pasta dish. It uses minced meat sauce with a blend of fresh and sour tomato sauce and pasta. Of the various types of sauces that are popular, one of them is bolognese sauce which is said to have originated in the city of Bologna, Italy. This meat and tomato sauce is also used for lasagna and tagilatelle, a wide flat pasta.",
+        "serving": "3",
+        "length": "18",
+        "minutes": "45",
+        "calories": "885",
+        "bahan": [
+            "250 gram of spaghetti",
+            "2.5 liters of water",
+            "3 tbsp of butter",
+            "50 gr onion",
+            "3 cloves garlic",
+            "100 gr of button mushrooms",
+            "300 gr of minced beef",
+            "2 tbsp of tomato paste",
+            "3 red tomatoes",
+            "1 tsp of dried organo",
+            "2 tsp of dried basil",
+            "2 bayleaf leaves",
+            "1/2 tsp of black peppercorns",
+            "1 tsp of sugar",
+            "2 tsp of salt",
+            "250 ml of pasta cooking water",
+            "50 gr of parmesan cheese",
+            "10 basil leaves"],
+        "cara": [
+        "Bring water to a boil in a saucepan, boil spaghetti until soft 'al dente'. Drain and set aside 250 ml boiling water.",
+        "Bolognese Sauce: Melt butter in a pan, sauté onion and garlic. Stir until wilted and fragrant.",
+        "Add mushrooms and stir until browned.",
+        "Add beef, stir until browned and cooked.",
+        "Add tomato paste, tomato paste, organo, basil, bayleaf, pepper, sugar and salt.",
+        "Pour pasta cooking water and add spaghetti, stirring until slightly dry.",
+        "Remove from heat, serve warm with Parmesan cheese and fresh basil leaves.",
+        "Serve warm."]
     },
     {
         "id": 4,
-        "title": "Popcorn",
-        "category": "Snack",
+        "title": "Popcorn Caramel",
+        "category": ["Snack"],
         "nationality": "Western",
         "featured": "yes",
-        "time": "2 Minutes",
+        "time": "5 Minutes",
         "img": "pop.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html",
+        "desc": "Pancakes or pancakes are cakes made from flour, eggs, sugar and milk. The ingredients are mixed with water to form a thick batter that is fried on a lightly greased flat pan. Once cooked, pancakes can be served while still warm or once cooled.",
+        "serving": "2",
+        "length": "5",
+        "minutes": "5",
+        "calories": "380",
+        "bahan": [
+            "1/2 cup of corn kernels",
+            "1 glass of sugar",
+            "125 g of butter",
+            "1/4 glass of oil",
+            "1/4 tsp salt"],
+        "cara": [
+        "Make popcorn as usual by heating butter and popcorn in a saucepan.", 
+        "Prepare another pot to make the caramel.",
+        "Heat the butter, salt and sugar in a saucepan over medium heat.", 
+        "Once mixed, continue to heat until boiling.", 
+        "Cook until golden in color, approximately 10 minutes.",
+        "Once cooked, pour the caramel popcorn into the finished one and stir until evenly distributed."]
     },
     {
         "id": 5,
@@ -46,7 +127,7 @@
         "featured": "yes",
         "time": "10 Minutes",
         "img": "nasgor.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 6,
@@ -56,7 +137,7 @@
         "featured": "yes",
         "time": "5 Minutes",
         "img": "pancake.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 7,
@@ -65,7 +146,7 @@
         "nationality": "Western",
         "time": "7 Minutes",
         "img": "spaget.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 8,
@@ -75,7 +156,7 @@
         "featured": "yes",
         "time": "10 Minutes",
         "img": "nasgor.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 9,
@@ -85,7 +166,7 @@
         "featured": "yes",
         "time": "5 Minutes",
         "img": "pancake.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 10,
@@ -94,7 +175,7 @@
         "nationality": "Western",
         "time": "7 Minutes",
         "img": "spaget.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 11,
@@ -104,7 +185,7 @@
         "featured": "yes",
         "time": "10 Minutes",
         "img": "nasgor.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 12,
@@ -114,7 +195,7 @@
         "featured": "yes",
         "time": "5 Minutes",
         "img": "pancake.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     },
     {
         "id": 13,
@@ -123,6 +204,6 @@
         "nationality": "Western",
         "time": "7 Minutes",
         "img": "spaget.png",
-        "url": "nasgorDetail.html"
+        "url": "detail.html"
     }
 ]
