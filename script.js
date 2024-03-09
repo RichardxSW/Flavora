@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let displayData = food.map((cat_items) => {
                 return `<div class="swiper-slide">
                             <div class="card">
-                                <a href="${cat_items.url}" target="_blank">
+                                <a href="${cat_items.url}?id=${cat_items.id}">
                                     <img src="${cat_items.img}">
                                     <h5>${cat_items.title}</h5>
                                     <div class="time row">
@@ -96,7 +96,7 @@ function separateByNationality(food) {
                     const asianDisplayData = separatedFoods.Asian.map(cat_items => {
                         return `<div class="swiper-slide">
                         <div class="card">
-                                <a href="${cat_items.url}" target="_blank">
+                                <a href="${cat_items.url}?id=${cat_items.id}">
                                     <img src="${cat_items.img}">
                                     <h5>${cat_items.title}</h5>
                                     <div class="time row">
@@ -116,7 +116,7 @@ function separateByNationality(food) {
                     const westernDisplayData = separatedFoods.Western.map(cat_items => {
                         return `<div class="swiper-slide">
                         <div class="card">
-                                <a href="${cat_items.url}" target="_blank">
+                                <a href="${cat_items.url}?id=${cat_items.id}">
                                     <img src="${cat_items.img}">
                                     <h5>${cat_items.title}</h5>
                                     <div class="time row">
@@ -181,7 +181,7 @@ function separateByNationality(food) {
                     const quickPrepDisplayData = separatedFoods.UpTo5Minutes.map(cat_items => {
                         return `<div class="swiper-slide">
                         <div class="card">
-                                <a href="${cat_items.url}" target="_blank">
+                                <a href="${cat_items.url}?id=${cat_items.id}">
                                     <img src="${cat_items.img}">
                                     <h5>${cat_items.title}</h5>
                                     <div class="time row">
@@ -227,7 +227,7 @@ function displayFeaturedFoodData(food) {
         const featuredDisplayData = featuredFoods.map(cat_items => {
             return `<div class="swiper-slide">
             <div class="card">
-                    <a href="${cat_items.url}" target="_blank">
+                    <a href="${cat_items.url}?id=${cat_items.id}">
                         <img src="${cat_items.img}">
                         <h5>${cat_items.title}</h5>
                         <div class="time row">
