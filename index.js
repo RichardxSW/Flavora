@@ -48,4 +48,3 @@ function changeCategory(category) {
     var clickedCategory = document.querySelector('[data-id="' + category + '"]');
     clickedCategory.parentElement.classList.add('active');
   }
-
