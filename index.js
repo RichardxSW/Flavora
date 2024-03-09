@@ -47,4 +47,4 @@ function changeCategory(category) {
     // Add 'active' class to the clicked category
     var clickedCategory = document.querySelector('[data-id="' + category + '"]');
     clickedCategory.parentElement.classList.add('active');
-  }
+}
