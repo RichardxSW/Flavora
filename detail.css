@@ -180,26 +180,40 @@ button.unsaved {
 
 /* Style untuk kontainer tag-list */
 .tag-list {
-  display: flex; /* Menggunakan flexbox untuk penataan */
+  display: flex;
   flex-wrap: wrap; /* Item akan meluncur ke baris baru jika tidak cukup ruang */
 }
 
 /* Style untuk setiap filter-chip */
 .filter-chip {
-  padding: 8px 12px; /* Padding di dalam filter chip */
-  margin-right: 8px; /* Jarak antara setiap filter chip */
-  margin-bottom: 30px; /* Jarak bawah setiap filter chip */
-  border: 1px solid #ccc; /* Garis tepi untuk filter chip */
-  border-radius: 16px; /* Sudut melengkung */
-  background-color: #e5dc32; /* Warna latar belakang */
-  font-size: 14px; /* Ukuran teks */
-  line-height: 1.5; /* Tinggi baris */
-  cursor: pointer; /* Kursor akan berubah menjadi pointer saat diarahkan ke filter chip */
+  padding: 8px 10px; 
+  margin-right: 8px; 
+  margin-bottom: 30px; 
+  /* border: 1px solid #ccc;  */
+  border-radius: 50px; 
+  background-color: #e5dc32;
+  font-size: 15px; 
+  font-weight: 550;
+  line-height: 1.5; 
+  cursor: pointer;
+  animation: filtertext 1.5s infinite ;
+}
+
+@keyframes filtertext {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Style untuk filter chip yang sedang dihover */
 .filter-chip:hover {
-  background-color: #e0e0e0; /* Warna latar belakang saat dihover */
+  background-color: #e0e0e0; 
 }
 
 
