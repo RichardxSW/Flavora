@@ -237,7 +237,7 @@
         "serving": "4",
         "length": "8",
         "minutes": "20",
-        "calories": "4263",
+        "calories": "193",
         "bahan": [
             "1 cup water",
             "2 1/2 tablespoons white sugar",
@@ -253,6 +253,39 @@
             "Heat oil for frying in a deep fryer or deep pot to 375 degrees F (190 degrees C).",
             "Transfer dough to a sturdy pastry bag fitted with a medium star tip. Carefully pipe a few 5- to 6-inch strips of dough into the hot oil; work in batches so you don't crowd the fryer. Cook until golden; use a spider or slotted spoon to transfer churros to paper towels to drain.",
             "Combine 1/2 cup sugar and cinnamon. Roll drained churros in cinnamon and sugar mixture."
+        ]
+    },
+    {
+        "id": 10,
+        "title": "French Fries",
+        "category": ["Snack"],
+        "nationality": "Western",
+        "time": "25 Minutes",
+        "img": "fries.jpg",
+        "url": "detail.html",
+        "desc": "French fries are a popular side dish made from deep-fried potatoes. They are typically cut into thin strips or wedges and then fried until golden brown and crispy. French fries are often seasoned with salt and can be served alone or as a complement to various dishes such as burgers, sandwiches, or fried chicken. They are enjoyed worldwide for their crispy texture and savory flavor.",
+        "serving": "8",
+        "length": "8",
+        "minutes": "25",
+        "calories": "193",
+        "bahan": [
+            "2 1/2 pounds russet potatoes, peeled",
+            "1 cup vegetable oil for frying",
+            "1 cup all-purpose flour",
+            "1 teaspoon garlic salt",
+            "1 teaspoon onion salt",
+            "1 teaspoon paprika",
+            "1 teaspoon salt",
+            "1/2 cup water, or as needed"
+        ],
+        "cara": [
+            "Slice potatoes into French fries and place them into a large bowl of cold water to prevent them from turning brown.",
+            "Heat oil in a heavy saucepan or large skillet to 350 degrees F (175 degrees C).",
+            "While the oil is heating, sift flour, garlic salt, onion salt, paprika, and salt into a large bowl. Gradually stir in enough water to make a slightly thick batter that can be drizzled from a spoon.",
+            "Drain fries and pat dry; dip into the batter one at a time.",
+            "Lower fries carefully into the hot oil in batches to prevent them from clumping together. Fry until golden brown and crispy on all sides, about 7 to 10 minutes.",
+            "Drain fries on a paper towel-lined plate.",
+            "Serve hot and enjoy!"
         ]
     }
 ]
