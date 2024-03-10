@@ -23,22 +23,27 @@ document.addEventListener("DOMContentLoaded", function () {
          // Inisialisasi Swiper untuk konten default saat halaman dimuat
          initializeSwiper();
 
-        document.querySelectorAll(".categories__item a").forEach(function(link) {
+         document.querySelectorAll(".categories__item a").forEach(function(link) {
             link.addEventListener("click", function(e) {
                 e.preventDefault();
                 const category = this.getAttribute("data-id");
+        
+                // Ubah menjadi array jika kategori merupakan array
+                const categories = Array.isArray(category) ? category : [category];
+        
                 let filteredFood;
-                if (category === "All") {
+                if (categories.includes("All")) {
                     displayFoodData(foodData); 
                 } else {
                     filteredFood = foodData.filter(function(item) {
-                        return item.category === category;
+                        // Periksa apakah setiap kategori ada dalam array kategori makanan
+                        return categories.some(cat => item.category.includes(cat));
                     });
                     displayFoodData(filteredFood);
                 }
             });
         });
-        
+           
         function displayFoodData(food) {
             let displayData = food.map(function(cat_items) {
                 return `<div class="swiper-slide">
@@ -66,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function initializeSwiper() {
             var productSwiper = new Swiper(".swiper-product", {
                 slidesPerView: 4,
-                spaceBetween: 10,
+                spaceBetween: 3,
                 runCallbacksOnInit: true,
                 observer: true,
                 // updateOnImagesReady: true,
