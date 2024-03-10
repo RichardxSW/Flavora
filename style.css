@@ -186,7 +186,7 @@ header{
 
 .recommended .text h4{
   font-weight: 900;
-  font-size: 15px;
+  font-size: 18px;
   color: red;
   margin-left: 20px;
   margin-bottom: 0;
@@ -349,7 +349,7 @@ header{
 
 .card .time .row .bookmark {
   margin-left: 10px;
-  cursor: pointer; /* Memberikan efek kursor pointer saat dihover */
+  cursor: pointer; 
 }
 
 .card .bookmark i {
@@ -373,7 +373,6 @@ header{
   font-size: 18px;
   background: #fff;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -385,7 +384,7 @@ header{
   margin-top: 10px;
   margin-left: 5em;
   margin-right: 5em;
-  /* border-bottom: 2px solid black; */
+  border-bottom: 2px solid black;
   margin-bottom: 3em;
 }
 
@@ -397,7 +396,7 @@ header{
   margin-top: 10px;
   margin-left: 5em;
   margin-right: 5em;
-  /* border-bottom: 2px solid black; */
+  border-bottom: 2px solid black;
   margin-bottom: 3em;
 }
 
