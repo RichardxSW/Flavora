@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
-    fetch("recipes.json")
+    fetch("../recipes.json") // Path menuju recipes.json di luar folder
         .then(response => response.json())
         .then(data => {
             const foodItem = data.find(item => item.id === parseInt(id)); 

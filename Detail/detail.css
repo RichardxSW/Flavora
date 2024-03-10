@@ -242,6 +242,7 @@ button.unsaved {
     margin-block: 8px;
     list-style-type: disc;
     margin-inline-start: 24px;
+    text-align: justify;
 }
 
 .inst-list {
@@ -255,6 +256,7 @@ button.unsaved {
 .inst-item {
     margin-block: 8px;
     margin-inline-start: 24px;
+    text-align: justify;
 }
 
 /* Footer  */
