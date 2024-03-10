@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function initializeSwiper() {
             var productSwiper = new Swiper(".swiper-product", {
                 slidesPerView: 4,
-                spaceBetween: 10,
+                spaceBetween: 3,
                 runCallbacksOnInit: true,
                 observer: true,
                 // updateOnImagesReady: true,
