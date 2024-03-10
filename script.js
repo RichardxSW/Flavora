@@ -4,175 +4,180 @@ var app = angular.module('myApp', []);
 
 // Mendefinisikan controller untuk navbar
 app.controller('myCtrl', function($scope) {
-
     var username = localStorage.getItem('username');
-
     $scope.username = username;
 });
 
+const swiperWrapper = document.querySelector(".swiper-wrapper"); // Menambahkan ini di sini untuk mengakses elemen swiper-wrapper
+
 document.addEventListener("DOMContentLoaded", function () {
-    
-    const foodData = [
-        {
-            id: 1,
-            title: "Fried Rice",
-            category: "Lunch",
-            nationality: "Asian",
-            featured: "yes", 
-            time: "10 Minutes",
-            img: "nasgor.png",
-            url: "nasgorDetail.html"
-        },
-        {
-            id: 2,
-            title: "Pancake",
-            category: "Breakfast",
-            nationality: "Western",
-            featured: "yes", 
-            time: "5 Minutes",
-            img: "pancake.png",
-            url: "nasgorDetail.html"
-        },
-        {
-            id: 3,
-            title: "Spaghetti Bolognese",
-            category: "Dinner",
-            nationality: "Western",
-            time: "7 Minutes",
-            img: "spaget.png",
-            url: "nasgorDetail.html"
-        },
-        {
-            id: 4,
-            title: "Popcorn",
-            category: "Snack",
-            nationality: "Western",
-            featured: "yes",
-            time: "2 Minutes",
-            img: "pop.png",
-            url: "nasgorDetail.html"
-        },
-        // {
-        //     id: 5,
-        //     title: "Indian Butter Chicken",
-        //     category: "Lunch",
-        //     nationality: "Asian",
-        //     featured: "yes", // Ditambahkan properti featured
-        //     time: "14 Minutes",
-        //     img: "indianbc.jpg",
-        //     url: "nasgorDetail.html"
-        // },
-        // {
-        //     id: 6,
-        //     title: "Pad Thai",
-        //     category: "Breakfast",
-        //     nationality: "Asian",
-        //     featured: "yes", // Ditambahkan properti featured
-        //     time: "10 Minutes",
-        //     img: "padthai.jpg",
-        //     url: "nasgorDetail.html"
-        // },
-        // Anda dapat menambahkan data lebih lanjut di sini
-    ];
+    // Mendapatkan data dari file JSON
+    fetch("recipes.json")
+    .then(response => response.json())
+    .then(data => {
+        const foodData = data;
 
-    const cardContainer = document.querySelector(".card-wrapper");
-const links = document.querySelectorAll(".categories__item a");
+         // Memanggil fungsi displayFoodData dengan semua data makanan saat halaman dimuat pertama kali
+         displayFoodData(foodData);
 
-// display all
-window.addEventListener("DOMContentLoaded", () => {
-    displayFoodData(foodData);
-});
+         // Inisialisasi Swiper untuk konten default saat halaman dimuat
+         initializeSwiper();
 
-links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const category = e.target.dataset.id;
-        const filteredFood = category === "All" ? foodData : foodData.filter((item) => item.category === category);
-        displayFoodData(filteredFood);
-    });
-});
-
-function displayFoodData(food) {
-    let displayData = food.map((cat_items) => {
-        return `<div class="card">
-                    <a href="${cat_items.url}">
-                    <img src="${cat_items.img}">
-                    <h5>${cat_items.title}</h5>
-                    <div class="time row">
-                        <div class="row">
-                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
+         document.querySelectorAll(".categories__item a").forEach(function(link) {
+            link.addEventListener("click", function(e) {
+                e.preventDefault();
+                const category = this.getAttribute("data-id");
+        
+                // Ubah menjadi array jika kategori merupakan array
+                const categories = Array.isArray(category) ? category : [category];
+        
+                let filteredFood;
+                if (categories.includes("All")) {
+                    displayFoodData(foodData); 
+                } else {
+                    filteredFood = foodData.filter(function(item) {
+                        // Periksa apakah setiap kategori ada dalam array kategori makanan
+                        return categories.some(cat => item.category.includes(cat));
+                    });
+                    displayFoodData(filteredFood);
+                }
+            });
+        });
+           
+        function displayFoodData(food) {
+            let displayData = food.map(function(cat_items) {
+                return `<div class="swiper-slide">
+                <div class="card">
+                    <a href="${cat_items.url}?id=${cat_items.id}">
+                        <img src="${cat_items.img}">
+                        <h5>${cat_items.title}</h5>
+                        <div class="time row">
+                            <div class="row">
+                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
+                            </div>
                         </div>
-                    </div>
-                </div>`;
+                        <div class="view-icon">
+                            <i class="fa-solid fa-eye"></i>
+                            <span class="view-text">150</span>
+                        </div>
+                    </a>
+                    <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+                </div>
+            </div>
+            `; 
+            });
+            swiperWrapper.innerHTML = displayData.join("");
+        }
+        
+        function initializeSwiper() {
+            var productSwiper = new Swiper(".swiper-product", {
+                slidesPerView: 4,
+                spaceBetween: 3,
+                runCallbacksOnInit: true,
+                observer: true,
+                // updateOnImagesReady: true,
+            });
+        
+            // Update Swiper dan scrollbar
+            document.querySelectorAll(".categories__item").forEach(function(item) {
+                item.addEventListener("click", function() {
+                    productSwiper.slideTo(0);
+                });
+            });
+        }
+        
+            // Mendefinisikan fungsi separateByNationality
+function separateByNationality(food) {
+    const separatedFoods = {
+        Western: [],
+        Asian: [],
+    };
+
+    food.forEach(item => {
+        separatedFoods[item.nationality].push(item);
     });
-    displayData = displayData.join("");
-    cardContainer.innerHTML = displayData;
+
+    return separatedFoods;
 }
 
-    // Pisahkan makanan berdasarkan nationality
-    function separateByNationality(food) {
-        const separatedFoods = {
-            Western: [],
-            Asian: []
-        };
-
-        food.forEach(item => {
-            separatedFoods[item.nationality].push(item);
-        });
-
-        return separatedFoods;
-    }
-
-    function displaySeparatedFoodData(food) {
-        const separatedFoods = separateByNationality(food);
-
-        // Tampilkan makanan Barat dalam carousel dengan id carousel-4
-        if (separatedFoods.Western.length > 0) {
-            const westernDisplayData = separatedFoods.Western.map(cat_items => {
-                return `
-                <div class="card">
-                    <a href="${cat_items.url}">
-                        <img src="${cat_items.img}">
-                        <h5>${cat_items.title}</h5>
-                        <div class="time row">
-                            <div class="row">
-                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                            </div>
+            function displaySeparatedFoodData(food) {
+                const separatedFoods = separateByNationality(food);
+            
+                // Tampilkan makanan Asia dalam swiper
+                if (separatedFoods.Asian.length > 0) {
+                    const asianDisplayData = separatedFoods.Asian.map(cat_items => {
+                        return `<div class="swiper-slide">
+                        <div class="card">
+                            <a href="${cat_items.url}?id=${cat_items.id}">
+                                <img src="${cat_items.img}">
+                                <h5>${cat_items.title}</h5>
+                                <div class="time row">
+                                    <div class="row">
+                                        <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                        <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
+                                    </div>
+                                </div>
+                                <div class="view-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <span class="view-text">150</span>
+                                </div>
+                            </a>
+                            <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
                         </div>
-                    </a>
-                </div>`;
-            });
-            document.querySelector("#carousel-4 .card-wrapper").innerHTML = westernDisplayData.join("");
-        }
-
-        // Tampilkan makanan Asia dalam carousel dengan id carousel-3
-        if (separatedFoods.Asian.length > 0) {
-            const asianDisplayData = separatedFoods.Asian.map(cat_items => {
-                return `
-                <div class="card">
-                    <a href="${cat_items.url}">
-                        <img src="${cat_items.img}">
-                        <h5>${cat_items.title}</h5>
-                        <div class="time row">
-                            <div class="row">
-                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                            </div>
+                    </div>`; 
+                    });
+                    document.querySelector(".asian .swiper-wrapper").innerHTML = asianDisplayData.join("");
+                }
+            
+                // Tampilkan makanan Barat dalam swiper
+                if (separatedFoods.Western.length > 0) {
+                    const westernDisplayData = separatedFoods.Western.map(cat_items => {
+                        return `<div class="swiper-slide">
+                        <div class="card">
+                            <a href="${cat_items.url}?id=${cat_items.id}">
+                                <img src="${cat_items.img}">
+                                <h5>${cat_items.title}</h5>
+                                <div class="time row">
+                                    <div class="row">
+                                        <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                        <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
+                                    </div>
+                                </div>
+                                <div class="view-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <span class="view-text">150</span>
+                                </div>
+                            </a>
+                            <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
                         </div>
-                    </a>
-                </div>`;
+                    </div>`; 
+                    });
+                    document.querySelector(".western .swiper-wrapper").innerHTML = westernDisplayData.join("");
+                }
+            }
+
+              // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
+              var swiper2 = new Swiper(".MySwiper", {
+                slidesPerView: 4,
+                spaceBetween: 3,
             });
-            document.querySelector("#carousel-3 .card-wrapper").innerHTML = asianDisplayData.join("");
-        }
-    }
 
-    displaySeparatedFoodData(foodData);
-
-    // Pisahkan makanan berdasarkan waktu persiapannya
-    function separateByTime(food) {
-        const separatedFoods = {
-            UpTo5Minutes: [],
-            Other: []
-        };
+            // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
+            var swiper3 = new Swiper(".MySwiper", {
+                slidesPerView: 4,
+                spaceBetween: 3,
+            });
+            
+            // Panggil fungsi displaySeparatedFoodData dengan menggunakan foodData
+            displaySeparatedFoodData(foodData);
+            
+            // Pisahkan makanan berdasarkan waktu persiapannya
+            function separateByTime(food) {
+                const separatedFoods = {
+                    UpTo5Minutes: [],
+                    Other: []
+                };
 
         food.forEach(item => {
             if (parseInt(item.time) <= 5) {
@@ -188,55 +193,86 @@ function displayFoodData(food) {
     function displaySeparatedTimeFoodData(food) {
         const separatedFoods = separateByTime(food);
 
-        // Tampilkan makanan dengan waktu persiapan <= 5 menit dalam carousel dengan id carousel-5
-        if (separatedFoods.UpTo5Minutes.length > 0) {
-            const quickPrepDisplayData = separatedFoods.UpTo5Minutes.map(cat_items => {
-                return `
-                <div class="card">
-                    <a href="${cat_items.url}">
-                        <img src="${cat_items.img}">
-                        <h5>${cat_items.title}</h5>
-                        <div class="time row">
-                            <div class="row">
-                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                            </div>
+                // Tampilkan makanan dengan waktu persiapan <= 5 menit dalam carousel dengan id carousel-5
+                if (separatedFoods.UpTo5Minutes.length > 0) {
+                    const quickPrepDisplayData = separatedFoods.UpTo5Minutes.map(cat_items => {
+                        return `<div class="swiper-slide">
+                        <div class="card">
+                            <a href="${cat_items.url}?id=${cat_items.id}">
+                                <img src="${cat_items.img}">
+                                <h5>${cat_items.title}</h5>
+                                <div class="time row">
+                                    <div class="row">
+                                        <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                        <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
+                                    </div>
+                                </div>
+                                <div class="view-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <span class="view-text">150</span>
+                                </div>
+                            </a>
+                            <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
                         </div>
-                    </a>
-                </div>`;
-            });
-            document.querySelector("#carousel-5 .card-wrapper").innerHTML = quickPrepDisplayData.join("");
-        }
-    }
+                    </div>`; 
+                    });
+                    // Update konten swiper-wrapper dengan data makanan
+                    const swiperWrapper = document.querySelector(".under .swiper-wrapper");
+                    swiperWrapper.innerHTML = quickPrepDisplayData.join("");
+                }
+                var swiper1 = new Swiper(".MySwiper", {
+                    slidesPerView: 4,
+                    spaceBetween: 3,
+                });
+            }
 
-    displaySeparatedTimeFoodData(foodData);
+            // Panggil fungsi untuk menampilkan makanan berdasarkan waktu persiapan
+            displaySeparatedTimeFoodData(foodData);
+            
+           // Pisahkan makanan berdasarkan properti featured
+function separateByFeatured(food) {
+    const featuredFoods = food.filter(item => item.featured === "yes");
+    return featuredFoods;
+}
 
-    // Pisahkan makanan berdasarkan properti featured
-    function separateByFeatured(food) {
-        const featuredFoods = food.filter(item => item.featured === "yes");
-        return featuredFoods;
-    }
+function displayFeaturedFoodData(food) {
+    const featuredFoods = separateByFeatured(food);
 
-    function displayFeaturedFoodData(food) {
-        const featuredFoods = separateByFeatured(food);
-
-        // Tampilkan makanan yang ditandai sebagai fitur dalam carousel dengan id carousel-2
-        if (featuredFoods.length > 0) {
-            const featuredDisplayData = featuredFoods.map(cat_items => {
-                return `
-                <div class="card">
-                    <a href="${cat_items.url}">
-                        <img src="${cat_items.img}">
-                        <h5>${cat_items.title}</h5>
-                        <div class="time row">
-                            <div class="row">
-                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                            </div>
+    // Tampilkan makanan yang ditandai sebagai fitur dalam carousel dengan id carousel-2
+    if (featuredFoods.length > 0) {
+        const featuredDisplayData = featuredFoods.map(cat_items => {
+            return `<div class="swiper-slide">
+            <div class="card">
+                <a href="${cat_items.url}?id=${cat_items.id}">
+                    <img src="${cat_items.img}">
+                    <h5>${cat_items.title}</h5>
+                    <div class="time row">
+                        <div class="row">
+                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                            <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
                         </div>
-                    </a>
-                </div>`;
-            });
-            document.querySelector("#carousel-2 .card-wrapper").innerHTML = featuredDisplayData.join("");
-        }
+                    </div>
+                    <div class="view-icon">
+                        <i class="fa-solid fa-eye"></i>
+                        <span class="view-text">150</span>
+                    </div>
+                </a>
+                <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+            </div>
+        </div>`; 
+        });
+        const swiperWrapper = document.querySelector(".featured .swiper-wrapper");
+        swiperWrapper.innerHTML = featuredDisplayData.join("");
     }
-    displayFeaturedFoodData(foodData);
+    var swiperFeatured = new Swiper(".MySwiper", {
+        slidesPerView: 4,
+        spaceBetween: 3,
+    });
+
+}
+
+// Menampilkan makanan berdasarkan properti featured
+displayFeaturedFoodData(foodData);
+        })
+        .catch(error => console.log("Error fetching data:", error));
 });

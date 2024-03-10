@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Nasi Goreng</title>
-    <link rel="stylesheet" href="nasgorDetail.css">
+    <link rel="stylesheet" href="detail.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
-    <script src="nasgorDetail.js"></script>
+    <script src="btnDetail.js"></script>
+    <script src="detail.js"></script>
 </head>
 
 <body ng-controller="myCtrl">
@@ -29,7 +29,7 @@
               </div>
           </div>
         </nav>
-      </header>
+    </header>
       
         <div class="recipe">
             <div class="recipe-image">
@@ -57,19 +57,19 @@
                 <div class="detail-stats">
 
                     <div class="stats-item">
-                        <span class="display-medium">6</span>
+                        <span class="ingr">6</span>
 
                         <span class="label-medium">Ingredients</span>
                     </div>
 
                     <div class="stats-item">
-                        <span class="display-medium">10</span>
+                        <span class="mnt">10</span>
 
                         <span class="label-medium">Minutes</span>
                     </div>
 
                     <div class="stats-item">
-                        <span class="display-medium">267</span>
+                        <span class="clr">267</span>
 
                         <span class="label-medium">Calories</span>
                     </div>
@@ -81,10 +81,10 @@
                 </div>
 
                 <h3 class="title-medium ingr-title">Ingredients
-                    <span class="label-medium">for 1 Serving</span>
+                    <div class="serving-text">for <span class="serving">1</span> Serving</span>
                 </h3>
 
-                <ul class="body-large ingr-list">
+                <ul class="ingr-list">
                     <li class="ingr-item">Rice</li>
                     <li class="ingr-item">Garlic</li>
                     <li class="ingr-item">Egg</li>
@@ -93,8 +93,8 @@
                     <li class="ingr-item">White Pepper</li>
                 </ul>
                 
-                <h3 class="title-medium ingr-title">Instructions</h3>
-                <ol class="body-large inst-list">
+                <h3 class="ingr-title">Instructions</h3>
+                <ol class="inst-list">
                     <li class="inst-item">Heat oil over medium heat.</li>
                     <li class="inst-item">Saute spices until fragrant.</li>
                     <li class="inst-item">Add rice and egg, stir until smooth.</li>
