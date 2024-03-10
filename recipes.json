@@ -201,20 +201,20 @@
         "minutes": "50",
         "calories": "657",
         "bahan": [
-            "½ cup rice vinegar",
-            "¼ cup white sugar",
-            "¼ cup water",
-            "¼ cup matchstick-cut carrots",
-            "¼ cup peeled and matchstick-cut daikon radish",
-            "¼ cup thinly sliced white onion",
+            "1/2 cup of rice vinegar",
+            "1/4 cup of white sugar",
+            "1/4 cup of water",
+            "1/4 cup of matchstick-cut carrots",
+            "1/4 cup of peeled and matchstick-cut daikon radish",
+            "1/4 cup of thinly sliced white onion",
             "1 skinless, boneless chicken breast half",
-            "1 pinch garlic salt, or to taste",
+            "1 pinch of garlic salt, or to taste",
             "1/2 pieces of green onion",
             "ground black pepper to taste",
             "1 (12 inch) French baguette",
-            "4 tablespoons mayonnaise",
-            "¼ cup thinly sliced cucumber",
-            "1 tablespoon fresh cilantro leaves",
+            "4 tbsp of mayonnaise",
+            "1/4 cup of thinly sliced cucumber",
+            "1 tbsp of fresh cilantro leaves",
             "1 small jalapeño pepper, cut into 1/16-inch-thick matchsticks",
             "1 wedge lime"
         ],
@@ -285,17 +285,17 @@
         "minutes": "20",
         "calories": "1700",
         "bahan": [
-            "1 cup water",
-            "2 1/2 tablespoons white sugar",
-            "1/2 teaspoon salt",
-            "2 tablespoons vegetable oil",
-            "1 cup all-purpose flour",
-            "2 quarts oil for frying",
-            "1/2 cup white sugar, or to taste",
-            "1 teaspoon ground cinnamon"
+            "1 cup of water",
+            "2 1/2 of tbsp white sugar",
+            "1/2 tsp of salt",
+            "2 tbsp of vegetable oil",
+            "1 cup of all-purpose flour",
+            "2 quarts of oil for frying",
+            "1/2 cup of white sugar, or to taste",
+            "1 tsp of ground cinnamon"
         ],
         "cara": [
-            "Combine water, 2 1/2 tablespoons sugar, salt, and 2 tablespoons vegetable oil in a small saucepan and place over medium heat. Bring to a boil and remove from the heat. Stir in flour, stirring until mixture forms a ball.",
+            "Combine water, 2 1/2 tbsp sugar, salt, and 2 tbsp vegetable oil in a small saucepan and place over medium heat. Bring to a boil and remove from the heat. Stir in flour, stirring until mixture forms a ball.",
             "Heat oil for frying in a deep fryer or deep pot to 375 degrees F (190 degrees C).",
             "Transfer dough to a sturdy pastry bag fitted with a medium star tip. Carefully pipe a few 5- to 6-inch strips of dough into the hot oil; work in batches so you don't crowd the fryer. Cook until golden; use a spider or slotted spoon to transfer churros to paper towels to drain.",
             "Combine 1/2 cup sugar and cinnamon. Roll drained churros in cinnamon and sugar mixture."
@@ -315,14 +315,14 @@
         "minutes": "25",
         "calories": "193",
         "bahan": [
-            "2 1/2 pounds russet potatoes, peeled",
-            "1 cup vegetable oil for frying",
-            "1 cup all-purpose flour",
-            "1 teaspoon garlic salt",
-            "1 teaspoon onion salt",
-            "1 teaspoon paprika",
-            "1 teaspoon salt",
-            "1/2 cup water, or as needed"
+            "2 1/2 of pounds russet potatoes, peeled",
+            "1 cup of vegetable oil for frying",
+            "1 cup of all-purpose flour",
+            "1 tsp of garlic salt",
+            "1 tsp of onion salt",
+            "1 tsp of paprika",
+            "1 tsp of salt",
+            "1/2 of cup water, or as needed"
         ],
         "cara": [
             "Slice potatoes into French fries and place them into a large bowl of cold water to prevent them from turning brown.",
@@ -332,6 +332,40 @@
             "Lower fries carefully into the hot oil in batches to prevent them from clumping together. Fry until golden brown and crispy on all sides, about 7 to 10 minutes.",
             "Drain fries on a paper towel-lined plate.",
             "Serve hot and enjoy!"
+        ]
+    },
+    {
+        "id": 11,
+        "title": "Chicken Cordon Bleu",
+        "category": ["Dinner"],
+        "nationality": "Western",
+        "time": "60 Minutes",
+        "img": "cordon.jpg",
+        "url": "detail.html",
+        "desc": "Chicken Cordon Bleu is a classic dish of French origin, consisting of breaded and fried chicken breast stuffed with ham and Swiss cheese. The chicken breast is pounded flat, then rolled with ham and cheese inside, breaded, and fried until golden brown and crispy. Chicken Cordon Bleu is often served with a creamy sauce, such as a white wine or Dijon mustard sauce, which adds richness and flavor to the dish. It's a delicious and elegant dish that is popular in many countries around the world.",
+        "serving": "6",
+        "length": "10",
+        "minutes": "60",
+        "calories": "584",
+        "bahan": [
+            "3 tbsp of all-purpose flour",
+            "1 tsp of paprika",
+            "6 skinless, boneless chicken breast halves",
+            "6 slices of Swiss cheese",
+            "6 slices of ham",
+            "6 tbsp of butter",
+            "1/2 cup of dry white wine",
+            "1 tsp of chicken bouillon granules",
+            "1 cup of heavy whipping cream",
+            "1 tbsp of cornstarch"
+        ],
+        "cara": [
+            "Mix flour and paprika together in a shallow bowl.",
+            "Pound chicken breasts to a thickness of 1/4 inch. Place one slice Swiss and one slice ham onto each breast, leaving the outer 1/2 inch uncovered.",
+            "Roll chicken over filling, dip in flour mixture to coat on all sides, and secure with toothpicks.",
+            "Melt butter in a large skillet over medium-high heat. Add chicken and cook, turning occasionally, until browned on all sides, 5 to 8 minutes. Add wine and bouillon. Reduce the heat to low, cover, and simmer until chicken is no longer pink in the center and the juices run clear, about 30 minutes.",
+            "Transfer chicken to a warm platter and remove the toothpicks. Whisk cream and cornstarch together in a small bowl; slowly pour into the skillet, whisking constantly to blend with remaining wine mixture. Cook, stirring often, until sauce thickens, 3 to 5 minutes.",
+            "Pour sauce over chicken and serve immediately."
         ]
     }
 ]
