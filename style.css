@@ -281,9 +281,7 @@ header{
 
 .card {
   border: 1px solid #c0bfbf;
-  margin-left: 0.5em;
   margin-top: 0.5em;
-  margin-right: 0.5em;
   margin-bottom: 1em; 
   width: 285px;
   transition: transform 0.3s ease;
@@ -499,4 +497,11 @@ header{
   display: inline-block;
   margin: 0 10px;
   font-size: 24px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .card {
+    width: 100%; 
+    max-width: 400px; 
+  }
 }

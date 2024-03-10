@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function initializeSwiper() {
             var productSwiper = new Swiper(".swiper-product", {
                 slidesPerView: 4,
-                spaceBetween: 3,
+                spaceBetween: 10,
                 runCallbacksOnInit: true,
                 observer: true,
                 // updateOnImagesReady: true,
@@ -160,13 +160,13 @@ function separateByNationality(food) {
               // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
               var swiper2 = new Swiper(".MySwiper", {
                 slidesPerView: 4,
-                spaceBetween: 3,
+                spaceBetween: 10,
             });
 
             // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
             var swiper3 = new Swiper(".MySwiper", {
                 slidesPerView: 4,
-                spaceBetween: 3,
+                spaceBetween: 10,
             });
             
             // Panggil fungsi displaySeparatedFoodData dengan menggunakan foodData
@@ -222,7 +222,7 @@ function separateByNationality(food) {
                 }
                 var swiper1 = new Swiper(".MySwiper", {
                     slidesPerView: 4,
-                    spaceBetween: 3,
+                    spaceBetween: 10,
                 });
             }
 
@@ -266,7 +266,7 @@ function displayFeaturedFoodData(food) {
     }
     var swiperFeatured = new Swiper(".MySwiper", {
         slidesPerView: 4,
-        spaceBetween: 3,
+        spaceBetween: 10,
     });
 
 }
