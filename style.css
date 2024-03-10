@@ -375,7 +375,11 @@ header{
   display: flex;
   align-items: center;
   font-size: 20px; 
-  color: rgb(5, 204, 5);
+  color: #222;
+  background-color: whitesmoke;
+  padding: 4px;
+  border-radius: 50px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
 }
 
 .view-text {
