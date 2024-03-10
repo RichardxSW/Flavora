@@ -160,13 +160,13 @@ function separateByNationality(food) {
               // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
               var swiper2 = new Swiper(".MySwiper", {
                 slidesPerView: 4,
-                spaceBetween: 10,
+                spaceBetween: 3,
             });
 
             // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
             var swiper3 = new Swiper(".MySwiper", {
                 slidesPerView: 4,
-                spaceBetween: 10,
+                spaceBetween: 3,
             });
             
             // Panggil fungsi displaySeparatedFoodData dengan menggunakan foodData
@@ -266,7 +266,7 @@ function displayFeaturedFoodData(food) {
     }
     var swiperFeatured = new Swiper(".MySwiper", {
         slidesPerView: 4,
-        spaceBetween: 10,
+        spaceBetween: 3,
     });
 
 }
