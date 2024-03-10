@@ -346,7 +346,7 @@ header{
   font-weight: 500; 
 }
 
-button{
+.card button{
   position: absolute;
   bottom: 55px;
   right: .5rem;
