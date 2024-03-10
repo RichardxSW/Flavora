@@ -55,12 +55,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="row">
                                 <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
                                 <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
-                                <div class="bookmark">
-                                    <i class="fa fa-bookmark"></i>
-                                </div>
                             </div>
                         </div>
+                        <div class="view-icon">
+                            <i class="fa-solid fa-eye"></i>
+                            <span class="view-text">150</span>
+                        </div>
                     </a>
+                    <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
                 </div>
             </div>
             `; 
@@ -107,17 +109,23 @@ function separateByNationality(food) {
                     const asianDisplayData = separatedFoods.Asian.map(cat_items => {
                         return `<div class="swiper-slide">
                         <div class="card">
-                                <a href="${cat_items.url}?id=${cat_items.id}">
-                                    <img src="${cat_items.img}">
-                                    <h5>${cat_items.title}</h5>
-                                    <div class="time row">
-                                        <div class="row">
-                                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                                        </div>
+                            <a href="${cat_items.url}?id=${cat_items.id}">
+                                <img src="${cat_items.img}">
+                                <h5>${cat_items.title}</h5>
+                                <div class="time row">
+                                    <div class="row">
+                                        <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                        <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
                                     </div>
-                                </a>
-                            </div>
-                        </div>`; 
+                                </div>
+                                <div class="view-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <span class="view-text">150</span>
+                                </div>
+                            </a>
+                            <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+                        </div>
+                    </div>`; 
                     });
                     document.querySelector(".asian .swiper-wrapper").innerHTML = asianDisplayData.join("");
                 }
@@ -127,17 +135,23 @@ function separateByNationality(food) {
                     const westernDisplayData = separatedFoods.Western.map(cat_items => {
                         return `<div class="swiper-slide">
                         <div class="card">
-                                <a href="${cat_items.url}?id=${cat_items.id}">
-                                    <img src="${cat_items.img}">
-                                    <h5>${cat_items.title}</h5>
-                                    <div class="time row">
-                                        <div class="row">
-                                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                                        </div>
+                            <a href="${cat_items.url}?id=${cat_items.id}">
+                                <img src="${cat_items.img}">
+                                <h5>${cat_items.title}</h5>
+                                <div class="time row">
+                                    <div class="row">
+                                        <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                        <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
                                     </div>
-                                </a>
-                            </div>
-                        </div>`; 
+                                </div>
+                                <div class="view-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <span class="view-text">150</span>
+                                </div>
+                            </a>
+                            <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+                        </div>
+                    </div>`; 
                     });
                     document.querySelector(".western .swiper-wrapper").innerHTML = westernDisplayData.join("");
                 }
@@ -146,13 +160,13 @@ function separateByNationality(food) {
               // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
               var swiper2 = new Swiper(".MySwiper", {
                 slidesPerView: 4,
-                spaceBetween: 10,
+                spaceBetween: 3,
             });
 
             // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
             var swiper3 = new Swiper(".MySwiper", {
                 slidesPerView: 4,
-                spaceBetween: 10,
+                spaceBetween: 3,
             });
             
             // Panggil fungsi displaySeparatedFoodData dengan menggunakan foodData
@@ -184,17 +198,23 @@ function separateByNationality(food) {
                     const quickPrepDisplayData = separatedFoods.UpTo5Minutes.map(cat_items => {
                         return `<div class="swiper-slide">
                         <div class="card">
-                                <a href="${cat_items.url}?id=${cat_items.id}">
-                                    <img src="${cat_items.img}">
-                                    <h5>${cat_items.title}</h5>
-                                    <div class="time row">
-                                        <div class="row">
-                                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                                        </div>
+                            <a href="${cat_items.url}?id=${cat_items.id}">
+                                <img src="${cat_items.img}">
+                                <h5>${cat_items.title}</h5>
+                                <div class="time row">
+                                    <div class="row">
+                                        <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                                        <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
                                     </div>
-                                </a>
-                            </div>
-                        </div>`; 
+                                </div>
+                                <div class="view-icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                    <span class="view-text">150</span>
+                                </div>
+                            </a>
+                            <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+                        </div>
+                    </div>`; 
                     });
                     // Update konten swiper-wrapper dengan data makanan
                     const swiperWrapper = document.querySelector(".under .swiper-wrapper");
@@ -202,7 +222,7 @@ function separateByNationality(food) {
                 }
                 var swiper1 = new Swiper(".MySwiper", {
                     slidesPerView: 4,
-                    spaceBetween: 10,
+                    spaceBetween: 3,
                 });
             }
 
@@ -223,24 +243,30 @@ function displayFeaturedFoodData(food) {
         const featuredDisplayData = featuredFoods.map(cat_items => {
             return `<div class="swiper-slide">
             <div class="card">
-                    <a href="${cat_items.url}?id=${cat_items.id}">
-                        <img src="${cat_items.img}">
-                        <h5>${cat_items.title}</h5>
-                        <div class="time row">
-                            <div class="row">
-                                <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i>
-                            </div>
+                <a href="${cat_items.url}?id=${cat_items.id}">
+                    <img src="${cat_items.img}">
+                    <h5>${cat_items.title}</h5>
+                    <div class="time row">
+                        <div class="row">
+                            <i class="fa fa-clock-o" style="font-size:15px"><p>${cat_items.time}</p></i>
+                            <i class="fa fa-cutlery" style="font-size:15px"><p>${cat_items.category}</p></i> 
                         </div>
-                    </a>
-                </div>
-            </div>`; 
+                    </div>
+                    <div class="view-icon">
+                        <i class="fa-solid fa-eye"></i>
+                        <span class="view-text">150</span>
+                    </div>
+                </a>
+                <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+            </div>
+        </div>`; 
         });
         const swiperWrapper = document.querySelector(".featured .swiper-wrapper");
         swiperWrapper.innerHTML = featuredDisplayData.join("");
     }
     var swiperFeatured = new Swiper(".MySwiper", {
         slidesPerView: 4,
-        spaceBetween: 10,
+        spaceBetween: 3,
     });
 
 }
