@@ -407,7 +407,7 @@ header{
   margin-top: 10px;
   margin-left: 5em;
   margin-right: 5em;
-  /* border-bottom: 2px solid black; */
+  border-bottom: 2px solid black;
   margin-bottom: 3em;
 }
 
@@ -419,7 +419,7 @@ header{
   margin-top: 10px;
   margin-left: 5em;
   margin-right: 5em;
-  /* border-bottom: 2px solid black; */
+  border-bottom: 2px solid black;
   margin-bottom: 3em;
 }
 
