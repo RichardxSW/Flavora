@@ -236,7 +236,7 @@ function displayFeaturedFoodData(food) {
             </div>`; 
         });
         const swiperWrapper = document.querySelector(".featured .swiper-wrapper");
-        swiperWrapper.innerHTML = featuredDisplayData.join(""); // Menggunakan featuredDisplayData, bukan quickPrepDisplayData
+        swiperWrapper.innerHTML = featuredDisplayData.join("");
     }
     var swiperFeatured = new Swiper(".MySwiper", {
         slidesPerView: 4,

@@ -5,11 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("recipes.json")
         .then(response => response.json())
         .then(data => {
-            const foodItem = data.find(item => item.id === parseInt(id)); // Ubah ke integer karena id dari URL biasanya string
+            const foodItem = data.find(item => item.id === parseInt(id)); 
             if (foodItem) {
                 document.querySelector('.recipe-image img').src = foodItem.img;
                 document.querySelector('.recipe-image .desc').textContent = foodItem.desc;
                 document.querySelector('.recipe-title h2').textContent = foodItem.title;
+
                 // Mengisi detail-stats
                 document.querySelector('.detail-stats .stats-item .ingr').textContent = foodItem.length;
                 document.querySelector('.detail-stats .stats-item .mnt').textContent = foodItem.minutes;
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Mengisi tag-list
                 const tagList = document.querySelector('.tag-list');
-                tagList.innerHTML = ''; // Bersihkan list terlebih dahulu
+                tagList.innerHTML = ''; 
                 foodItem.category.forEach(category => {
                     const tagChip = document.createElement('div');
                     tagChip.className = 'filter-chip';
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Mengisi Ingredients
                 const ingrList = document.querySelector('.ingr-list');
-                ingrList.innerHTML = ''; // Bersihkan list terlebih dahulu
+                ingrList.innerHTML = ''; 
                 foodItem.bahan.forEach(bahan => {
                     const ingrItem = document.createElement('li');
                     ingrItem.className = 'ingr-item';
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Mengisi Instructions
                 const instList = document.querySelector('.inst-list');
-                instList.innerHTML = ''; // Bersihkan list terlebih dahulu
+                instList.innerHTML = ''; 
                 foodItem.cara.forEach(cara => {
                     const instItem = document.createElement('li');
                     instItem.className = 'inst-item';
