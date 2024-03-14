@@ -14,17 +14,22 @@ app.use(expressLayouts);
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', { title: 'Home',layout:'mainlayout.ejs' });
+    res.render('index.ejs', {layout:'mainlayout.ejs' });
 })
 
-//about
-app.get('/about', (req, res) => {
-    res.render('about.ejs', { title: 'About' ,layout:'mainlayouts.ejs' });
+//pinned
+app.get('/pinned', (req, res) => {
+    res.render('pinned.ejs', {layout:'mainlayout.ejs' });
 })
 
-//post
-app.get('/post', (req, res) => {
-    res.render('post.ejs', { title: 'Post' ,layout:'mainlayouts.ejs' });
+//recent
+app.get('/recent', (req, res) => {
+    res.render('recent.ejs', {layout:'mainlayout.ejs' });
+})
+
+//detail
+app.get('/detail', (req, res) => {
+    res.render('detail.ejs', {layout:'mainlayout.ejs' });
 })
 
 //contact
