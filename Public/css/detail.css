@@ -139,12 +139,16 @@ button.saved {
   border: none;
   font-size: 16px;
   cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 button.unsaved {
   border: none;
   font-size: 16px;
   cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .recipe-info {

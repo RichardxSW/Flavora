@@ -13,7 +13,7 @@ app.use(expressLayouts);
 //static express
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
     res.render('index.ejs', {layout:'mainlayout.ejs' });
 })
 
@@ -32,9 +32,14 @@ app.get('/detail', (req, res) => {
     res.render('detail.ejs', {layout:'mainlayout.ejs' });
 })
 
-//contact
-app.get('/contact', (req, res) => {
-    res.render('contact.ejs', { title: 'contact' ,layout:'mainlayouts.ejs' });
+//login
+app.get('/', (req, res) => {
+    res.render('login.ejs', {title:'Login Form',layout:'accountlayout.ejs' });
+})
+
+//register
+app.get('/regis', (req, res) => {
+    res.render('regis.ejs', {title:'Registration Form',layout:'accountlayout.ejs' });
 })
 
 app.listen(port, () => {
