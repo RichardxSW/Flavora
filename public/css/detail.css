@@ -1,0 +1,303 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Navbar  */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px;
+    background-color: lightgoldenrodyellow;
+    border-bottom: 1px solid #ddd;
+  }
+
+  header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: 0.6s;
+    z-index: 1000;
+    font-weight: bold;
+  }
+  
+  .navbar__container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar__brand {
+    font-size: 36px; 
+    color: #ff7f50; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    text-decoration: none;
+    padding: 5px 15px; 
+    text-align: center; 
+    transition: 0.6s ease;
+    display: inline-block;
+    border-radius: 100px;
+  }
+
+  .navbar__brand:hover {
+    background-color: brown;
+    text-decoration: none;
+    color: gold;
+    border-radius: 100px;
+  }
+  
+  .navbar__menu {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar__item {
+    margin-right: 20px;
+  }
+  
+  .navbar__link {
+    color: #333;
+    text-decoration: none;
+    padding: 5px;
+  }
+
+  .navbar__link:hover {
+    color: red;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+  
+  .navbar__search {
+    margin-left: auto;
+  }
+  
+  .navbar__search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+  }
+  
+  .navbar__search-button {
+    padding: 8px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 15px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .navbar__search-button:hover {
+    background-color: red;
+    transition: 0.5s ease;
+  }
+
+  .navbar_profile{
+    padding: 20px;
+  }
+
+  /* Konten  */
+
+  .recipe {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    margin-bottom: 30px;
+}
+
+.recipe-image {
+    width: 30%;
+    height: auto;
+}
+
+.recipe-image img{
+    width: 100%;
+    height: 350px;
+    margin-bottom: 14px;
+}
+
+.desc {
+    text-align: justify;
+    font-size: 20px;
+}
+
+.recipe-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+button.saved {
+  display: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button.unsaved {
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.recipe-info {
+    margin-left: 50px;
+}
+
+.detail-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 20px;
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px;
+}
+
+.stats-item:not(:last-child) {
+    border-inline-end: 1px solid black;
+} 
+
+.ingr, .mnt, .clr {
+    font-size: 30px;
+}
+
+.detail-stats .stats-item .label-medium {
+    color: red;
+    opacity: 1;
+}
+
+/* Style untuk kontainer tag-list */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap; /* Item akan meluncur ke baris baru jika tidak cukup ruang */
+}
+
+/* Style untuk setiap filter-chip */
+.filter-chip {
+  padding: 8px 10px; 
+  margin-right: 8px; 
+  margin-bottom: 30px; 
+  /* border: 1px solid #ccc;  */
+  border-radius: 50px; 
+  background-color: #e5dc32;
+  font-size: 15px; 
+  font-weight: 550;
+  line-height: 1.5; 
+  cursor: pointer;
+  animation: filtertext 1.5s infinite ;
+}
+
+@keyframes filtertext {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Style untuk filter chip yang sedang dihover */
+.filter-chip:hover {
+  background-color: #e0e0e0; 
+}
+
+
+.ingr-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingr-title .serving-text {
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.ingr-list {
+    margin-block-start: 16px;
+    border-block-start: 1px solid black;
+    padding-block-start: 8px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 10px;
+    width: 500px;
+}
+
+.ingr-item {
+    margin-block: 8px;
+    list-style-type: disc;
+    margin-inline-start: 24px;
+}
+
+.inst-list {
+    margin-block-start: 16px;
+    border-block-start: 1px solid black;
+    padding-block-start: 8px;
+    margin-bottom: 10px;
+    width: 500px;
+}
+
+.inst-item {
+    margin-block: 8px;
+    margin-inline-start: 24px;
+    text-align: justify;
+}
+
+/* Footer  */
+.footer {
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer a {
+  color: lightblue;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer__brand {
+  font-size: 16px; /* Ukuran font */
+  color: #ff7f50; /* Warna teks */
+  text-transform: uppercase; /* Merubah teks menjadi huruf kapital */
+  letter-spacing: 2px; /* Jarak antara huruf */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Bayangan teks */
+  text-align: center; 
+  display: inline-block;
+}
+
+.footer p {
+  margin: 10px 0;
+}
+
+.footer .social-icons {
+  margin-top: 10px;
+}
+
+.footer .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 24px;
+}
