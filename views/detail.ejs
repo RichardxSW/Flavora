@@ -4,11 +4,41 @@
                 <div class="desc">
                     Delicious fried rice recipes are always perfect for breakfast, lunch or dinner. Topped with eggs, shredded chicken, prawns, beef meatballs and fish balls, make this special fried rice recipe your new family favorite.
                 </div>
+
+                    <div class="review-box">
+                        <div class="review-box-title">
+                            <h1>Reviews</h1>
+                        </div>
+                        <div class="rating">
+                            <span class="rating-title">
+                                Your Rating
+                            </span>
+                            <div class="rating-star">
+                                <div class="rating-text">
+                                    <span class="rtext"></span>
+                                </div>
+                                <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+                            </div>
+                        </div>
+                        <div class="review">
+                            <span class="review-title">
+                                Your Review
+                            </span>
+                            <textarea class="review-textarea" rows="4" cols="40"></textarea>
+                            <button class="submit-button">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="submission-container"></div>
             </div>
 
             <div class="recipe-info">
                 <div class="recipe-title">
-                    <h2 class="display-small">Fried Rice</h2>
+                    <div class="foodName">Fried Rice</div>
 
                     <button class="unsaved">
                         <span class="iconUnsaved"><i class="fa-regular fa-bookmark"></i></span>
@@ -40,34 +70,42 @@
 
                         <span class="label-medium">Calories</span>
                     </div>
-
                 </div>
 
                 <div class="tag-list">
                     <div class="filter-chip">Lunch</div>
                 </div>
 
-                <h3 class="title-medium ingr-title">Ingredients
-                    <div class="serving-text">for <span class="serving">1</span> Serving</span>
-                </h3>
+                <details>
+                    <summary>
+                        <span class="ingr-title">Ingredients</span>
+                        <div class="serving-text">for <span class="serving">1</span> serving</span></div>
+                    </summary>
 
-                <ul class="ingr-list">
-                    <li class="ingr-item">Rice</li>
-                    <li class="ingr-item">Garlic</li>
-                    <li class="ingr-item">Egg</li>
-                    <li class="ingr-item">Sweet Soy Sauce</li>
-                    <li class="ingr-item">Salt</li>
-                    <li class="ingr-item">White Pepper</li>
-                </ul>
+                    <ul class="ingr-list">
+                        <li class="ingr-item">Rice</li>
+                        <li class="ingr-item">Garlic</li>
+                        <li class="ingr-item">Egg</li>
+                        <li class="ingr-item">Sweet Soy Sauce</li>
+                        <li class="ingr-item">Salt</li>
+                        <li class="ingr-item">White Pepper</li>
+                    </ul>
+                </details>
                 
-                <h3 class="ingr-title">Instructions</h3>
-                <ol class="inst-list">
-                    <li class="inst-item">Heat oil over medium heat.</li>
-                    <li class="inst-item">Saute spices until fragrant.</li>
-                    <li class="inst-item">Add rice and egg, stir until smooth.</li>
-                    <li class="inst-item">Add sweet soy sauce, stir again until smooth. </li>
-                    <li class="inst-item">Remove from heat and serve with complementary fried rice. </li>
-                </ol>
+                <details>
+                    <summary>
+                        <span class="inst-title">Instructions</span>
+                    </summary>
+
+                    <ol class="inst-list">
+                        <li class="inst-item">Heat oil over medium heat.</li>
+                        <li class="inst-item">Saute spices until fragrant.</li>
+                        <li class="inst-item">Add rice and egg, stir until smooth.</li>
+                        <li class="inst-item">Add sweet soy sauce, stir again until smooth. </li>
+                        <li class="inst-item">Remove from heat and serve with complementary fried rice. </li>
+                    </ol>
+                </details>
+
             </div>
         </div>
 

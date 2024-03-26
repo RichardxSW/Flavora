@@ -1,7 +1,6 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
   }
   
   /* Navbar  */
@@ -19,7 +18,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    transition: 0.6s;
+    /* transition: 0.6s; */
     z-index: 1000;
     font-weight: bold;
   }
@@ -38,7 +37,7 @@
     text-decoration: none;
     padding: 5px 15px; 
     text-align: center; 
-    transition: 0.6s ease;
+    transition: 0.6s ease; 
     display: inline-block;
     border-radius: 100px;
   }
@@ -115,17 +114,109 @@
 .recipe-image {
     width: 30%;
     height: auto;
+    align-items: center;
 }
 
 .recipe-image img{
     width: 100%;
     height: 350px;
-    margin-bottom: 14px;
+    margin-bottom: 40px;
 }
 
 .desc {
-    text-align: justify;
-    font-size: 20px;
+  border-top: 1px solid black;  
+  text-align: justify;
+  font-size: 18px;
+  padding: 40px;
+  border-bottom: 1px solid black;  
+}
+
+.review-box {
+  width: 500px;
+  height: 500px;
+  background-color: lightgoldenrodyellow;
+  margin-top: 60px;
+  padding: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-box-title {
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.rating-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.rating-star {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  cursor: pointer;
+  font-size: 50px;
+  color: #ddd;
+  float: right;
+}
+
+.rating label:before {
+  content: "\2605"; /* karakter bintang */
+}
+
+.rating input:checked ~ label,
+.rating input:hover ~ label{
+  color: #ffc107;
+}
+
+.rating input:checked ~ label:before {
+  content: "\2605"; /* karakter bintang */
+}
+
+.rating-text {
+  display: inline;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+.rating-text .rtext {
+  display: inline; /* atau display: block; */
+  font-size: 18px;
+}
+
+.rating-text .rtext.hide {
+  display: none;
+}
+
+.rating input:checked ~ .rating-text .rtext {
+  display: inline;
+}
+
+.review-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.review-textarea {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding: 15px;
 }
 
 .recipe-title {
@@ -133,6 +224,11 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
+}
+
+.foodName {
+  font-size: 30px;
+  font-weight: bold;
 }
 
 button.saved {
@@ -150,6 +246,7 @@ button.unsaved {
 
 .recipe-info {
     margin-left: 50px;
+    width: 500px;
 }
 
 .detail-stats {
@@ -183,16 +280,17 @@ button.unsaved {
 .tag-list {
   display: flex;
   flex-wrap: wrap; /* Item akan meluncur ke baris baru jika tidak cukup ruang */
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
 }
 
 /* Style untuk setiap filter-chip */
 .filter-chip {
   padding: 8px 10px; 
   margin-right: 8px; 
-  margin-bottom: 30px; 
-  /* border: 1px solid #ccc;  */
+  margin-bottom: 20px; 
   border-radius: 50px; 
-  background-color: #e5dc32;
+  background-color: gold;
   font-size: 15px; 
   font-weight: 550;
   line-height: 1.5; 
@@ -214,49 +312,91 @@ button.unsaved {
 
 /* Style untuk filter chip yang sedang dihover */
 .filter-chip:hover {
-  background-color: #e0e0e0; 
+    background-color: #e0e0e0; 
 }
 
+details{
+    margin-bottom: 20px;
+    width: 500px;
+}
 
-.ingr-title {
-    display: flex;
+summary {
+    border-radius: 1em;
+    padding: 20px;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    background-color: rgb(255, 255, 116);
+    transition: background-color .3s ease;
+    &:hover{
+      background-color: rgb(249, 249, 178);
+    }
 }
 
-.ingr-title .serving-text {
-    opacity: 0.6;
+.animate > :not(summary, .serving){
+  animation: sweep .3s ease-in;
+}
+
+@keyframes sweep {
+  from {
+    opacity: 0;
+    margin-top: -10px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+/* details[open] summary::after {
+  content: " -";
+}
+details summary::after {
+  content: " +";
+} */
+
+.ingr-title {
+  font-size: 20px;
+  font-weight:600;
+}
+
+ .serving-text {
+    opacity: 0.8;
     font-size: 14px;
 }
 
 .ingr-list {
-    margin-block-start: 16px;
-    border-block-start: 1px solid black;
     padding-block-start: 8px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-bottom: 10px;
     width: 500px;
+    padding: 20px;
 }
 
 .ingr-item {
-    margin-block: 8px;
+    margin-block: 6px;
     list-style-type: disc;
     margin-inline-start: 24px;
+    word-spacing: 3px;
+}
+
+.inst-title {
+    font-size: 20px;
+    font-weight:600;
 }
 
 .inst-list {
-    margin-block-start: 16px;
-    border-block-start: 1px solid black;
-    padding-block-start: 8px;
     margin-bottom: 10px;
     width: 500px;
+    padding: 0px 20px 20px 20px;
 }
 
 .inst-item {
-    margin-block: 8px;
-    margin-inline-start: 24px;
+    margin-block: 20px;
+    margin-inline-start: 20px;
     text-align: justify;
+    word-spacing: 3px;
+    line-height: 2;
 }
 
 /* Footer  */
