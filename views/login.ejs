@@ -1,29 +1,16 @@
     <div class="wrapper">
-        <form ng-submit="login()">
             <h1>Login</h1>
-            <div class="input-box">
-                <input type="text" id="username" ng-model="username" placeholder="Username" required>
-                <i class='bx bxs-user'></i>
+            <div class="social-login">
+                <h2>Choose a login method</h2>
+                <button class="btn google-login">Login with Google</button>
+                <button class="btn facebook-login">Login with Facebook</button>
+                <button class="btn email-login">Login with Email</button>
             </div>
-            <div class="input-box">
-                <input type="password" placeholder="Password" required>
-                <i class='bx bxs-lock-alt'></i>
-            </div>
-
-            <div class="remember-forgot">
-                <label>
-                    <input type="checkbox">Remember me
-                </label>
-                <a href="#">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="btn">Login</button>
 
             <div class="register-link">
                 <p>Don't have an account? <a href="/register">Register</a>
                 </p>
             </div>
-        </form>
     </div>
 
     <script>
