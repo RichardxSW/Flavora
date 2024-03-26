@@ -1,11 +1,19 @@
     <div class="wrapper">
             <h1>Login</h1>
-            <div class="social-login">
-                <h2>Choose a login method</h2>
-                <button class="btn google-login">Login with Google</button>
-                <button class="btn facebook-login">Login with Facebook</button>
-                <button class="btn email-login">Login with Email</button>
-            </div>
+            <p>Choose a login method</p>
+            <div class="loginButton google" onclick="window.open('http://localhost:3000/auth/google', '_self');">
+                <i class='bx bxl-google'></i>
+                Google
+              </div>
+              <div class="loginButton facebook" onclick="window.open('http://localhost:3000/auth/facebook', '_self');">
+                <i class='bx bxl-facebook'></i>
+                Facebook
+              </div>
+              <div class="loginButton email" onclick="window.open('http://localhost:3000/auth/email', '_self');">
+                <i class='bx bx-envelope'></i>
+                Email
+              </div>
+            
 
             <div class="register-link">
                 <p>Don't have an account? <a href="/register">Register</a>

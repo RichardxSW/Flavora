@@ -16,12 +16,16 @@ body {
 }
 
 .wrapper {
-    width: 320px; /* Mengubah lebar wrapper agar sesuai dengan konten */
+    width: 400px; /* Mengubah lebar wrapper agar sesuai dengan konten */
     background: #41557e;
     color: #fff;
     border-radius: 10px;
     padding: 30px;
     text-align: center; /* Mengatur teks menjadi rata tengah */
+    display: flex;
+    flex-direction: column; /* Mengatur arah konten menjadi vertikal */
+    justify-content: center; /* Menengahkan konten secara vertikal */
+    align-items: center; /* Menengahkan konten secara horizontal */
 }
 
 .wrapper h1 {
@@ -29,23 +33,39 @@ body {
     margin-bottom: 20px;
 }
 
-.social-login {
+.wrapper p {
+    font-size: 16px; /* Mengurangi ukuran font h1 */
     margin-bottom: 20px;
 }
 
-.social-login h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.social-login .btn {
-    width: 100%;
-    height: 40px;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    font-size: 16px;
-}
+.loginButton{
+    width: 150px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .google{
+    background-color: white;
+  }
+  .facebook{
+    background-color: #507cc0;
+  }
+  .email{
+    background-color: #df4930;
+  }
+  
+  .loginButton i{
+    font-size: 30px;
+    margin-right: 10px;
+    left: 10px; /* Menyesuaikan posisi logo */
+  }
 
 .register-link {
     font-size: 14px;
