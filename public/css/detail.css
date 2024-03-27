@@ -133,18 +133,36 @@
 
 .review-box {
   width: 500px;
-  height: 500px;
+  height: 600px;
   background-color: lightgoldenrodyellow;
   margin-top: 60px;
   padding: 40px;
   margin-bottom: 40px;
-  display: flex;
-  flex-direction: column;
 }
 
 .review-box-title {
   border-bottom: 1px solid black;
   margin-bottom: 30px;
+}
+
+.review-name {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.review-name img {
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  margin: 0;
+  object-fit: cover;
+}
+
+.name-text {
+  font-size: 22px;
+  font-weight: 550;
+  margin-left: 20px;
+  margin-top: 17px;
 }
 
 .rating {
@@ -171,9 +189,11 @@
 
 .rating label {
   cursor: pointer;
-  font-size: 50px;
+  font-size: 45px;
   color: #ddd;
   float: right;
+  -webkit-text-stroke: 2px #555;
+  margin-right: 10px;
 }
 
 .rating label:before {
@@ -196,7 +216,7 @@
 }
 
 .rating-text .rtext {
-  display: inline; /* atau display: block; */
+  display: inline; 
   font-size: 18px;
 }
 
@@ -215,8 +235,49 @@
 
 .review-textarea {
   margin-top: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   padding: 15px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none; /* Mencegah perubahan ukuran textarea oleh pengguna */
+  font-size: 16px;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: #4CAF50;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.submit-button:hover {
+  background-color: #45a049; /* Efek hover saat kursor diarahkan ke tombol */
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.sub-rating-date {
+  font-size: 30px;
+  color: #ddd;
+}
+
+
+
+
+
+.sub-date {
+  margin-left: 20px;
+  font-weight: 300;
+  font-size: 12px;
 }
 
 .recipe-title {
