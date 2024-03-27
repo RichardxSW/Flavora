@@ -13,7 +13,6 @@
                 <i class='bx bx-envelope'></i>
                 Email
               </div>
-            
 
             <div class="register-link">
                 <p>Don't have an account? <a href="/register">Register</a>
@@ -21,18 +20,5 @@
             </div>
     </div>
 
-    <script>
-        var app = angular.module('myApp', []);
-
-        app.controller('loginController', function ($scope, $window) {
-            $scope.login = function () {
-                console.log('Login clicked');
-                // Store the username in localStorage
-                localStorage.setItem('username', $scope.username);
-                // Navigasi ke halaman index.html
-                $window.location.href = 'home';
-            };
-        });
-    </script>
     <link rel="stylesheet" href="css/login.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
