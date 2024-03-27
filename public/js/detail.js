@@ -54,6 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     instItem.textContent = cara;
                     instList.appendChild(instItem);
                 });
+
+                document.querySelector('.review-name img').src = foodItem.img;
+                document.querySelector('.review-name .name-text').textContent = foodItem.title;
+
             } else {
                 console.log("Makanan tidak ditemukan");
             }
@@ -90,9 +94,11 @@ document.addEventListener("DOMContentLoaded", function () {
           let value = '';
         
           stars.forEach(function(star) {
+
             star.addEventListener('mouseover', function() {
+
               const value = this.getAttribute('for').replace('star', '');
-            
+
               if (value === '5') {
                 text.textContent = 'Perfect';
               } else if (value === '4') {
@@ -103,17 +109,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 text.textContent = 'Not bad';
               } else if (value === '1') {
                 text.textContent = 'Very Bad';
-              }
+              } 
               text.classList.remove('hide');
             });
         
             star.addEventListener('mouseout', function() {
-              text.classList.add('hide');
+                text.classList.add('hide');
             });
 
             star.addEventListener('click', function() {
               value = this.getAttribute('for').replace('star', '');
             });
+          });
+          
 
             // komen
             const submitButton = document.querySelector('.submit-button');
@@ -123,25 +131,41 @@ document.addEventListener("DOMContentLoaded", function () {
             submitButton.addEventListener('click', function() {
               const reviewText = reviewTextarea.value.trim();
               const currentDate = new Date().toLocaleDateString();
-              
-              const bintang = "\u2605".repeat(parseInt(value));
-              if (value !== '') {
+              const bintang = "\u2605".repeat(5);
+
+              if (reviewText !== '' && value !== '') {
                 const submissionContainer = document.createElement('div');
                 submissionContainer.classList.add('submission');
+
+                const ratingContainer = document.createElement('div');
+                ratingContainer.classList.add('rating-container');
                 
                 const nameElement = document.createElement('h2');
                 nameElement.textContent = username;
                 // Create elements for the submission details
-                const ratingElement = document.createElement('p');
-                ratingElement.textContent = `${bintang}`+ '      ' + `${currentDate}`;
+                const ratingElement = document.createElement('span');
+                ratingElement.textContent = `${bintang}`;
+                ratingElement.className = 'sub-rating-date';
+
+                const bintangArray = ratingElement.textContent.split('');
+                for (let i = 0; i < parseInt(value); i++) {
+                    bintangArray[i] = '<span style="color: #ffc107;">\u2605</span>'; // Ubah warna bintang yang dipilih
+                }
+                ratingElement.innerHTML = bintangArray.join('');
+
+
+                const dateElement = document.createElement('span');
+                dateElement.textContent = `${currentDate}`;
+                dateElement.className = 'sub-date';
     
                 const reviewElement = document.createElement('p');
                 reviewElement.textContent = `${reviewText}`;
     
                 // Append elements to the container
-                submissionContainer.appendChild(ratingElement);
+                ratingContainer.appendChild(ratingElement);
+                ratingContainer.appendChild(dateElement);
+                submissionContainer.appendChild(ratingContainer);
                 submissionContainer.appendChild(reviewElement);
-                // submissionContainer.appendChild(dateElement);
 
                 submissionsContainer.innerHTML = '';
     
@@ -151,9 +175,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Clear the textarea
                 reviewTextarea.value = reviewText;
               } else {
-                  submissionsContainer.textContent = 'Please select a rating and provide a review.';
+                  // submissionsContainer.textContent = 'Please select a rating and provide a review.';
+                  alert('Please select a rating and provide a review.');
               }
               });
-
-          });  
-});
+          })
