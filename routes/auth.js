@@ -26,15 +26,15 @@ router.get("/logout", (req, res) => {
   res.redirect(CLIENT_URL);
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+// router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
-router.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/home",
-    failureRedirect: "/login/failed",
-  })
-);
+// router.get(
+//   "/google/callback",
+//   passport.authenticate("google", {
+//     successRedirect: "/home",
+//     failureRedirect: "/login/failed",
+//   })
+// );
 
 router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
 

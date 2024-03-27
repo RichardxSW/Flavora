@@ -14,45 +14,11 @@
       <div class="navbar_profile">
         <ul class="list">
           <li class="listItem">
-            <img id="avatar" src="" alt="" class="avatar" />
+            <img src="<%= pic%>" alt="" class="avatar" />
           </li>
-          <li id="displayName" class="listItem"></li>
+          <li class="listItem"><%= name%></li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
-
-<script>
-  let user = null;
-
-  function setUser(newUser) {
-    user = newUser;
-    document.getElementById('avatar').src = user.photos[0].value; // Ubah gambar avatar
-    document.getElementById('displayName').innerText = user.displayName; // Ubah teks nama pengguna
-  }
-
-  function fetchUserData() {
-    fetch("http://localhost:5000/auth/login/success", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-        throw new Error("authentication has been failed!");
-      })
-      .then((resObject) => {
-        setUser(resObject.user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  fetchUserData();
-</script>

@@ -36,20 +36,30 @@ app.get('/register', (req, res) => {
     res.render('regis.ejs', {title: 'Register', layout: "accountlayout"});
 });
 
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
+
+app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+      successRedirect: "/home",
+      failureRedirect: "/login/failed",
+    })
+  );
+
 app.get('/home', (req, res) => {
-    res.render('index',  {title: 'Home', layout: "mainlayout"});
+    res.render('index',  {title: 'Home', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
 });
 
 app.get('/detail', (req, res) => {
-    res.render('detail', {title: 'Detail', layout: "mainlayout"});
+    res.render('detail', {title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
 });
 
 app.get('/recent', (req, res) => {
-    res.render('recent', {title: 'Recent', layout: "mainlayout"});
+    res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
 });
 
 app.get('/pinned', (req, res) => {
-    res.render('pinned', {title: 'Pinned', layout: "mainlayout"});
+    res.render('pinned', {title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
 });
 
 app.listen(port, () => {
