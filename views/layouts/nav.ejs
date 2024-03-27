@@ -1,24 +1,58 @@
 <header>
-    <nav class="navbar">
-      <a href="#" class="navbar__brand"><i class="fa-solid fa-kitchen-set"></i>Flavora</a>
-      <div class="navbar__container">
-        <ul class="navbar__menu">
-          <li class="navbar__item"><a href="/home" class="navbar__link">Home</a></li>
-          <li class="navbar__item"><a href="/recent" class="navbar__link">Recent</a></li>
-          <li class="navbar__item"><a href="/pinned" class="navbar__link">Pinned</a></li>
-        </ul>
-        <div class="navbar__search">
-          <input type="text" class="navbar__search-input" placeholder="Search...">
-          <button class="navbar__search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-        <div class="navbar_profile">
-          <ul class="list">
-            <li class="listItem>">
-              <img src="/img/fries.jpg" alt="" class="avatar" />
-            </li>
-            <li class="listItem">Tanjaya Jason</li>
-          </ul>
-        </div>
+  <nav class="navbar">
+    <a href="#" class="navbar__brand"><i class="fa-solid fa-kitchen-set"></i>Flavora</a>
+    <div class="navbar__container">
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="/home" class="navbar__link">Home</a></li>
+        <li class="navbar__item"><a href="/recent" class="navbar__link">Recent</a></li>
+        <li class="navbar__item"><a href="/pinned" class="navbar__link">Pinned</a></li>
+      </ul>
+      <div class="navbar__search">
+        <input type="text" class="navbar__search-input" placeholder="Search...">
+        <button class="navbar__search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
-    </nav>
-  </header>
+      <div class="navbar_profile">
+        <ul class="list">
+          <li class="listItem">
+            <img id="avatar" src="" alt="" class="avatar" />
+          </li>
+          <li id="displayName" class="listItem"></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  let user = null;
+
+  function setUser(newUser) {
+    user = newUser;
+    document.getElementById('avatar').src = user.photos[0].value; // Ubah gambar avatar
+    document.getElementById('displayName').innerText = user.displayName; // Ubah teks nama pengguna
+  }
+
+  function fetchUserData() {
+    fetch("http://localhost:5000/auth/login/success", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        throw new Error("authentication has been failed!");
+      })
+      .then((resObject) => {
+        setUser(resObject.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  fetchUserData();
+</script>
