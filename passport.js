@@ -15,16 +15,16 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-passport.use(new FacebookStrategy({
-  clientID: FACEBOOK_APP_ID,
-  clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: "/auth/facebook/callback",
-  passReqToCallback: true
-},
-function(request, accessToken, refreshToken, profile, done) {
-  done(null, profile)
-}
-));
+// passport.use(new FacebookStrategy({
+//   clientID: FACEBOOK_APP_ID,
+//   clientSecret: FACEBOOK_APP_SECRET,
+//   callbackURL: "/auth/facebook/callback",
+//   passReqToCallback: true
+// },
+// function(request, accessToken, refreshToken, profile, done) {
+//   done(null, profile)
+// }
+// ));
 
 passport.serializeUser((user, done) => {
     done(null, user);
