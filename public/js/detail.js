@@ -160,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
                 const reviewElement = document.createElement('p');
                 reviewElement.textContent = `${reviewText}`;
+                reviewElement.className ='sub-review';
     
                 // Append elements to the container
                 ratingContainer.appendChild(ratingElement);
