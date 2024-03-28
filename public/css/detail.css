@@ -116,8 +116,8 @@
   }
   
   .avatar{
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -287,6 +287,16 @@
 .rating-container {
   display: flex;
   align-items: center;
+}
+
+.sub-img-name {
+  display: flex;
+  align-items: center;
+}
+
+.sub-name {
+  font-weight: 600;
+  margin-left: 15px;
 }
 
 .sub-rating-date {
