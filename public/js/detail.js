@@ -102,17 +102,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 const ratings = foodItem.rating;
                 const dates = foodItem.date;
                 const reviews = foodItem.review;
+                const pic = foodItem.photo;
+                const name = foodItem.name;
                 
                 const submissionsContainer = document.querySelector('.submission-container');
                 // Iterasi melalui setiap elemen dalam data
                 for (let i = 0; i < ratings.length; i++) {
-                    // Membuat elemen submission baru
-                    const submissionContainer = document.createElement('div');
-                    submissionContainer.classList.add('submission');
-
                     // Membuat kontainer untuk rating dan tanggal
                     const ratingContainer = document.createElement('div');
                     ratingContainer.classList.add('rating-container');
+
+                    const imgContainer = document.createElement('div');
+                    imgContainer.className='sub-img-name';
+
+                    const imageElement = document.createElement('img');
+                    imageElement.classList.add('sub-img');
+                    imageElement.src = pic[i];
+                    imageElement.style.width = '40px';
+                    imageElement.style.height = '40px';
+                    imageElement.style.borderRadius = '50%';
+                    imageElement.style.objectFit = 'cover';
+                    imageElement.style.margin = '0';
+
+                    const nameElement = document.createElement('span');
+                    nameElement.textContent = name[i];
+                    nameElement.classList.add('sub-name');
 
                     // Membuat elemen untuk rating
                     const ratingElement = document.createElement('span');
@@ -130,7 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     const dateElement = document.createElement('span');
                     dateElement.textContent = dates[i]; // Menggunakan tanggal dari JSON
                     dateElement.classList.add('sub-date');
-
+                    
+                    imgContainer.appendChild(imageElement);
+                    imgContainer.appendChild(nameElement);
                     // Mengisi kontainer rating dan tanggal
                     ratingContainer.appendChild(ratingElement);
                     ratingContainer.appendChild(dateElement);
@@ -140,14 +156,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     reviewElement.textContent = reviews[i]; // Menggunakan ulasan dari JSON
                     reviewElement.classList.add('sub-review');
 
-                    // Menambahkan kontainer rating dan tanggal ke dalam submission
-                    submissionContainer.appendChild(ratingContainer);
-
-                    // Menambahkan elemen ulasan ke dalam submission
-                    submissionContainer.appendChild(reviewElement);
-
                     // Menambahkan submission ke dalam kontainer submissions
-                    submissionsContainer.appendChild(submissionContainer);
+                    submissionsContainer.appendChild(imgContainer);
+                    submissionsContainer.appendChild(ratingContainer);
+                    submissionsContainer.appendChild(reviewElement);
+                    
                 }
                 
             } else {
@@ -219,6 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const submitButton = document.querySelector('.submit-button');
             const reviewTextarea = document.querySelector('.review-textarea');
             const submissionsContainer = document.querySelector('.submission-container');
+            const imgContainer = document.querySelector('.sub-img-name');
 
             submitButton.addEventListener('click', function() {
               const reviewText = reviewTextarea.value.trim();
@@ -226,14 +240,27 @@ document.addEventListener("DOMContentLoaded", function () {
               const bintang = "\u2605".repeat(5);
 
               if (reviewText !== '' && value !== '') {
-                const submissionContainer = document.createElement('div');
-                submissionContainer.classList.add('submission');
-
                 const ratingContainer = document.createElement('div');
                 ratingContainer.classList.add('rating-container');
                 
-                const nameElement = document.createElement('h2');
-                nameElement.textContent = username;
+                const pic = picValue;
+                const imageElement = document.createElement('img');
+                imageElement.classList.add('sub-img');
+                imageElement.src = pic;
+                imageElement.style.width = '40px';
+                imageElement.style.height = '40px';
+                imageElement.style.borderRadius = '50%';
+                imageElement.style.objectFit = 'cover';
+                imageElement.style.margin = '0';
+
+                const name = nameValue;
+                const nameElement = document.createElement('span');
+                nameElement.classList.add('sub-name');
+                nameElement.textContent = name;
+
+                // const nameElement = document.createElement('h2');
+                // nameElement.textContent = username;
+
                 // Create elements for the submission details
                 const ratingElement = document.createElement('span');
                 ratingElement.textContent = `${bintang}`;
@@ -257,13 +284,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Append elements to the container
                 ratingContainer.appendChild(ratingElement);
                 ratingContainer.appendChild(dateElement);
-                submissionContainer.appendChild(ratingContainer);
-                submissionContainer.appendChild(reviewElement);
+                imgContainer.appendChild(imageElement); 
+                imgContainer.appendChild(nameElement); 
 
                 // submissionsContainer.innerHTML = '';
     
                 // Append the container to the submissions container
-                submissionsContainer.appendChild(submissionContainer);
+                submissionsContainer.appendChild(imgContainer);
+                submissionsContainer.appendChild(ratingContainer);
+                submissionsContainer.appendChild(reviewElement);
     
                 // Clear the textarea
                 reviewTextarea.value = reviewText;
