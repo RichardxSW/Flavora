@@ -1,43 +1,24 @@
     <div class="wrapper">
-        <form ng-submit="login()">
             <h1>Login</h1>
-            <div class="input-box">
-                <input type="text" id="username" ng-model="username" placeholder="Username" required>
-                <i class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="Password" required>
-                <i class='bx bxs-lock-alt'></i>
-            </div>
-
-            <div class="remember-forgot">
-                <label>
-                    <input type="checkbox">Remember me
-                </label>
-                <a href="#">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="btn">Login</button>
+            <p>Choose a login method</p>
+            <div class="loginButton google" onclick="window.open('http://localhost:3000/auth/google', '_self');">
+                <i class='bx bxl-google'></i>
+                Google
+              </div>
+              <div class="loginButton facebook" onclick="window.open('http://localhost:3000/auth/facebook', '_self');">
+                <i class='bx bxl-facebook'></i>
+                Facebook
+              </div>
+              <div class="loginButton email" onclick="window.open('http://localhost:3000/auth/email', '_self');">
+                <i class='bx bx-envelope'></i>
+                Email
+              </div>
 
             <div class="register-link">
                 <p>Don't have an account? <a href="/register">Register</a>
                 </p>
             </div>
-        </form>
     </div>
 
-    <script>
-        var app = angular.module('myApp', []);
-
-        app.controller('loginController', function ($scope, $window) {
-            $scope.login = function () {
-                console.log('Login clicked');
-                // Store the username in localStorage
-                localStorage.setItem('username', $scope.username);
-                // Navigasi ke halaman index.html
-                $window.location.href = 'home';
-            };
-        });
-    </script>
     <link rel="stylesheet" href="css/login.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

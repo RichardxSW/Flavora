@@ -100,7 +100,27 @@ header{
 }
 
 .navbar_profile{
-  padding: 20px;
+  margin-left: 15px;
+}
+
+.list{
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.listItem{
+  cursor: pointer;
+  padding: 10px;
+}
+
+.avatar{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* Banner */
