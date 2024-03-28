@@ -135,9 +135,9 @@
   width: 500px;
   height: 600px;
   background-color: lightgoldenrodyellow;
-  margin-top: 60px;
+  margin-top: 50px;
   padding: 40px;
-  margin-bottom: 40px;
+  /* margin-bottom: 15px; */
 }
 
 .review-box-title {
@@ -258,6 +258,10 @@
 
 .submit-button:hover {
   background-color: #45a049; /* Efek hover saat kursor diarahkan ke tombol */
+}
+
+.submission-container {
+  padding-top: 20px;
 }
 
 .rating-container {
