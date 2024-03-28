@@ -57,7 +57,99 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 document.querySelector('.review-name img').src = foodItem.img;
                 document.querySelector('.review-name .name-text').textContent = foodItem.title;
+                
+                // foodItem.rating.forEach(rating => {
+                //     // const bintang = "\u2605".repeat(rating);
+                //     const submissionsContainer = document.querySelector('.submission-container');
 
+                //     const submissionContainer = document.createElement('div');
+                //     submissionContainer.classList.add('submission'); 
+              
+                //     const ratingContainer = document.createElement('div');
+                //     ratingContainer.classList.add('rating-container');
+
+                //     // const nameElement = document.createElement('h2');
+                //     // nameElement.textContent = username;
+
+                //     // bintang
+                //     const ratingElement = document.createElement('span');
+                //     ratingElement.textContent = "\u2605".repeat(5);
+                //     ratingElement.className = 'sub-rating-date';
+
+                //     const bintangArray = ratingElement.textContent.split('');
+                //     for (let i = 0; i < parseInt(rating); i++) {
+                //         bintangArray[i] = '<span style="color: #ffc107;">\u2605</span>'; // Ubah warna bintang yang dipilih
+                //     }
+                //     ratingElement.innerHTML = bintangArray.join('');
+
+                //     const dateElement = document.createElement('span');
+                //     dateElement.textContent = foodItem.date;
+                //     dateElement.className = 'sub-date';
+        
+                //     const reviewElement = document.createElement('p');
+                //     reviewElement.textContent = foodItem.review;
+                //     reviewElement.className ='sub-review';
+        
+                //     // Append elements to the container
+                //     ratingContainer.appendChild(ratingElement);
+                //     ratingContainer.appendChild(dateElement);
+                //     submissionContainer.appendChild(ratingContainer);
+                //     submissionContainer.appendChild(reviewElement);
+                //     // Append the container to the submissions container
+                //     submissionsContainer.appendChild(submissionContainer);
+                // });
+
+                const ratings = foodItem.rating;
+                const dates = foodItem.date;
+                const reviews = foodItem.review;
+                
+                const submissionsContainer = document.querySelector('.submission-container');
+                // Iterasi melalui setiap elemen dalam data
+                for (let i = 0; i < ratings.length; i++) {
+                    // Membuat elemen submission baru
+                    const submissionContainer = document.createElement('div');
+                    submissionContainer.classList.add('submission');
+
+                    // Membuat kontainer untuk rating dan tanggal
+                    const ratingContainer = document.createElement('div');
+                    ratingContainer.classList.add('rating-container');
+
+                    // Membuat elemen untuk rating
+                    const ratingElement = document.createElement('span');
+                    ratingElement.textContent = "\u2605".repeat(5);
+                    ratingElement.className = 'sub-rating-date';
+
+                     // Membuat bintang sesuai dengan rating
+                    const bintangArray = ratingElement.textContent.split('');
+                    for (let j = 0; j < parseInt(ratings[i]); j++) {
+                        bintangArray[j] = '<span style="color: #ffc107;">\u2605</span>'; // Ubah warna bintang yang dipilih
+                    }
+                    ratingElement.innerHTML = bintangArray.join('');
+
+                    // Membuat elemen untuk tanggal
+                    const dateElement = document.createElement('span');
+                    dateElement.textContent = dates[i]; // Menggunakan tanggal dari JSON
+                    dateElement.classList.add('sub-date');
+
+                    // Mengisi kontainer rating dan tanggal
+                    ratingContainer.appendChild(ratingElement);
+                    ratingContainer.appendChild(dateElement);
+
+                    // Membuat elemen untuk ulasan
+                    const reviewElement = document.createElement('p');
+                    reviewElement.textContent = reviews[i]; // Menggunakan ulasan dari JSON
+                    reviewElement.classList.add('sub-review');
+
+                    // Menambahkan kontainer rating dan tanggal ke dalam submission
+                    submissionContainer.appendChild(ratingContainer);
+
+                    // Menambahkan elemen ulasan ke dalam submission
+                    submissionContainer.appendChild(reviewElement);
+
+                    // Menambahkan submission ke dalam kontainer submissions
+                    submissionsContainer.appendChild(submissionContainer);
+                }
+                
             } else {
                 console.log("Makanan tidak ditemukan");
             }
@@ -168,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 submissionContainer.appendChild(ratingContainer);
                 submissionContainer.appendChild(reviewElement);
 
-                submissionsContainer.innerHTML = '';
+                // submissionsContainer.innerHTML = '';
     
                 // Append the container to the submissions container
                 submissionsContainer.appendChild(submissionContainer);
