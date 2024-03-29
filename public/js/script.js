@@ -12,7 +12,7 @@ const swiperWrapper = document.querySelector(".swiper-wrapper"); // Menambahkan 
 
 document.addEventListener("DOMContentLoaded", function () {
     // Mendapatkan data dari file JSON
-    fetch("/recipes.json")
+    fetch("/api/recipes")
     .then(response => response.json())
     .then(data => {
         const foodData = data;
