@@ -1,6 +1,6 @@
  function changeCategory(category) {
     // Mengambil data kategori dari JSON
-    fetch("/recipes.json")
+    fetch("/api/recipes")
         .then(response => response.json())
         .then(categories => {
             var categoryItems = document.querySelectorAll('.categories__item');
