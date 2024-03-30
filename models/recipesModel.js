@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const recipesSchema = new Schema({
-    id: {
+    recipeID: {
         type: Number,
         required: true
     },
