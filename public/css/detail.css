@@ -144,15 +144,16 @@
 }
 
 .desc {
-  border-top: 1px solid black;  
+  border-top: 3px solid #ff7f50;  
   text-align: justify;
   font-size: 18px;
   padding: 40px;
-  border-bottom: 1px solid black;  
+  border-bottom: 3px solid #ff7f50;  
+  background-color: lightgoldenrodyellow;
 }
 
 .review-box {
-  width: 500px;
+  width: 455px;
   height: 600px;
   background-color: lightgoldenrodyellow;
   margin-top: 50px;
@@ -209,15 +210,15 @@
 
 .rating label {
   cursor: pointer;
-  font-size: 45px;
-  color: #ddd;
+  font-size: 40px;
+  color: white;
   float: right;
-  -webkit-text-stroke: 2px #555;
+  -webkit-text-stroke: 3px #555;
   margin-right: 10px;
 }
 
 .rating label:before {
-  content: "\2605"; /* karakter bintang */
+  content: "\2605"; 
 }
 
 .rating input:checked ~ label,
@@ -231,7 +232,7 @@
 
 .rating-text {
   display: inline;
-  margin-left: 20px;
+  margin-left: 10px;
   font-size: 18px;
 }
 
@@ -294,6 +295,14 @@
   align-items: center;
 }
 
+.sub-img-name img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0;
+}
+
 .sub-name {
   font-weight: 600;
   margin-left: 15px;
@@ -301,7 +310,8 @@
 
 .sub-rating-date {
   font-size: 30px;
-  color: #ddd;
+  color: #ffc107;
+  /* -webkit-text-stroke: 1px #ffc107; */
 }
 
 .sub-date {
@@ -414,10 +424,13 @@ button.unsaved {
 details{
     margin-bottom: 20px;
     width: 500px;
+    background-color: #ff7f50;
+    border-radius: 1em;
 }
 
 summary {
-    border-radius: 1em;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
     padding: 20px;
     justify-content: space-between;
     align-items: center;
