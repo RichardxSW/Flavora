@@ -6,57 +6,57 @@ app.controller('myCtrl', function($scope) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    // const params = new URLSearchParams(window.location.search);
+    // const id = params.get('id');
 
-    fetch("/api/recipes") // Path menuju recipes.json di luar folder
-        .then(response => response.json())
-        .then(data => {
-            const foodItem = data.find(item => item.id === parseInt(id)); 
-            if (foodItem) {
-                document.querySelector('.recipe-image img').src = foodItem.img;
-                document.querySelector('.recipe-image .desc').textContent = foodItem.desc;
-                document.querySelector('.recipe-title .foodName').textContent = foodItem.title;
+    // fetch("/api/recipes") // Path menuju recipes.json di luar folder
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         const foodItem = data.find(item => item.id === parseInt(id)); 
+    //         if (foodItem) {
+    //             document.querySelector('.recipe-image img').src = foodItem.img;
+    //             document.querySelector('.recipe-image .desc').textContent = foodItem.desc;
+    //             document.querySelector('.recipe-title .foodName').textContent = foodItem.title;
 
-                // Mengisi detail-stats
-                document.querySelector('.detail-stats .stats-item .ingr').textContent = foodItem.length;
-                document.querySelector('.detail-stats .stats-item .mnt').textContent = foodItem.minutes;
-                document.querySelector('.detail-stats .stats-item .clr').textContent = foodItem.calories;
+    //             // Mengisi detail-stats
+    //             document.querySelector('.detail-stats .stats-item .ingr').textContent = foodItem.length;
+    //             document.querySelector('.detail-stats .stats-item .mnt').textContent = foodItem.minutes;
+    //             document.querySelector('.detail-stats .stats-item .clr').textContent = foodItem.calories;
 
-                // Mengisi tag-list
-                const tagList = document.querySelector('.tag-list');
-                tagList.innerHTML = ''; 
-                foodItem.category.forEach(category => {
-                    const tagChip = document.createElement('div');
-                    tagChip.className = 'filter-chip';
-                    tagChip.textContent = category;
-                    tagList.appendChild(tagChip);
-                });
+    //             // Mengisi tag-list
+                // const tagList = document.querySelector('.tag-list');
+                // tagList.innerHTML = ''; 
+                // foodItem.category.forEach(category => {
+                //     const tagChip = document.createElement('div');
+                //     tagChip.className = 'filter-chip';
+                //     tagChip.textContent = category;
+                //     tagList.appendChild(tagChip);
+                // });
 
-                document.querySelector('.serving').textContent = foodItem.serving;
+    //             document.querySelector('.serving').textContent = foodItem.serving;
 
-                // Mengisi Ingredients
-                const ingrList = document.querySelector('.ingr-list');
-                ingrList.innerHTML = ''; 
-                foodItem.bahan.forEach(bahan => {
-                    const ingrItem = document.createElement('li');
-                    ingrItem.className = 'ingr-item';
-                    ingrItem.textContent = bahan;
-                    ingrList.appendChild(ingrItem);
-                });
+    //             // Mengisi Ingredients
+    //             const ingrList = document.querySelector('.ingr-list');
+    //             ingrList.innerHTML = ''; 
+    //             foodItem.bahan.forEach(bahan => {
+    //                 const ingrItem = document.createElement('li');
+    //                 ingrItem.className = 'ingr-item';
+    //                 ingrItem.textContent = bahan;
+    //                 ingrList.appendChild(ingrItem);
+    //             });
 
-                // Mengisi Instructions
-                const instList = document.querySelector('.inst-list');
-                instList.innerHTML = ''; 
-                foodItem.cara.forEach(cara => {
-                    const instItem = document.createElement('li');
-                    instItem.className = 'inst-item';
-                    instItem.textContent = cara;
-                    instList.appendChild(instItem);
-                });
+    //             // Mengisi Instructions
+    //             const instList = document.querySelector('.inst-list');
+    //             instList.innerHTML = ''; 
+    //             foodItem.cara.forEach(cara => {
+    //                 const instItem = document.createElement('li');
+    //                 instItem.className = 'inst-item';
+    //                 instItem.textContent = cara;
+    //                 instList.appendChild(instItem);
+    //             });
 
-                document.querySelector('.review-name img').src = foodItem.img;
-                document.querySelector('.review-name .name-text').textContent = foodItem.title;
+    //             document.querySelector('.review-name img').src = foodItem.img;
+    //             document.querySelector('.review-name .name-text').textContent = foodItem.title;
                 
                 // foodItem.rating.forEach(rating => {
                 //     // const bintang = "\u2605".repeat(rating);
@@ -99,75 +99,75 @@ document.addEventListener("DOMContentLoaded", function () {
                 //     submissionsContainer.appendChild(submissionContainer);
                 // });
 
-                const ratings = foodItem.rating;
-                const dates = foodItem.date;
-                const reviews = foodItem.review;
-                const pic = foodItem.photo;
-                const name = foodItem.name;
+        //         const ratings = foodItem.rating;
+        //         const dates = foodItem.date;
+        //         const reviews = foodItem.review;
+        //         const pic = foodItem.photo;
+        //         const name = foodItem.name;
                 
-                const submissionsContainer = document.querySelector('.submission-container');
-                // Iterasi melalui setiap elemen dalam data
-                for (let i = 0; i < ratings.length; i++) {
-                    // Membuat kontainer untuk rating dan tanggal
-                    const ratingContainer = document.createElement('div');
-                    ratingContainer.classList.add('rating-container');
+        //         const submissionsContainer = document.querySelector('.submission-container');
+        //         // Iterasi melalui setiap elemen dalam data
+        //         for (let i = 0; i < ratings.length; i++) {
+        //             // Membuat kontainer untuk rating dan tanggal
+        //             const ratingContainer = document.createElement('div');
+        //             ratingContainer.classList.add('rating-container');
 
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className='sub-img-name';
+        //             const imgContainer = document.createElement('div');
+        //             imgContainer.className='sub-img-name';
 
-                    const imageElement = document.createElement('img');
-                    imageElement.classList.add('sub-img');
-                    imageElement.src = pic[i];
-                    imageElement.style.width = '40px';
-                    imageElement.style.height = '40px';
-                    imageElement.style.borderRadius = '50%';
-                    imageElement.style.objectFit = 'cover';
-                    imageElement.style.margin = '0';
+        //             const imageElement = document.createElement('img');
+        //             imageElement.classList.add('sub-img');
+        //             imageElement.src = pic[i];
+        //             imageElement.style.width = '40px';
+        //             imageElement.style.height = '40px';
+        //             imageElement.style.borderRadius = '50%';
+        //             imageElement.style.objectFit = 'cover';
+        //             imageElement.style.margin = '0';
 
-                    const nameElement = document.createElement('span');
-                    nameElement.textContent = name[i];
-                    nameElement.classList.add('sub-name');
+        //             const nameElement = document.createElement('span');
+        //             nameElement.textContent = name[i];
+        //             nameElement.classList.add('sub-name');
 
-                    // Membuat elemen untuk rating
-                    const ratingElement = document.createElement('span');
-                    ratingElement.textContent = "\u2605".repeat(5);
-                    ratingElement.className = 'sub-rating-date';
+        //             // Membuat elemen untuk rating
+        //             const ratingElement = document.createElement('span');
+        //             ratingElement.textContent = "\u2605".repeat(5);
+        //             ratingElement.className = 'sub-rating-date';
 
-                     // Membuat bintang sesuai dengan rating
-                    const bintangArray = ratingElement.textContent.split('');
-                    for (let j = 0; j < parseInt(ratings[i]); j++) {
-                        bintangArray[j] = '<span style="color: #ffc107;">\u2605</span>'; // Ubah warna bintang yang dipilih
-                    }
-                    ratingElement.innerHTML = bintangArray.join('');
+        //              // Membuat bintang sesuai dengan rating
+        //             const bintangArray = ratingElement.textContent.split('');
+        //             for (let j = 0; j < parseInt(ratings[i]); j++) {
+        //                 bintangArray[j] = '<span style="color: #ffc107;">\u2605</span>'; // Ubah warna bintang yang dipilih
+        //             }
+        //             ratingElement.innerHTML = bintangArray.join('');
 
-                    // Membuat elemen untuk tanggal
-                    const dateElement = document.createElement('span');
-                    dateElement.textContent = dates[i]; // Menggunakan tanggal dari JSON
-                    dateElement.classList.add('sub-date');
+        //             // Membuat elemen untuk tanggal
+        //             const dateElement = document.createElement('span');
+        //             dateElement.textContent = dates[i]; // Menggunakan tanggal dari JSON
+        //             dateElement.classList.add('sub-date');
                     
-                    imgContainer.appendChild(imageElement);
-                    imgContainer.appendChild(nameElement);
-                    // Mengisi kontainer rating dan tanggal
-                    ratingContainer.appendChild(ratingElement);
-                    ratingContainer.appendChild(dateElement);
+        //             imgContainer.appendChild(imageElement);
+        //             imgContainer.appendChild(nameElement);
+        //             // Mengisi kontainer rating dan tanggal
+        //             ratingContainer.appendChild(ratingElement);
+        //             ratingContainer.appendChild(dateElement);
 
-                    // Membuat elemen untuk ulasan
-                    const reviewElement = document.createElement('p');
-                    reviewElement.textContent = reviews[i]; // Menggunakan ulasan dari JSON
-                    reviewElement.classList.add('sub-review');
+        //             // Membuat elemen untuk ulasan
+        //             const reviewElement = document.createElement('p');
+        //             reviewElement.textContent = reviews[i]; // Menggunakan ulasan dari JSON
+        //             reviewElement.classList.add('sub-review');
 
-                    // Menambahkan submission ke dalam kontainer submissions
-                    submissionsContainer.appendChild(imgContainer);
-                    submissionsContainer.appendChild(ratingContainer);
-                    submissionsContainer.appendChild(reviewElement);
+        //             // Menambahkan submission ke dalam kontainer submissions
+        //             submissionsContainer.appendChild(imgContainer);
+        //             submissionsContainer.appendChild(ratingContainer);
+        //             submissionsContainer.appendChild(reviewElement);
                     
-                }
+        //         }
                 
-            } else {
-                console.log("Makanan tidak ditemukan");
-            }
-        })
-        .catch(error => console.error("Error fetching data:", error));
+        //     } else {
+        //         console.log("Makanan tidak ditemukan");
+        //     }
+        // })
+        // .catch(error => console.error("Error fetching data:", error));
 
         var detailsElements = document.querySelectorAll('details');
 
@@ -235,6 +235,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const imgContainer = document.querySelector('.sub-img-name');
 
             submitButton.addEventListener('click', function() {
+
+
               const reviewText = reviewTextarea.value.trim();
               const currentDate = new Date().toLocaleDateString();
               const bintang = "\u2605".repeat(5);
@@ -265,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const ratingElement = document.createElement('span');
                 ratingElement.textContent = `${bintang}`;
                 ratingElement.className = 'sub-rating-date';
-
+                
                 const bintangArray = ratingElement.textContent.split('');
                 for (let i = 0; i < parseInt(value); i++) {
                     bintangArray[i] = '<span style="color: #ffc107;">\u2605</span>'; // Ubah warna bintang yang dipilih
@@ -297,7 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Clear the textarea
                 reviewTextarea.value = reviewText;
               } else {
-                  // submissionsContainer.textContent = 'Please select a rating and provide a review.';
                   alert('Please select a rating and provide a review.');
               }
               });
