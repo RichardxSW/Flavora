@@ -9,6 +9,7 @@ const cookieSession = require("cookie-session");
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const fs = require('fs');
 const Recipes = require('./models/recipesModel');
 dotenv.config();
 
@@ -23,11 +24,24 @@ app.use(morgan('dev'));
 app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
 
 mongoose.connect(MONGO_URL)
-    .then(() => console.log(`MongoDB connected at ${MONGO_URL}`))
+    .then(async () => {
+        console.log(`MongoDB connected at ${MONGO_URL}`);
+
+        const dataJSON = fs.readFileSync('public/recipes.json');
+        const data = JSON.parse(dataJSON);
+        
+        // Masukkan data ke MongoDB
+        try {
+            await Recipes.insertMany(data);
+            console.log('Data berhasil dimasukkan ke MongoDB');
+        } catch (err) {
+            console.error(err);
+        }
+    })
     .catch(err => console.log(err))
 
 app.use(
-    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
 );
 
 app.use(passport.initialize());
@@ -104,6 +118,35 @@ app.get('/detail/:recipeID', async (req, res) => {
 //         res.status(500).send("Internal Server Error")
 //     }
 // })
+
+app.post('/detail/:recipeID', async (req, res) => {
+    try {
+        const { recipeID } = req.params;
+        const { rating, review, date, name , photo } = req.body;
+
+        // Lakukan sesuatu dengan data yang diterima, misalnya menyimpan ke database menggunakan Mongoose
+        // Contoh:
+        const recipe = await Recipes.findOne({ recipeID });
+        if (!recipe) {
+            return res.status(404).send("Recipe not found");
+        }
+        // Menambahkan review ke resep
+        recipe.reviews.push({
+            rating,
+            review,
+            date,
+            name,
+            photo
+        });
+
+        await recipe.save();
+
+        res.status(201).send("Review added successfully");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 app.get('/recent', (req, res) => {
     res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});

@@ -158,7 +158,8 @@
   background-color: lightgoldenrodyellow;
   margin-top: 50px;
   padding: 40px;
-  /* margin-bottom: 15px; */
+  margin-bottom: 20px;
+  border: 10px solid #ff7f50;
 }
 
 .review-box-title {
@@ -213,7 +214,7 @@
   font-size: 40px;
   color: white;
   float: right;
-  -webkit-text-stroke: 3px #555;
+  -webkit-text-stroke: 2px #555;
   margin-right: 10px;
 }
 
@@ -267,10 +268,10 @@
 }
 
 .submit-button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #ff7f50;
+  color: black;
   padding: 10px 20px;
-  border: #4CAF50;
+  border: #ff7f50;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
@@ -278,11 +279,12 @@
 }
 
 .submit-button:hover {
-  background-color: #45a049; /* Efek hover saat kursor diarahkan ke tombol */
+  background-color: #ffc1ab; /* Efek hover saat kursor diarahkan ke tombol */
 }
 
 .submission-container {
   padding-top: 20px;
+  border-top: 1px solid black;
 }
 
 .rating-container {
@@ -322,7 +324,7 @@
 
 .sub-review {
   padding-bottom: 20px;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
 }
 
 .recipe-title {
@@ -370,7 +372,7 @@ button.unsaved {
 }
 
 .stats-item:not(:last-child) {
-    border-inline-end: 1px solid black;
+    border-inline-end: 3px solid #ff7f50;
 } 
 
 .ingr, .mnt, .clr {
@@ -386,7 +388,7 @@ button.unsaved {
 .tag-list {
   display: flex;
   flex-wrap: wrap; /* Item akan meluncur ke baris baru jika tidak cukup ruang */
-  border-bottom: 1px solid black;
+  border-bottom: 3px solid #ff7f50;
   margin-bottom: 20px;
 }
 
@@ -424,7 +426,7 @@ button.unsaved {
 details{
     margin-bottom: 20px;
     width: 500px;
-    background-color: #ff7f50;
+    background-color: #ffd3c3;
     border-radius: 1em;
 }
 

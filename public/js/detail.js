@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 rating: value,
                 review: reviewText,
                 date: currentDate,
-                // photo: photo,
+                photo: photo,
                 name: name,
               }
 
