@@ -1,0 +1,17 @@
+<div class="card">
+    <a href="<%= recipe.url %>/<%= recipe.recipeID %>">
+        <img src="<%= recipe.img %>">
+        <h5><%= recipe.title %></h5>
+        <div class="time row">
+            <div class="row">
+                <i class="fa fa-clock-o" style="font-size:15px"><p><%= recipe.time %></p></i>
+                <i class="fa fa-cutlery" style="font-size:15px"><p><%= recipe.category %></p></i> 
+            </div>
+        </div>
+        <div class="view-icon">
+            <i class="fa-solid fa-eye"></i>
+            <span class="view-text">150</span>
+        </div>
+    </a>
+    <button type="button" class="button-circle"><i onclick="myFunction(this)" class="fa-regular fa-bookmark"></i></button>
+</div>
