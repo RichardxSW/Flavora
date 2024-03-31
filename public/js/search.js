@@ -1,10 +1,19 @@
 // let recipes = [];
 const recipesObject = JSON.parse(recipes);
-// Menggunakan variabel recipesObject untuk melakukan pencarian
-function performSearch(event) {
-    if (event.key === 'Enter') {
-        const searchKeyword = event.target.value.toLowerCase(); // Mendapatkan kata kunci pencarian dari input
+// Mendaftarkan event listener untuk tombol pencarian
+const searchButton = document.querySelector('.navbar__search-button');
+if (searchButton) {
+    searchButton.addEventListener('click', function(event) {
+        // Memanggil fungsi performSearch saat tombol pencarian ditekan
+        performSearch(event);
+    });
+}
 
+// Fungsi performSearch yang diperbarui
+function performSearch(event) {
+    const searchKeyword = document.querySelector('.navbar__search-input').value.toLowerCase();
+
+    if (event.key === 'Enter' || event.type === 'click') {
         // Pastikan bahwa recipesObject adalah array sebelum mencari
         if (Array.isArray(recipesObject)) {
             // Cari resep yang sesuai dengan kata kunci pencarian
