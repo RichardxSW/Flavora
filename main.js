@@ -32,15 +32,20 @@ mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
 
-        const dataJSON = fs.readFileSync('public/recipes.json');
-        const data = JSON.parse(dataJSON);
-        
-        // Masukkan data ke MongoDB
-        try {
-            await Recipes.insertMany(data);
-            console.log('Data berhasil dimasukkan ke MongoDB');
-        } catch (err) {
-            console.error(err);
+        const count = await Recipes.countDocuments();
+        if (count == 0) {
+            const dataJSON = fs.readFileSync('public/recipes.json');
+            const data = JSON.parse(dataJSON);
+            
+            // Masukkan data ke MongoDB
+            try {
+                await Recipes.insertMany(data);
+                console.log('Data berhasil dimasukkan ke MongoDB');
+            } catch (err) {
+                console.error(err);
+            }
+        } else {
+            console.log('Database sudah berisi data');
         }
     })
     .catch(err => console.log(err))
@@ -88,6 +93,22 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     res.render('login.ejs', {title: 'Login', layout: "accountlayout"});
+});
+
+
+function isLoggedIn(req,res,next){
+    req.user? next(): res.sendStatus(401);
+}
+app.delete('/', isLoggedIn, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user._id);
+        req.logout();
+        res.sendStatus(200);
+        // res.redirect('/'); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.get('/register', (req, res) => {
