@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
         res.status(400).json({message: error.message})
     }
 })
-  
+
 router.delete('/:id', async (req, res) => {
     try
     {
