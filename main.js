@@ -27,7 +27,7 @@ mongoose.connect(MONGO_URL)
     .catch(err => console.log(err))
 
 app.use(
-    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
 );
 
 app.use(passport.initialize());
