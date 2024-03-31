@@ -29,15 +29,20 @@ mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
 
-        const dataJSON = fs.readFileSync('public/recipes.json');
-        const data = JSON.parse(dataJSON);
-        
-        // Masukkan data ke MongoDB
-        try {
-            await Recipes.insertMany(data);
-            console.log('Data berhasil dimasukkan ke MongoDB');
-        } catch (err) {
-            console.error(err);
+        const count = await Recipes.countDocuments();
+        if (count == 0) {
+            const dataJSON = fs.readFileSync('public/recipes.json');
+            const data = JSON.parse(dataJSON);
+            
+            // Masukkan data ke MongoDB
+            try {
+                await Recipes.insertMany(data);
+                console.log('Data berhasil dimasukkan ke MongoDB');
+            } catch (err) {
+                console.error(err);
+            }
+        } else {
+            console.log('Database sudah berisi data');
         }
     })
     .catch(err => console.log(err))
