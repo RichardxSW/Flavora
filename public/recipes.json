@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "recipeID": 1,
         "title": "Nasi Goreng",
         "category": ["Lunch","Breakfast"],
         "nationality": "Asian",
@@ -20,41 +20,45 @@
         "Add rice and egg, stir until smooth.",
         "Add sweet soy sauce, stir again until smooth.",
         "Remove from heat and serve with complementary fried rice."],
-        "name": [
-            "Evangeline",
-            "Ismail",
-            "Amir",
-            "Herbert",
-            "Nikki"],
-        "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-            ],
-        "rating": [
-            "4", 
-            "5", 
-            "4",
-            "4",
-            "5"],
-        "date": [
-            "3/5/2024", 
-            "3/10/2024", 
-            "3/12/2024", 
-            "3/20/2024", 
-            "3/26/2024"],
-        "review": [
-            "Easy recipe, delicious result! Will make again.", 
-            "Amazing recipe! Now a favorite dish. Thanks!", 
-            "Family loved it! Incredible flavors.",
-            "Simple ingredients, clear instructions. Great recipe!",
-            "Perfect for beginners! Helpful instructions."
+        "reviews": [
+          {
+          "name": "Evangeline",
+          "photo": "/img/profilepic.jpg",
+          "rating": "4",
+          "date": "3/5/2024",
+          "review": "Easy recipe, delicious result! Will make again."},
+          {
+            "name": "Ismail",
+            "photo": "/img/profilepic.jpg",
+            "rating": "5",
+            "date": "3/10/2024",
+            "review": "Amazing recipe! Now a favorite dish. Thanks!"
+          },
+          {
+            "name": "Amir",
+            "photo": "/img/profilepic.jpg",
+            "rating": "4",
+            "date": "3/12/2024",
+            "review": "Easy recipe, delicious result! Will make again."
+          },
+          {
+            "name": "Herbert",
+            "photo": "/img/profilepic.jpg",
+            "rating": "4",
+            "date": "3/20/2024",
+            "review": "Easy recipe, delicious result! Will make again."
+          },
+          {
+            "name": "Nikki",
+            "photo": "/img/profilepic.jpg",
+            "rating": "5",
+            "date": "3/26/2024",
+            "review": "Amazing recipe! Now a favorite dish. Thanks!"
+          }
         ]
     },
     {
-        "id": 2,
+        "recipeID": 2,
         "title": "Pancake",
         "category": ["Breakfast"],
         "nationality": "Western",
@@ -80,30 +84,32 @@
         "Add melted butter. Stir well.",
         "Brush the pan with a little butter and heat it on the stove. Then pour 1 spoon of dough into the pan.",
         "Cook the pancake until the dough on the inside of the pan is golden yellow or brownish yellow. The sign, we will see the shape of bubbles above the dough, then the dough must be turned slowly. cook for a while and remove."],
-        "name": [
-            "Exotic Fire",
-            "Hanson Nichol",
-            "Marvel"],
-        "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-            ],
-        "rating": [
-            "5", 
-            "5", 
-            "4"],
-        "date": [
-            "3/22/2024", 
-            "3/25/2024", 
-            "3/26/2024"],
-        "review": [
-            "Very Good Recipe!", 
-            "I love it", 
-            "WONDERFUL!!"]
+        "reviews": [
+          {
+            "name": "Exotic Fire",
+            "photo": "/img/profilepic.jpg",
+            "rating": "5",
+            "date": "3/22/2024",
+            "review": "Very Good Recipe!"
+          },
+          {
+            "name": "Hanson Nichol",
+            "photo": "/img/profilepic.jpg",
+            "rating": "5",
+            "date": "3/25/2024",
+            "review": "I love it"
+          },
+          {
+            "name": "Marvel",
+            "photo": "/img/profilepic.jpg",
+            "rating": "4",
+            "date": "3/26/2024",
+            "review": "WONDERFUL!!"
+          }
+        ]
     },
     {
-        "id": 3,
+        "recipeID": 3,
         "title": "Spaghetti Bolognese",
         "category": ["Dinner"],
         "nationality": "Western",
@@ -143,29 +149,25 @@
         "Pour pasta cooking water and add spaghetti, stirring until slightly dry.",
         "Remove from heat, serve warm with Parmesan cheese and fresh basil leaves.",
         "Serve warm."],
-            "name": [
-                "John Doe", 
-                "Alice Smith"
-            ],
-            "photo": [
-              "/img/profilepic.jpg",
-              "/img/profilepic.jpg"
-            ],
-            "rating": [
-              "4",
-              "5"
-            ],
-            "date": [
-              "3/10/2024",
-              "3/15/2024"
-            ],
-            "review": [
-                "Delicious recipe! Definitely worth trying.",
-                "Fantastic recipe! My friends couldn't get enough of it."
-            ]
+        "reviews": [
+          {
+            "name": "John Doe",
+            "photo": "/img/profilepic.jpg",
+            "rating": "4",
+            "date": "3/10/2024",
+            "review": "Delicious recipe! Definitely worth trying."
+          },
+          {
+            "name": "Alice Smith",
+            "photo": "/img/profilepic.jpg",
+            "rating": "5",
+            "date": "3/15/2024",
+            "review": "Fantastic recipe! My friends couldn't get enough of it."
+          }
+        ]
     },
     {
-        "id": 4,
+        "recipeID": 4,
         "title": "Popcorn Caramel",
         "category": ["Snack"],
         "nationality": "Western",
@@ -191,14 +193,18 @@
         "Once mixed, continue to heat until boiling.", 
         "Cook until golden in color, approximately 10 minutes.",
         "Once cooked, pour the caramel popcorn into the finished one and stir until evenly distributed."],
-        "name": ["Ryan"],
-        "photo": ["/img/profilepic.jpg"],
-        "rating": ["5"],
-        "date": ["3/20/2024"],
-        "review": ["The dish was amazing!"]
+        "reviews" :[
+          {
+            "name" : "Ryan",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/20/2024",
+            "review" : "The dish was amazing!"
+          }
+        ]
     },
     {
-        "id": 5,
+        "recipeID": 5,
         "title": "Omelette",
         "category": ["Breakfast"],
         "nationality": "Western",
@@ -223,31 +229,32 @@
         "Tilt the pan again to allow it to fill back up with the runny egg. Repeat once or twice more until the egg has just set.",
         "At this point you can fill the omelette with whatever you like – some grated cheese, sliced ham, fresh herbs, sautéed mushrooms or smoked salmon all work well. Scatter the filling over the top of the omelette and fold gently in half with the spatula. Slide onto a plate to serve."
         ],
-        "name": [
-            "Emma", 
-            "David", 
-            "Sophia"],
-        "photo": [
-            "/img/profilepic.jpg", 
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-        ],
-        "rating": [
-            "4", 
-            "2", 
-            "5"],
-        "date": [
-            "3/12/2024", 
-            "3/16/2024", 
-            "3/22/2024"],
-        "review": [
-            "The recipe was fantastic! Will definitely make it again.",
-            "Disappointing dish. Didn't meet my expectations.",
-            "Absolutely loved it! Best recipe ever."
+        "reviews":[
+          {
+            "name" : "Emma",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/12/2024",
+            "review" : "The recipe was fantastic! Will definitely make it again."
+          },
+          {
+            "name" : "David",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "2",
+            "date" : "3/16/2024",
+            "review" : "Disappointing dish. Didn't meet my expectations."
+          },
+          {
+            "name" : "Sophia",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/22/2024",
+            "review" : "Absolutely loved it! Best recipe ever."
+          }
         ]
     },
     {
-        "id": 6,
+        "recipeID": 6,
         "title": "Chicken Congee",
         "category": ["Breakfast"],
         "nationality": "Asian",
@@ -285,36 +292,39 @@
         "Add the strips of ginger, as well as chicken bouillon. Stir everything around for 20 to 30 seconds.",
         "Turn off the heat, and pour it into your bowl. Garnish with the green onions and cilantro."
         ],
-        "name": [
-            "Olivia", 
-            "Michael", 
-            "Sophie", 
-            "William"],
-        "photo": [
-            "/img/profilepic.jpg", 
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-        ],
-        "rating": [
-            "5", 
-            "3", 
-            "4", 
-            "2"],
-        "date": [
-            "3/1/2024", 
-            "3/6/2024", 
-            "3/8/2024",
-            "3/20/2024"],
-        "review": [
-            "Outstanding recipe! Definitely a new favorite.",
-            "Decent dish. Could have been better.",
-            "Absolutely delicious! Would recommend to everyone.",
-            "Disappointing experience. Not worth trying."
-  ]
+        "reviews":[
+          {
+            "name": "Olivia",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/1/2024",
+            "review" : "Outstanding recipe! Definitely a new favorite."
+          },
+          {
+            "name" : "Michael",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "3",
+            "date" : "3/6/2024",
+            "review" : "Decent dish. Could have been better."
+          },
+          {
+            "name" : "Sophia",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/8/2024",
+            "review" : "Absolutely delicious! Would recommend to everyone."
+          },
+          {
+            "name" : "William",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/20/2024",
+            "review" : "Disappointing experience. Not worth trying."
+          }
+        ]
     },
     {
-        "id": 7,
+        "recipeID": 7,
         "title": "Banh Mi",
         "category": ["Lunch"],
         "nationality": "Asian",
@@ -358,69 +368,81 @@
         "To assemble the sandwich, spread each half of toasted baguette with mayonnaise. Layer chicken on the bottom half of the bread. Top with cucumber, drained pickled vegetables, cilantro, and jalapeño. Squeeze lime wedge over fillings and cover with top half of baguette.",
         "Cut into two 6-inch sandwiches to serve."
         ],
-        "name": [
-            "Liam",
-            "Emma",
-            "Noah",
-            "Olivia",
-            "William",
-            "Sophia",
-            "James",
-            "Isabella",
-            "Benjamin",
-            "Charlotte"
-          ],
-          "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-          ],
-          "rating": [
-            "5",
-            "3",
-            "4",
-            "2",
-            "4",
-            "5",
-            "3",
-            "4",
-            "2",
-            "5"
-          ],
-          "date": [
-            "3/1/2024",
-            "3/3/2024",
-            "3/5/2024",
-            "3/7/2024",
-            "3/9/2024",
-            "3/11/2024",
-            "3/13/2024",
-            "3/15/2024",
-            "3/17/2024",
-            "3/19/2024"
-          ],
-          "review": [
-            "Outstanding recipe! Definitely a new favorite.",
-            "Decent dish. Could have been better.",
-            "Absolutely delicious! Would recommend to everyone.",
-            "Disappointing experience. Not worth trying.",
-            "Great dish! Enjoyed every bite.",
-            "Incredible recipe! Will make it again for sure.",
-            "Not bad, but not the best either.",
-            "Fantastic meal! Loved every bit of it.",
-            "Okay dish. Could use some improvement.",
-            "Amazing recipe! A must-try for everyone."
-          ]
+        "reviews":[
+          {
+            "name": "Liam",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/1/2024",
+            "review" : "Outstanding recipe! Definitely a new favorite."
+          },
+          {
+            "name" : "Emma",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "3",
+            "date" : "3/3/2024",
+            "review" : "Decent dish. Could have been better."
+          },
+          {
+            "name" : "Noah",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/5/2024",
+            "review" : "Absolutely delicious! Would recommend to everyone."
+          },
+          {
+            "name" : "Olivia",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "2",
+            "date" : "3/7/2024",
+            "review" : "Disappointing experience. Not worth trying."
+          },
+          {
+            "name" : "William",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/9/2024",
+            "review" : "Great dish! Enjoyed every bite."
+          },
+          {
+            "name" : "Sophia",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/11/2024",
+            "review" : "Incredible recipe! Will make it again for sure."
+          },
+          {
+            "name" : "James",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "3",
+            "date" : "3/13/2024",
+            "review" : "Not bad, but not the best either."
+          },
+          {
+            "name" : "Isabella",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/15/2024",
+            "review" : "Fantastic meal! Loved every bit of it."
+          },
+          {
+            "name" : "Benjamin",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "2",
+            "date" : "3/17/2024",
+            "review" : "Okay dish. Could use some improvement."
+          },
+          {
+            "name" : "Charlotte",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/19/2024",
+            "review" : "Amazing recipe! A must-try for everyone."
+          }
+        ]
     },
     {
-        "id": 8,
+        "recipeID": 8,
         "title": "Pad Thai",
         "category": ["Lunch"],
         "nationality": "Asian",
@@ -457,29 +479,25 @@
             "Stir bean sprouts into wok and cook for 3 minutes.",
            " Serve topped with green onions, crushed peanuts, and a wedge of lemon."
         ],
-        "name": [
-            "Sophia",
-            "Ethan"
-          ],
-          "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-          ],
-          "rating": [
-            "4",
-            "5"
-          ],
-          "date": [
-            "3/1/2024",
-            "3/2/2024"
-          ],
-          "review": [
-            "Delicious dish! Will definitely make again.",
-            "Amazing recipe! Highly recommended."
-          ]
+        "reviews":[
+          {
+            "name": "Sophia",
+            "photo": "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/1/2024",
+            "review" : "Delicious dish! Will definitely make again."
+          },
+          {
+            "name" : "Ethan",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/2/2024",
+            "review" : "Amazing recipe! Highly recommended."
+          }
+        ]
     },
     {
-        "id": 9,
+        "recipeID": 9,
         "title": "Churros",
         "category": ["Snack"],
         "nationality": "Western",
@@ -507,34 +525,32 @@
             "Transfer dough to a sturdy pastry bag fitted with a medium star tip. Carefully pipe a few 5- to 6-inch strips of dough into the hot oil; work in batches so you don't crowd the fryer. Cook until golden; use a spider or slotted spoon to transfer churros to paper towels to drain.",
             "Combine 1/2 cup sugar and cinnamon. Roll drained churros in cinnamon and sugar mixture."
         ],
-        "name": [
-            "Liam",
-            "Emma",
-            "Noah"
-          ],
-          "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-          ],
-          "rating": [
-            "3",
-            "4",
-            "2"
-          ],
-          "date": [
-            "3/5/2024",
-            "3/6/2024",
-            "3/7/2024"
-          ],
-          "review": [
-            "Enjoyed the dish! Will try again.",
-            "Excellent recipe! Highly recommended.",
-            "Disappointing experience. Not worth it."
-          ]
+        "reviews":[
+          {
+            "name":"Liam",
+            "photo": "/img/profilepic.jpg",
+            "rating" : "3",
+            "date" : "3/5/2024",
+            "review" : "Enjoyed the dish! Will try again."
+          },
+          {
+            "name" : "Emma",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/6/2024",
+            "review" : "Excellent recipe! Highly recommended."
+          },
+          {
+            "name" : "Noah",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "2",
+            "date" : "3/7/2024",
+            "review" : "Disappointing experience. Not worth it."
+          }
+        ]
     },
     {
-        "id": 10,
+        "recipeID": 10,
         "title": "French Fries",
         "category": ["Snack"],
         "nationality": "Western",
@@ -565,39 +581,39 @@
             "Drain fries on a paper towel-lined plate.",
             "Serve hot and enjoy!"
         ],
-        "name": [
-            "Sophia",
-            "Ethan",
-            "Isabella",
-            "Noah"
-          ],
-          "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-          ],
-          "rating": [
-            "4",
-            "5",
-            "3",
-            "2"
-          ],
-          "date": [
-            "3/5/2024",
-            "3/6/2024",
-            "3/7/2024",
-            "3/8/2024"
-          ],
-          "review": [
-            "Delicious dish! Will definitely make again.",
-            "Amazing recipe! Highly recommended.",
-            "Great flavor! Enjoyed every bite.",
-            "Disappointing experience. Not worth it."
-          ]
+        "reviews":[
+          {
+            "name": "Sophia",
+            "photo": "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/5/2024",
+            "review" : "Delicious dish! Will definitely make again."
+          },
+          {
+            "name" : "Ethan",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "5",
+            "date" : "3/6/2024",
+            "review" : "Amazing recipe! Highly recommended."
+          },
+          {
+            "name" : "Isabella",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "3",
+            "date" : "3/7/2024",
+            "review" : "Great flavor! Enjoyed every bite."
+          },
+          {
+            "name" : "Noah",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "2",
+            "date" : "3/8/2024",
+            "review" : "Disappointing experience. Not worth it."
+          }
+        ]
     },
     {
-        "id": 11,
+        "recipeID": 11,
         "title": "Chicken Cordon Bleu",
         "category": ["Dinner"],
         "nationality": "Western",
@@ -629,30 +645,28 @@
             "Transfer chicken to a warm platter and remove the toothpicks. Whisk cream and cornstarch together in a small bowl; slowly pour into the skillet, whisking constantly to blend with remaining wine mixture. Cook, stirring often, until sauce thickens, 3 to 5 minutes.",
             "Pour sauce over chicken and serve immediately."
         ],
-        "name": [
-            "Liam",
-            "Ava",
-            "Noah"
-          ],
-          "photo": [
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg",
-            "/img/profilepic.jpg"
-          ],
-          "rating": [
-            "3",
-            "4",
-            "2"
-          ],
-          "date": [
-            "3/15/2024",
-            "3/16/2024",
-            "3/17/2024"
-          ],
-          "review": [
-            "Enjoyed the meal! Would recommend.",
-            "Delicious recipe! Will definitely make again.",
-            "Disappointing experience. Not worth it."
-          ]
+        "reviews":[
+          {
+            "name": "Liam",
+            "photo": "/img/profilepic.jpg",
+            "rating" : "3",
+            "date" : "3/15/2024",
+            "review" : "Enjoyed the meal! Would recommend."
+          },
+          {
+            "name" : "Ava",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "4",
+            "date" : "3/16/2024",
+            "review" : "Delicious recipe! Will definitely make again."
+          },
+          {
+            "name" : "Noah",
+            "photo" : "/img/profilepic.jpg",
+            "rating" : "2",
+            "date" : "3/17/2024",
+            "review" : "Disappointing experience. Not worth it."
+          }
+        ]
     }
 ]
