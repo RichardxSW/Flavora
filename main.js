@@ -72,7 +72,6 @@ app.get('/detail/:recipeID', async (req, res) => {
     try {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
-        const reviews = await Reviews.findOne({ recipeID })
         if (recipes) {
             res.render('detail', {recipes , title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
         } else {
@@ -83,6 +82,34 @@ app.get('/detail/:recipeID', async (req, res) => {
         res.status(500).send("Internal Server Error")
     }
 })
+
+app.post('/detail/:recipeID', async (req, res) => {
+    try {
+        const { recipeID } = req.params;
+        const { rating, review, date, name  } = req.body;
+
+        // Lakukan sesuatu dengan data yang diterima, misalnya menyimpan ke database menggunakan Mongoose
+        // Contoh:
+        const recipe = await Recipes.findOne({ recipeID });
+        if (!recipe) {
+            return res.status(404).send("Recipe not found");
+        }
+        // Menambahkan review ke resep
+        recipe.reviews.push({
+            rating,
+            review,
+            date,
+            name
+        });
+
+        await recipe.save();
+
+        res.status(201).send("Review added successfully");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 app.get('/recent', (req, res) => {
     res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
