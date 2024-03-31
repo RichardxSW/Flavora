@@ -92,6 +92,22 @@ app.get('/', (req, res) => {
     res.render('login.ejs', {title: 'Login', layout: "accountlayout"});
 });
 
+
+function isLoggedIn(req,res,next){
+    req.user? next(): res.sendStatus(401);
+}
+app.delete('/', isLoggedIn, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user._id);
+        req.logout();
+        res.sendStatus(200);
+        // res.redirect('/'); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
 app.get('/register', (req, res) => {
     res.render('regis.ejs', {title: 'Register', layout: "accountlayout"});
 });
