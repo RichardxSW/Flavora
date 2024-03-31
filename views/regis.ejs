@@ -10,7 +10,7 @@
 
 <body>
     <div class="wrapper">
-        <form action="/">
+        <form action="/register" method="post">
             <h1>Registration</h1>
 
             <div class="input-box">
@@ -19,14 +19,14 @@
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-field">
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" name="username" placeholder="Username" required>
                     <i class='bx bxs-user'></i>
                 </div>
             </div>
 
             <div class="input-box">
                 <div class="input-field">
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" name="email" placeholder="Email" required>
                     <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-field">
@@ -37,7 +37,7 @@
 
             <div class="input-box">
                 <div class="input-field">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" name ="password" placeholder="Password" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <div class="input-field">
@@ -50,7 +50,7 @@
                 <input type="checkbox">Informasi di atas benar dan saya setuju dengan semua persyaratan
             </label>
 
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" name="register" class="btn">Register</button>
         </form>
     </div>
     <link rel="stylesheet" href="css/regis.css">

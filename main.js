@@ -13,6 +13,8 @@ const fs = require('fs');
 const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
 const bcrypt = require("bcrypt");
+const flash = require("connect-flash");
+const localUser = require("./models/localuserModel");
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -23,6 +25,7 @@ app.use(express.static('public'));
 app.use(expressLayouts); 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(flash());
 app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
 
 mongoose.connect(MONGO_URL)
@@ -90,6 +93,81 @@ app.get('/', (req, res) => {
 app.get('/register', (req, res) => {
     res.render('regis.ejs', {title: 'Register', layout: "accountlayout"});
 });
+
+// app.post('/register', async (req, res) => {
+//     try {
+//       const { username, email, password } = req.body;
+  
+//       // Validasi email menggunakan regular expression
+//       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//       if (!emailRegex.test(email)) {
+//         req.flash("error", "Invalid email address");
+//         return res.redirect("/");
+//       }
+  
+//       // Cek apakah username sudah ada dalam database
+//       const existingUser = await UserData.findOne({ username });
+//       if (existingUser) {
+//         req.flash("error", "Username already exists");
+//         return res.redirect("/");
+//       }
+  
+//       // Cek apakah email sudah terdaftar
+//       const existingEmail = await UserData.findOne({ email });
+//       if (existingEmail) {
+//         req.flash("error", "Email already registered");
+//         return res.redirect("/");
+//       }
+  
+//       // Enkripsi password sebelum disimpan di database
+//       const hashedPassword = await bcrypt.hash(password, 10);
+  
+//       // Simpan data pengguna baru ke dalam database
+//       const newUser = new UserData({ username, email, password: hashedPassword });
+//       await newUser.save();
+  
+//       req.flash("success", "User registered successfully! Please login.");
+//       res.redirect("/");
+//     } catch (error) {
+//       console.error("Error registering user:", error.message);
+//       req.flash("error", "Error registering user");
+//     //   res.redirect("e");
+//     }
+//   });
+
+app.post('/register', async (req, res) => {
+    try {
+      const { fullName, userName, email, phoneNum, password } = req.body;
+  
+      // Cek apakah username atau email sudah ada dalam database lokal
+      const existingUser = await localUser.findOne({ $or: [{ userName }, { email }] });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Username or email already exists.' });
+      }
+  
+      // Enkripsi password sebelum menyimpannya dalam database
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Buat pengguna baru
+      const newUser = new localUser({
+        fullName,
+        userName,
+        email,
+        phoneNum,
+        password: hashedPassword // Simpan password yang dienkripsi
+      });
+  
+      // Simpan pengguna baru ke dalam database
+      const savedUser = await newUser.save();
+  
+      // Kirim respons berhasil
+      res.status(201).json({ message: 'User registered successfully.', user: savedUser });
+    } catch (error) {
+      console.error('Error registering user:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+  
 
 app.get('/home', async (req, res) => {
     try {
