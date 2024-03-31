@@ -228,12 +228,45 @@ document.addEventListener("DOMContentLoaded", function () {
             const reviewTextarea = document.querySelector('.review-textarea');
             const submissionsContainer = document.querySelector('.submission-container');
             const imgContainer = document.querySelector('.sub-img-name');
-
-            submitButton.addEventListener('click', function() {
-
-
+            
+            submitButton.addEventListener('click', async () => {
+              const recipeID = idValue;
+              // const rating = this.getAttribute('for').replace('star', '');
               const reviewText = reviewTextarea.value.trim();
               const currentDate = new Date().toLocaleDateString();
+              const photo = picValue;
+              const name = nameValue;
+
+              const reviewData = {
+                rating: value,
+                review: reviewText,
+                date: currentDate,
+                // photo: photo,
+                name: name,
+              }
+
+              try {
+                const response = await fetch(`/detail/${recipeID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reviewData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit review');
+                } else {
+                  console.log('succes')
+                }
+
+                // Refresh halaman untuk memperbarui daftar review
+                window.location.reload();
+            } catch (error) {
+                console.error(error);
+                alert('Failed to submit review');
+            }
+
               const bintang = "\u2605".repeat(5);
 
               if (reviewText !== '' && value !== '') {
