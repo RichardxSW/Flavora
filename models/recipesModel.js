@@ -62,23 +62,23 @@ const recipesSchema = new Schema({
     },
     reviews: [{
         name: {
-            type: [String],
+            type: String,
             required: true
         },
         photo: {
-            type: [String],
+            type: String,
             required: true
         },
         rating: {
-            type: [String],
+            type: String,
             required: true
         },
         date: {
-            type: [String],
+            type: String,
             required: true
         },
         review: {
-            type: [String],
+            type: String,
             required: true
         }
         // type: Schema.Types.ObjectId,
