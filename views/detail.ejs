@@ -5,7 +5,7 @@
                     <%= recipes.desc %>
                 </div>
 
-                    <div class="review-box">
+                    <form class="review-box">
                         <div class="review-box-title">
                             <h1>Reviews</h1>
                         </div>
@@ -35,25 +35,29 @@
                                 Your Review
                             </span>
                             <textarea class="review-textarea" rows="4" cols="40" placeholder="What do you think about this recipe?"></textarea>
-                            <button class="submit-button">SUBMIT</button>
+                            <button type="submit" class="submit-button">SUBMIT</button>
                         </div>
-                    </div>
+                    </form>
 
-                    <% for (let i = 0; i < recipes.rating.length; i++) { %>
+                    <% for (let i = 0; i < recipes.reviews.length; i++) { %>
                     <div class="submission-container">
                             <div class="sub-img-name">
-                                <img class="sub-img" src="<%= recipes.photo[i] %>">
-                                <div class="sub-name"><%= recipes.name[i] %></div>
+                                <img class="sub-img" src="<%= recipes.reviews[i].photo %>">
+                                <div class="sub-name"><%= recipes.reviews[i].name %></div>
                             </div>
                             <div class="rating-container">
                                 <% for (let j = 0; j < 5; j++) { %>
-                                <span class="sub-rating-date">&#9734;</span>
+                                    <% if (j < recipes.reviews[i].rating) { %>
+                                        <span class="sub-rating-date">&#9733;</span>
+                                    <% } else { %>
+                                        <span class="sub-rating-date">&#9734;</span>
+                                    <% } %>
                                 <% } %>
                                 
-                                <span class="sub-date"><%= recipes.date[i] %></span>
+                                <span class="sub-date"><%= recipes.reviews[i].date %></span>
                             </div>
                             <p class="sub-review">
-                                <%= recipes.review[i] %>
+                                <%= recipes.reviews[i].review %>
                             </p>
                     </div>
                     <% } %>
@@ -144,6 +148,7 @@
 <script>
     const picValue = "<%= pic %>";
     const nameValue = "<%= name %>";
+    const idValue = "<%= recipes.recipeID %>";
 </script>
 
 <script src="/js/btnDetail.js"></script>
