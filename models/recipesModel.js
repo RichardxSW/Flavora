@@ -60,26 +60,31 @@ const recipesSchema = new Schema({
         type: [String],
         required: true
     },
-    name: {
-        type: [String],
-        required: true
-    },
-    photo: {
-        type: [String],
-        required: true
-    },
-    rating: {
-        type: [String],
-        required: true
-    },
-    date: {
-        type: [String],
-        required: true
-    },
-    review: {
-        type: [String],
-        required: true
-    }
+    reviews: [{
+        name: {
+            type: [String],
+            required: true
+        },
+        photo: {
+            type: [String],
+            required: true
+        },
+        rating: {
+            type: [String],
+            required: true
+        },
+        date: {
+            type: [String],
+            required: true
+        },
+        review: {
+            type: [String],
+            required: true
+        }
+        // type: Schema.Types.ObjectId,
+        // ref: 'Review'
+    }],
+    
 })
 
 
