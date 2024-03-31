@@ -1,10 +1,5 @@
 var app = angular.module('myApp', []);
 
-app.controller('myCtrl', function($scope) {
-    var username = localStorage.getItem('username');
-    $scope.username = username;
-});
-
 document.addEventListener("DOMContentLoaded", function () {
     // const params = new URLSearchParams(window.location.search);
     // const id = params.get('id');

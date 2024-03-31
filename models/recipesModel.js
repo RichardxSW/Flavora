@@ -87,6 +87,4 @@ const recipesSchema = new Schema({
     
 })
 
-
-
 module.exports = model('Recipe', recipesSchema)

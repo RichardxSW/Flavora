@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
         btnUnsave.style.display = "none";
         btnSave.style.display = "inline-block";
     })
-
-    
 });
 
 var app = angular.module('myApp', []);
