@@ -372,7 +372,7 @@ button.unsaved {
 }
 
 .stats-item:not(:last-child) {
-    border-inline-end: 1px solid black;
+    border-inline-end: 3px solid #ff7f50;
 } 
 
 .ingr, .mnt, .clr {
@@ -426,7 +426,7 @@ button.unsaved {
 details{
     margin-bottom: 20px;
     width: 500px;
-    background-color: #ff7f50;
+    background-color: #ffd3c3;
     border-radius: 1em;
 }
 
