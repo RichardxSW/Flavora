@@ -11,6 +11,8 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const Recipes = require('./models/recipesModel');
+const User = require("./models/userModel");
+const bcrypt = require("bcrypt");
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -56,6 +58,21 @@ app.use(
     })
 );
 
+app.get("/auth/google", 
+  passport.authenticate("google", { scope: ['email','profile'] })
+);
+
+app.get("/auth/google/callback",
+    passport.authenticate("google", {
+        successRedirect: "/home",
+        failureRedirect: "/auth/failure",
+    }),
+);
+
+app.get("/auth/failure", (req,res)=>{
+    res.send("something went wrong");
+})
+
 app.use((req, res, next) => {
     if (req.path.slice(-1) === '/' && req.path.length > 1) {
       const query = req.url.slice(req.path.length)
@@ -78,7 +95,7 @@ app.get('/home', async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            res.render('index', {recipes: recipes , title: 'Home', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value })
+            res.render('index', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Home', layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -86,17 +103,13 @@ app.get('/home', async (req, res) => {
         res.status(500).send("Internal Server Error")
     }
 })
-
-// app.get('/detail', (req, res) => {
-//     res.render('detail', {title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
-// });
 
 app.get('/detail/:recipeID', async (req, res) => {
     try {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
         if (recipes) {
-            res.render('detail', {recipes , title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
+            res.render('detail', {recipes: recipes , name: req.user.displayName, pic: req.user.profilePicture, title: 'Detail', layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -104,20 +117,6 @@ app.get('/detail/:recipeID', async (req, res) => {
         res.status(500).send("Internal Server Error")
     }
 })
-
-// app.get('/search/:recipeID', async (req, res) => {
-//     try {
-//         const recipeID = req.params.recipeID
-//         const recipes = await Recipes.findOne({ recipeID })
-//         if (recipes) {
-//             res.render('detail', {recipes , title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
-//         } else {
-//             res.status(404).send("Recipe not found")
-//         }
-//     } catch (error) { 
-//         res.status(500).send("Internal Server Error")
-//     }
-// })
 
 app.post('/detail/:recipeID', async (req, res) => {
     try {
@@ -155,6 +154,50 @@ app.get('/recent', (req, res) => {
 app.get('/pinned', (req, res) => {
     res.render('pinned', {title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
 });
+
+// // Register route
+// app.post("/register", async (req, res) => {
+//     try {
+//       const { name, photo, password } = req.body;
+//       // Hash password
+//       const hashedPassword = await bcrypt.hash(password, 10);
+//       // Create new user
+//       const newUser = new User({
+//         name,
+//         photo,
+//         password: hashedPassword,
+//       });
+//       // Save user to database
+//       await newUser.save();
+//       res.status(201).json({ success: true, message: "User created successfully" });
+//     } catch (error) {
+//       console.error("Error registering user:", error);
+//       res.status(500).json({ success: false, message: "Internal server error" });
+//     }
+//   });
+
+// app.get("/login/failed", (req, res) => {
+//     res.status(401).json({
+//       success: false,
+//       message: "failure",
+//     });
+//   });
+  
+//   app.get("/logout", (req, res) => {
+//     req.logout();
+//     res.redirect(CLIENT_URL);
+//   });
+
+//   app.get("/login/success", (req, res) => {
+//     if (req.user) {
+//       res.status(200).json({
+//         success: true,
+//         message: "successfull",
+//         user: req.user,
+//         //   cookies: req.cookies
+//       });
+//     }
+//   });
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
