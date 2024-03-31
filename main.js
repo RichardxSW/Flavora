@@ -64,7 +64,7 @@ app.get('/home', async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            res.render('index', {recipes: recipes , title: 'Home', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
+            res.render('index', {recipes: recipes , title: 'Home', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value })
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -91,19 +91,19 @@ app.get('/detail/:recipeID', async (req, res) => {
     }
 })
 
-app.get('/search/:recipeID', async (req, res) => {
-    try {
-        const recipeID = req.params.recipeID
-        const recipes = await Recipes.findOne({ recipeID })
-        if (recipes) {
-            res.render('detail', {recipes , title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
-        } else {
-            res.status(404).send("Recipe not found")
-        }
-    } catch (error) { 
-        res.status(500).send("Internal Server Error")
-    }
-})
+// app.get('/search/:recipeID', async (req, res) => {
+//     try {
+//         const recipeID = req.params.recipeID
+//         const recipes = await Recipes.findOne({ recipeID })
+//         if (recipes) {
+//             res.render('detail', {recipes , title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
+//         } else {
+//             res.status(404).send("Recipe not found")
+//         }
+//     } catch (error) { 
+//         res.status(500).send("Internal Server Error")
+//     }
+// })
 
 app.get('/recent', (req, res) => {
     res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});

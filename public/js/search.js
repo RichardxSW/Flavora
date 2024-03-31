@@ -1,31 +1,27 @@
-// // Mendapatkan input pencarian
-// const searchBar = document.querySelector('.navbar__search-input');
+// let recipes = [];
+const recipesObject = JSON.parse(recipes);
+// Menggunakan variabel recipesObject untuk melakukan pencarian
+function performSearch(event) {
+    if (event.key === 'Enter') {
+        const searchKeyword = event.target.value.toLowerCase(); // Mendapatkan kata kunci pencarian dari input
 
-// // Menambahkan event listener untuk input pencarian
-// searchBar.addEventListener('keypress', function(event) {
-//     // Periksa apakah tombol yang ditekan adalah tombol "Enter" (kode 13)
-//     if (event.key === 'Enter') {
-//         // Lakukan pencarian
-//         performSearch();
-//     }
-// });
+        // Pastikan bahwa recipesObject adalah array sebelum mencari
+        if (Array.isArray(recipesObject)) {
+            // Cari resep yang sesuai dengan kata kunci pencarian
+            const matchedRecipe = recipesObject.find(recipe => 
+                recipe.title.toLowerCase().includes(searchKeyword)
+            );
 
-// // Fungsi untuk melakukan pencarian
-// function performSearch() {
-//     const searchKeyword = searchBar.value.toLowerCase(); // Mendapatkan kata kunci pencarian dari input
-
-//     // Cari resep yang sesuai dengan kata kunci pencarian
-//     const matchedRecipe = recipes.find(recipe => 
-//         recipe.title.toLowerCase().includes(searchKeyword) ||
-//         recipe.description.toLowerCase().includes(searchKeyword)
-//     );
-
-//     if (matchedRecipe) {
-//         // Jika resep cocok ditemukan, arahkan pengguna ke halaman detail resep tersebut
-//         const recipeID = matchedRecipe.recipeID;
-//         window.location.href = `/detail/${recipeID}`;
-//     } else {
-//         // Jika tidak ada resep yang cocok, beri tahu pengguna atau lakukan tindakan lainnya
-//         alert('Recipe not found!');
-//     }
-// }
+            if (matchedRecipe) {
+                // Jika resep cocok ditemukan, arahkan pengguna ke halaman detail resep tersebut
+                const recipeID = matchedRecipe.recipeID;
+                window.location.href = `/detail/${recipeID}`;
+            } else {
+                // Jika tidak ada resep yang cocok, beri tahu pengguna atau lakukan tindakan lainnya
+                alert('Recipe not found!');
+            }
+        } else {
+            console.error('recipesObject is not an array:', recipesObject);
+        }
+    }
+}

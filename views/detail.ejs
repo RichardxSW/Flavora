@@ -142,10 +142,14 @@
             </div>
         </div>
 <script>
+    const recipes = `<%- JSON.stringify(recipes) %>`;
+</script>   
+<script>
     const picValue = "<%= pic %>";
     const nameValue = "<%= name %>";
 </script>
 
+<script src="/js/search.js"></script>
 <script src="/js/btnDetail.js"></script>
 <script src="/js/detail.js"></script>
 <link rel="stylesheet" href="/css/detail.css">

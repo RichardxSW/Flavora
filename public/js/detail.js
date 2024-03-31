@@ -262,10 +262,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Refresh halaman untuk memperbarui daftar review
                 window.location.reload();
-            } catch (error) {
-                console.error(error);
-                alert('Failed to submit review');
-            }
+              } catch (error) {
+                  console.error(error);
+                  alert('Failed to submit review');
+              }
 
               const bintang = "\u2605".repeat(5);
 
