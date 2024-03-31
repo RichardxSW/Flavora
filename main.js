@@ -9,6 +9,7 @@ const cookieSession = require("cookie-session");
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const fs = require('fs');
 const Recipes = require('./models/recipesModel');
 dotenv.config();
 
@@ -23,7 +24,20 @@ app.use(morgan('dev'));
 app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
 
 mongoose.connect(MONGO_URL)
-    .then(() => console.log(`MongoDB connected at ${MONGO_URL}`))
+    .then(async () => {
+        console.log(`MongoDB connected at ${MONGO_URL}`);
+
+        const dataJSON = fs.readFileSync('public/recipes.json');
+        const data = JSON.parse(dataJSON);
+        
+        // Masukkan data ke MongoDB
+        try {
+            await Recipes.insertMany(data);
+            console.log('Data berhasil dimasukkan ke MongoDB');
+        } catch (err) {
+            console.error(err);
+        }
+    })
     .catch(err => console.log(err))
 
 app.use(
@@ -108,7 +122,7 @@ app.get('/search/:recipeID', async (req, res) => {
 app.post('/detail/:recipeID', async (req, res) => {
     try {
         const { recipeID } = req.params;
-        const { rating, review, date, name  } = req.body;
+        const { rating, review, date, name , photo } = req.body;
 
         // Lakukan sesuatu dengan data yang diterima, misalnya menyimpan ke database menggunakan Mongoose
         // Contoh:
@@ -121,7 +135,8 @@ app.post('/detail/:recipeID', async (req, res) => {
             rating,
             review,
             date,
-            name
+            name,
+            photo
         });
 
         await recipe.save();
