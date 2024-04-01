@@ -169,11 +169,11 @@ app.post('/detail/:recipeID', async (req, res) => {
 });
 
 app.get('/recent', (req, res) => {
-    res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
+    res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
 });
 
 app.get('/pinned', (req, res) => {
-    res.render('pinned', {title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value});
+    res.render('pinned', {title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
 });
 
 // // Register route

@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
             spaceBetween: 3,
             runCallbacksOnInit: true,
             observer: true,
-            observeParents: true,
-            observeSlideChildren: true,
-            updateOnImagesReady: true,
+            // observeParents: true,
+            // observeSlideChildren: true,
+            // updateOnImagesReady: true,
         });
     
         // Update Swiper dan scrollbar
