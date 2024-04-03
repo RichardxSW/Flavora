@@ -8,6 +8,15 @@
                 <i class="fa fa-cutlery" style="font-size:15px"><p><%= recipe.category %></p></i> 
             </div>
         </div>
+
+        <div class="avg-rating">
+            <p>
+                <span class="avg-star">&#9733;</span>
+                <span class="avg-total"><%= recipe.averageRating %></span>
+                <span class="total-rating"><%= '(' + recipe.totalReviews + ')'%></span>
+            </p>
+        </div>
+
         <div class="view-icon">
             <i class="fa-solid fa-eye"></i>
             <span class="view-text">150</span>
