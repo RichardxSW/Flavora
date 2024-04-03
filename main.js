@@ -116,7 +116,12 @@ app.get('/home', async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            res.render('index', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Home', layout: "mainlayout"})
+            res.render('index', {
+                recipes: recipes, 
+                name: req.user.displayName, 
+                pic: req.user.profilePicture , 
+                title: 'Home', 
+                layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -130,7 +135,12 @@ app.get('/detail/:recipeID', async (req, res) => {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
         if (recipes) {
-            res.render('detail', {recipes: recipes , name: req.user.displayName, pic: req.user.profilePicture, title: 'Detail', layout: "mainlayout"})
+            res.render('detail', {
+                recipes: recipes , 
+                name: req.user.displayName, 
+                pic: req.user.profilePicture, 
+                title: 'Detail', 
+                layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -159,6 +169,22 @@ app.post('/detail/:recipeID', async (req, res) => {
             photo
         });
 
+        // Hitung totalRating, totalReviews, dan averageRating yang baru
+        const totalReviews = recipe.reviews.length;
+        let totalRating = 0;
+        let averageRating = 0;
+        if (totalReviews > 0) {
+            for (let i = 0; i < totalReviews; i++) {
+                totalRating += parseInt(recipe.reviews[i].rating);
+            }
+            averageRating = totalRating / totalReviews;
+            averageRating = averageRating.toFixed(1);
+        }
+
+        // Simpan totalReviews dan averageRating ke dalam dokumen resep
+        recipe.totalReviews = totalReviews;
+        recipe.averageRating = averageRating;
+
         await recipe.save();
 
         res.status(201).send("Review added successfully");
@@ -169,11 +195,23 @@ app.post('/detail/:recipeID', async (req, res) => {
 });
 
 app.get('/recent', (req, res) => {
-    res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
+    res.render('recent', {
+        title: 'Recent', 
+        layout: "mainlayout", 
+        name: req.user.displayName, 
+        pic: req.user.profilePicture, 
+        title: 'Detail', 
+        layout: "mainlayout"});
 });
 
 app.get('/pinned', (req, res) => {
-    res.render('pinned', {title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
+    res.render('pinned', {
+        title: 'Pinned', 
+        layout: "mainlayout", 
+        name: req.user.displayName, 
+        pic: req.user.profilePicture,
+        title: 'Detail', 
+        layout: "mainlayout"});
 });
 
 // // Register route

@@ -143,6 +143,28 @@
     margin-bottom: 40px;
 }
 
+.avg-rating p {
+  display: flex;
+  align-items: center;
+}
+
+.avg-star {
+  color: #ff7f50;
+  font-size: 25px;
+}
+
+.avg-total {
+  margin-left: 5px;
+  margin-top: 2px;
+  font-size: 18px;
+}
+
+.total-rating {
+  margin-top: 2px;
+  margin-left: 3px;
+  font-size: 18px;
+}
+
 .desc {
   border-top: 3px solid #ff7f50;  
   text-align: justify;
@@ -158,7 +180,7 @@
   background-color: lightgoldenrodyellow;
   margin-top: 50px;
   padding: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   border: 10px solid #ff7f50;
 }
 
@@ -282,9 +304,19 @@
   background-color: #ffc1ab; /* Efek hover saat kursor diarahkan ke tombol */
 }
 
+.comment-section {
+  overflow-y: scroll;
+  max-height: 570px;
+  border: 10px solid #ff7f50;
+  background-color: lightgoldenrodyellow;
+  padding: 0 40px;
+}
+
 .submission-container {
   padding-top: 20px;
   border-top: 1px solid black;
+  flex: 0 0 auto;
+  margin-right: 10px;
 }
 
 .rating-container {

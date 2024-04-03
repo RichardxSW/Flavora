@@ -38,29 +38,32 @@
                             <button type="submit" class="submit-button">SUBMIT</button>
                         </div>
                     </form>
-
+                    
+                    <div class="comment-section">
                     <% for (let i = 0; i < recipes.reviews.length; i++) { %>
-                    <div class="submission-container">
-                            <div class="sub-img-name">
-                                <img class="sub-img" src="<%= recipes.reviews[i].photo %>">
-                                <div class="sub-name"><%= recipes.reviews[i].name %></div>
-                            </div>
-                            <div class="rating-container">
-                                <% for (let j = 0; j < 5; j++) { %>
-                                    <% if (j < recipes.reviews[i].rating) { %>
-                                        <span class="sub-rating-date">&#9733;</span>
-                                    <% } else { %>
-                                        <span class="sub-rating-date">&#9734;</span>
+                        <div class="submission-container">
+                                <div class="sub-img-name">
+                                    <img class="sub-img" src="<%= recipes.reviews[i].photo %>">
+                                    <div class="sub-name"><%= recipes.reviews[i].name %></div>
+                                </div>
+                                <div class="rating-container">
+                                    <% for (let j = 0; j < 5; j++) { %>
+                                        <% if (j < recipes.reviews[i].rating) { %>
+                                            <span class="sub-rating-date">&#9733;</span>
+                                        <% } else { %>
+                                            <span class="sub-rating-date">&#9734;</span>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
-                                
-                                <span class="sub-date"><%= recipes.reviews[i].date %></span>
-                            </div>
-                            <p class="sub-review">
-                                <%= recipes.reviews[i].review %>
-                            </p>
-                    </div>
+                                    
+                                    <span class="sub-date"><%= recipes.reviews[i].date %></span>
+                                </div>
+                                <p class="sub-review">
+                                    <%= recipes.reviews[i].review %>
+                                </p>
+                        </div>
+                    
                     <% } %>
+                    </div>
             </div>
 
             <div class="recipe-info">
@@ -77,6 +80,19 @@
                         <span class="unsaved-text">Unpin</span>
                     </button>
                 </div>  
+                <% if (recipes.totalReviews > 0) { %>
+                    <div class="avg-rating">
+                        <p>
+                            <span class="avg-star">&#9733;</span>
+                            <span class="avg-total"><%= recipes.averageRating %></span>
+                            <span class="total-rating"><%= '(' + recipes.totalReviews + ')'%></span>
+                        </p>
+                    </div>
+                    <% } else { %>
+                        <div class="avg-rating">
+                            <p>Be first to rate & review</p>
+                        </div>
+                    <% } %>
 
                 <div class="detail-stats">
 
@@ -144,14 +160,12 @@
                 </details>
 
             </div>
-        </div>
-<script>
-    const recipes = `<%- JSON.stringify(recipes) %>`;
-</script>   
+        </div> 
 <script>
     const picValue = "<%= pic %>";
     const nameValue = "<%= name %>";
     const idValue = "<%= recipes.recipeID %>";
+    const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
 
 <script src="/js/search.js"></script>
