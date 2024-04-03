@@ -84,7 +84,12 @@ const recipesSchema = new Schema({
         // type: Schema.Types.ObjectId,
         // ref: 'Review'
     }],
-    
+    totalReviews: { 
+        type: Number 
+    },
+    averageRating: {
+        type: Number 
+    }
 })
 
 module.exports = model('Recipe', recipesSchema)
