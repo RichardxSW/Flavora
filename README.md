@@ -1,6 +1,6 @@
 # Flavora - Website Resep Makanan
 
-![Flavora Logo](https://w7.pngwing.com/pngs/28/126/png-transparent-cookpad-inc-recipe-cooking-cuisine-food-cooking-food-text-recipe.png)
+![Flavora Logo](/public/img/flavora.png)
 
 Flavora adalah sebuah website yang menyediakan kumpulan resep makanan dari berbagai jenis. Temukan berbagai inspirasi memasak dengan resep-resep yang menarik dan mudah diikuti.
 
@@ -30,7 +30,7 @@ Flavora merupakan platform daring yang bertujuan untuk memudahkan pengguna dalam
 
 1. **Clone repositori ini:**
     ```bash
-    git clone https://github.com/yourusername/flavora.git
+    git clone https://github.com/RichardxSW/Flavora.git
     ```
 2. **Install dependensi:**
     ```bash
@@ -39,6 +39,6 @@ Flavora merupakan platform daring yang bertujuan untuk memudahkan pengguna dalam
     ```
 3. **Jalankan server:**
     ```bash
-    npm start
+    npm run dev / nodemon
     ```
-4. **Buka browser dan akses [http://localhost:3000]http://localhost:3000**
+4. **Buka browser dan akses http://localhost:3000**
