@@ -134,9 +134,11 @@ app.get('/detail/:recipeID', async (req, res) => {
     try {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
+        const relatedRecipes = await Recipes.find({ category: recipes.category, _id: { $ne: recipes._id } });
         if (recipes) {
             res.render('detail', {
-                recipes: recipes , 
+                recipes: recipes ,
+                relatedRecipes: relatedRecipes, 
                 name: req.user.displayName, 
                 pic: req.user.profilePicture, 
                 title: 'Detail', 
