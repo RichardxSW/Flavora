@@ -2,7 +2,7 @@
     {
         "recipeID": 1,
         "title": "Nasi Goreng",
-        "category": ["Lunch","Breakfast"],
+        "category": ["Breakfast"],
         "nationality": "Asian",
         "featured": "yes",
         "time": "10 Minutes",
