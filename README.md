@@ -1,6 +1,6 @@
 # Flavora - Website Resep Makanan
 
-<img src="public/img/flavora.png" alt="Flavora Icon">
+![Flavora Logo](public/img/flavora.png)
 
 Flavora adalah sebuah website yang menyediakan kumpulan resep makanan dari berbagai jenis. Temukan berbagai inspirasi memasak dengan resep-resep yang menarik dan mudah diikuti.
 
