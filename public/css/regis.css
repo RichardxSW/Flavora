@@ -15,7 +15,7 @@ body{
 }
 
 .wrapper{
-    width: 750px;
+    width: 550px;
     background: #41557e;
     /* border: 2px solid rgba(255, 255, 255, .2);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
@@ -24,6 +24,7 @@ body{
     color: #fff;
     padding: 40px 35px 55px ;
     margin: 0 10px;
+    text-align: center;
 }
 
 .wrapper h1{
@@ -34,13 +35,13 @@ body{
 
 .wrapper .input-box{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
 .input-box .input-field{
     position: relative;
-    width: 48%;
+    width: 70%;
     height: 50px;
     margin: 13px 0;
 }
@@ -67,7 +68,7 @@ body{
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .wrapper label{
@@ -82,7 +83,7 @@ body{
 }
 
 .wrapper .btn{
-    width: 100%;
+    width: 200px;
     height: 45px;
     background: #fff;
     border: none;
@@ -93,6 +94,22 @@ body{
     font-size: 16px;
     color: #333;
     font-weight: 600;
+}
+
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px; /* Mengurangi margin atas untuk rapih */
+}
+
+.login-link a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 576px) {
