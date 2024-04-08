@@ -1,16 +1,16 @@
 "use strict";
 
-window.addEventListener('beforeunload', () => {
-    sessionStorage.setItem('scrollPosition', window.scrollY);
-});
+// window.addEventListener('beforeunload', () => {
+//     sessionStorage.setItem('scrollPosition', window.scrollY);
+// });
 
-window.addEventListener('load', () => {
-    const scrollPosition = sessionStorage.getItem('scrollPosition');
-    if (scrollPosition) {
-        window.scrollTo(0, scrollPosition);
-        sessionStorage.removeItem('scrollPosition');
-    }
-});
+// window.addEventListener('load', () => {
+//     const scrollPosition = sessionStorage.getItem('scrollPosition');
+//     if (scrollPosition) {
+//         window.scrollTo(0, scrollPosition);
+//         sessionStorage.removeItem('scrollPosition');
+//     }
+// });
 
 const swiperWrapper = document.querySelector(".swiper-wrapper"); // Menambahkan ini di sini untuk mengakses elemen swiper-wrapper
 document.addEventListener("DOMContentLoaded", function () {

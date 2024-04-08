@@ -3,15 +3,19 @@ const app = express();
 const cors = require("cors");
 const passportSetup = require("./passport");
 const passport = require("passport");
-const authRoute = require("./routes/auth")
+const authGoogle = require("./routes/auth")
+const authLocal = require("./routes/authLocal")
 const expressLayouts = require("express-ejs-layouts");
 const cookieSession = require("cookie-session");
+const session = require("express-session");
+const flash = require("express-flash");
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
+const LocalUser = require("./models/localuserModel");
 const bcrypt = require("bcrypt");
 dotenv.config();
 
@@ -51,9 +55,18 @@ app.use(
     cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
 );
 
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}))
+
+app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/auth", authRoute);
+app.use(flash());
+app.use("/auth", authGoogle);
+app.use("/auth", authLocal);
 
 app.use(
     cors({
@@ -62,21 +75,6 @@ app.use(
       credentials: true,
     })
 );
-
-app.get("/auth/google", 
-  passport.authenticate("google", { scope: ['email','profile'] })
-);
-
-app.get("/auth/google/callback",
-    passport.authenticate("google", {
-        successRedirect: "/home",
-        failureRedirect: "/auth/failure",
-    }),
-);
-
-app.get("/auth/failure", (req,res)=>{
-    res.send("something went wrong");
-})
 
 app.use((req, res, next) => {
     if (req.path.slice(-1) === '/' && req.path.length > 1) {
@@ -112,23 +110,74 @@ app.get('/register', (req, res) => {
     res.render('regis.ejs', {title: 'Register', layout: "accountlayout"});
 });
 
-app.get('/home', async (req, res) => {
+app.post('/register', async (req, res) => {
+    const localuser = new LocalUser({ 
+        email : req.body.email,
+        username: req.body.username, 
+        password: req.body.password });
+    try {
+      await localuser.save();
+      res.redirect('/local');
+    } catch (error){
+      res.redirect('/register');
+    }
+  });
+
+app.get('/local', (req, res) => {
+    res.render('loginEmail.ejs', {
+        title: 'Login', 
+        layout: "accountlayout",
+        });
+        req.flash('error','incorrect login')
+});
+
+app.post('/local', passport.authenticate('local',{
+    successRedirect: '/home',
+    failureRedirect: '/local',
+    failureFlash: true
+}));
+
+// Middleware untuk memeriksa apakah pengguna terautentikasi dan jenis otentikasi
+function isAuthenticated(req, res, next) {
+    if (req.user) {
+        // Jika pengguna terautentikasi dan objek req.user ada
+        return next();
+    } else {
+    // Jika pengguna tidak terautentikasi atau req.user tidak ada, redirect ke halaman login
+    res.redirect('/');
+    }
+}
+
+app.get('/home', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { // Jika pengguna telah login
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
+    
             res.render('index', {
                 recipes: recipes, 
-                name: req.user.displayName, 
-                pic: req.user.profilePicture , 
+                name: name, // Nama pengguna
+                pic: pic, // URL gambar profil
                 title: 'Home', 
-                layout: "mainlayout"})
+                layout: "mainlayout"
+            });
         } else {
-            res.status(404).send("Recipe not found")
+            res.status(404).send("Recipe not found");
         }
     } catch (error) { 
-        res.status(500).send("Internal Server Error")
+        res.status(500).send("Internal Server Error");
     }
-})
+});
 
 app.get('/detail/:recipeID', async (req, res) => {
     try {
@@ -136,11 +185,22 @@ app.get('/detail/:recipeID', async (req, res) => {
         const recipes = await Recipes.findOne({ recipeID })
         const relatedRecipes = await Recipes.find({ category: recipes.category, _id: { $ne: recipes._id } });
         if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { // Jika pengguna telah login
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
             res.render('detail', {
                 recipes: recipes ,
                 relatedRecipes: relatedRecipes, 
-                name: req.user.displayName, 
-                pic: req.user.profilePicture, 
+                name: name, 
+                pic: pic, 
                 title: 'Detail', 
                 layout: "mainlayout"})
         } else {
