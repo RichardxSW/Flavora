@@ -1,5 +1,5 @@
 // let recipes = [];
-const recipesObject = JSON.parse(recipes);
+const recipesObject = JSON.parse(resep);
 // Mendaftarkan event listener untuk tombol pencarian
 const searchButton = document.querySelector('.navbar__search-button');
 if (searchButton) {

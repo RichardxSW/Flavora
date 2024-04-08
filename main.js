@@ -195,6 +195,7 @@ app.get('/home', async (req, res) => {
         const recipes = await Recipes.find();
         if (recipes) {
             res.render('index', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Home', layout: "mainlayout"})
+            // res.render('index', {recipes: recipes, user: req.user , title: 'Home', layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -203,12 +204,49 @@ app.get('/home', async (req, res) => {
     }
 })
 
+app.get('/search', async (req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            res.render('search', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Search', layout: "mainlayout"})
+            // res.render('index', {recipes: recipes, user: req.user , title: 'Home', layout: "mainlayout"})
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+    } catch (error) { 
+        res.status(500).send("Internal Server Error")
+    }
+})
+
+// app.put('/detail/:recipeID', async (req, res) => {
+//     try {
+//         const recipeId = req.body._id; // Menggunakan _id dari MongoDB untuk resep
+//         const userId = req.body._id; // Menggunakan _id dari MongoDB untuk user
+
+//         const recipe = await Recipes.findById(recipeId);
+//         const user = await User.findById(userId);
+
+//         if (!recipe || !user) {
+//             return res.status(404).send("Recipe or User not found");
+//         }
+
+//         user.savedRecipes.push(recipe);
+//         await user.save();
+
+//         res.status(201).json({ savedRecipes: user.savedRecipes });
+//     } catch (error) { 
+//         console.error(error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// });
+
 app.get('/detail/:recipeID', async (req, res) => {
     try {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
+        const resep = await Recipes.find()
         if (recipes) {
-            res.render('detail', {recipes: recipes , name: req.user.displayName, pic: req.user.profilePicture, title: 'Detail', layout: "mainlayout"})
+            res.render('detail', {recipes: recipes ,resep: resep, name: req.user.displayName, pic: req.user.profilePicture, title: 'Detail', layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -246,13 +284,31 @@ app.post('/detail/:recipeID', async (req, res) => {
     }
 });
 
-app.get('/recent', (req, res) => {
-    res.render('recent', {title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
-});
+app.get('/recent', async (req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            res.render('recent', {recipes: recipes, title: 'Recent', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
 
-app.get('/pinned', (req, res) => {
-    res.render('pinned', {title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
-});
+app.get('/pinned', async(req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            res.render('pinned', {recipes: recipes, title: 'Pinned', layout: "mainlayout", name: req.user.displayName, pic: req.user.profilePicture});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
 
 // // Register route
 // app.post("/register", async (req, res) => {

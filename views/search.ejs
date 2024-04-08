@@ -1,0 +1,110 @@
+  <div class="content">
+    <div class="recommended">
+      <div class="imgwrap">
+        <a href="/detail/7">
+            <img src="/img/banh mi.png">
+        </a>
+      </div>
+      <div class="text">
+        <h4>Recommended recipe</h4>
+        <a href="/detail/7">
+          <h5>Banh mi</h5>
+        </a>
+        <p>An airy and crunchy French-style baguette, stuffed with an every varying combination of meats, vegetables, and sauces.</p>
+        <div class ="time row">
+          <div class="row">
+            <i class="fa fa-clock" style="font-size:15px"><p>50 Minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="categories">
+      <ul class="categories__list">
+        <li class="categories__item active"><a href="javascript:void(0)" data-id="All" onclick="changeCategory('All')">All</a></li>
+        <li class="categories__item"><a href="javascript:void(0)" data-id="Breakfast" onclick="changeCategory('Breakfast')">Breakfast</a></li>
+        <li class="categories__item"><a href="javascript:void(0)" data-id="Lunch" onclick="changeCategory('Lunch')">Lunch</a></li>
+        <li class="categories__item"><a href="javascript:void(0)" data-id="Dinner" onclick="changeCategory('Dinner')">Dinner</a></li>
+        <li class="categories__item"><a href="javascript:void(0)" data-id="Snack" onclick="changeCategory('Snack')">Snack</a></li>
+      </ul>
+      <div class="swiper swiper-product">
+        <div class="swiper-wrapper">
+          <% recipes.forEach(function(recipe) { %>
+            <div class="swiper-slide" data-category="<%= recipe.category %>">
+                <%- include('layouts/card', { recipe: recipe}) %>
+            </div>
+        <% }); %>
+        </div>
+      </div>
+    </div>
+  
+    <div class="featured">
+      <h3>Featured Recipes</h3>
+      <div class="swiper swiper1">
+        <div class="swiper-wrapper">
+          <% recipes.forEach((recipe) => { %>
+            <% if (recipe.featured === 'yes') { %>
+              <div class="swiper-slide">
+                <%- include('layouts/card', { recipe: recipe}) %>
+              </div>
+            <% } %>
+        <% }); %>
+        </div>
+      </div>
+    </div>
+  
+    <div class="asian">
+      <h3>Latest Asian Recipes</h3>
+      <div class="swiper swiper2">
+        <div class="swiper-wrapper">
+          <% recipes.forEach((recipe) => { %>
+            <% if (recipe.nationality === 'Asian') { %>
+              <div class="swiper-slide">
+                <%- include('layouts/card', { recipe: recipe}) %>
+              </div>
+            <% } %>
+        <% }); %>
+        </div>
+      </div>
+    </div>
+  
+    <div class="western">
+      <h3>Latest Western Recipes</h3>
+      <div class="swiper swiper3">
+        <div class="swiper-wrapper">
+          <% recipes.forEach((recipe) => { %>
+            <% if (recipe.nationality === 'Western') { %>
+              <div class="swiper-slide">
+                <%- include('layouts/card', { recipe: recipe}) %>
+              </div>
+            <% } %>
+        <% }); %>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="under">
+      <h3>5 Minutes & Under</h3>
+      <div class="swiper swiper4">
+        <div class="swiper-wrapper">
+          <% recipes.forEach((recipe) => { %>
+            <% if (recipe.minutes <= 5) { %>
+              <div class="swiper-slide">
+                <%- include('layouts/card', { recipe: recipe}) %>
+              </div>
+            <% } %>
+        <% }); %>
+        </div>
+      </div>
+    </div> 
+  </div>
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/tes.js"></script>
+  <script>
+     const recipes = `<%- JSON.stringify(recipes) %>`;
+  </script>
+  <script src="/js/button.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+  

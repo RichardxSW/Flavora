@@ -81,8 +81,6 @@ const recipesSchema = new Schema({
             type: String,
             required: true
         }
-        // type: Schema.Types.ObjectId,
-        // ref: 'Review'
     }],
     
 })

@@ -1,113 +1,73 @@
 const {Router} = require('express');
 const router = Router()
 const Recipes = require('../../models/recipesModel');
+const User = require('../../models/userModel');
 
 router.get('/', async (req, res) => {
     try {
         const recipes = await Recipes.find()
         if (!recipes) {
-            return res.status(404).json({message: 'Not found'})
-        }const sorted = recipes.sort((a, b) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime()
-        }) 
-        res.status(200).json(sorted)
+            return res.status(404).json({ message: 'Not found' })
+        } 
+        res.status(200).json(recipes) // Mengirim data JSON jika pencarian berhasil
     } catch (error) { 
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 })
 
 
 router.post('/', async (req, res) => {
     const recipes = new Recipes(req.body)
-
     try {
+        // const userId = req.user._id;
         const newRecipe = await recipes.save()
         if (!newRecipe) {
             return res.status(400).json({message: 'Bad request'})
         }
         res.status(201).json(newRecipe)
+        // res.status(201).json({userID : userId});
     } catch (error) {
         res.status(400).json({message: error.message})
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    try
-    {
-        const deletedRecipe = await Recipes.findByIdAndDelete(req.params.id)
-        if (!deletedRecipe) {
-            return res.status(404).json({message: 'Not found'})
-        }
-        res.status(200).json(deletedRecipe)
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-    
-})
+// router.put('/home', async (req, res) => {
+//     try {
+//         const recipes = await Recipes.findById(req.body.recipeID);
+//         const user = await User.findById(req.body.googleId);
+//         user.savedRecipes.push(recipes);
+//         await user.save();
+//         res.json({savedRecipes: user.savedRecipes});
+//         // if (recipes) {
+//         //     res.render('index', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Home', layout: "mainlayout"})
+//         // } else {
+//         //     res.status(404).send("Recipe not found")
+//         // }
+//     } catch (error) { 
+//         res.status(500).send("Internal Server Error")
+//     }
+// })
 
+// router.get("/savedRecipes/ids", async(req, res)=>{
+//     try{
+//         const user = await User.findById(req.body.userID);
+//         res.json({savedRecipes: user?.savedRecipes});
+//     } catch (err){
+//         res.json(err)
+//     }
+// })
 
-router.put('/:id', async (req, res) => {
-    
-    try {
-        const updatedRecipe = await Recipes.findByIdAndUpdate(req.params.id, req.body)
-        if (!updatedRecipe) {
-            return res.status(404).json({message: 'Not found'})
-        }
-        const update = {...updatedRecipe._doc, ...req.body}
-        res.status(200).json(update)
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-    
-})
-
-router.get('/detail/:recipeID', async (req, res) => {
-    try {
-        const recipeID = req.params.recipeID
-        const recipes = await Recipes.findOne({ id: recipeID })
-        if (recipes) {
-            res.render('detail', {recipes , title: 'Detail', layout: "mainlayout", name: req.user.displayName, pic: req.user.photos[0].value})
-        } else {
-            res.status(404).send("Recipe not found")
-        }
-        // res.status(200).json(sorted)
-    } catch (error) { 
-        res.status(500).send("Internal Server Error")
-    }
-})
-
-router.get('/detail/:id', async (req, res) => {
-    try {
-        const recipes = await Recipes.find()
-        if (!recipes) {
-            return res.status(404).json({message: 'Not found'})
-        }const sorted = recipes.sort((a, b) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime()
-        }) 
-        res.status(200).json(sorted)
-    } catch (error) { 
-        res.status(500).json({message: error.message})
-    }
-})
-
-router.post('/detail/:id', async (req, res) => {
-    const recipes = new Recipes({
-      name: req.body.name,
-      rating: req.body.rating,
-      date: new Date().toLocaleDateString(),
-      review: req.body.review,
-      photo: req.body.photo})
-
-    try {
-        const newRecipe = await recipes.save()
-        if (!newRecipe) {
-            return res.status(400).json({message: 'Bad request'})
-        }
-        res.status(201).json(newRecipe)
-    } catch (error) {
-        res.status(400).json({message: error.message})
-    }
-})
+// router.get("/savedRecipes", async(req, res)=>{
+//     try{
+//         const user = await User.findById(req.body.userID);
+//         const savedRecipes =  await Recipes.find({
+//             _id: { $in: user.savedRecipes},
+//         });
+//         res.json({savedRecipes});
+//     } catch (err){
+//         res.json(err)
+//     }
+// })
 
 
 module.exports = router

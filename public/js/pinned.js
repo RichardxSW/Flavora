@@ -1,13 +1,3 @@
-var app = angular.module('myApp', []);
-
-// Mendefinisikan controller untuk navbar
-app.controller('myCtrl', function($scope) {
-
-    var username = localStorage.getItem('username');
-
-    $scope.username = username;
-});
-
 function changeCategory(category) {
     var categoryItems = document.querySelectorAll('.categories__item');
     
