@@ -153,14 +153,20 @@ app.get('/profile', (req, res) => {
             if (req.user.username) { 
                 name = req.user.username || ''; 
                 pic = '/img/profilepic.jpg'; 
+                email = req.user.email || '';
+                password = req.user.password || '';
             } else {
                 name = req.user.displayName || '';
                 pic = req.user.profilePicture || '';
+                email = req.user.email || '';
+                password = req.user.password || '';
             }
         }
         res.render('profile', {
             name: name, 
             pic: pic, 
+            email: email,
+            password: password,
             title: 'Profile', 
             layout: "accountLayout"})
 });
