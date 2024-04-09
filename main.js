@@ -149,17 +149,20 @@ function isAuthenticated(req, res, next) {
 }
 
 app.get('/profile', (req, res) => {
+    let name = '';
+    let email = '';
+    let password = '';
         if (req.user) { // Jika pengguna telah login
             if (req.user.username) { 
                 name = req.user.username || ''; 
                 pic = '/img/profilepic.jpg'; 
                 email = req.user.email || '';
-                password = req.user.password || '';
+                password = maskPassword(req.user.password || '');
             } else {
                 name = req.user.displayName || '';
                 pic = req.user.profilePicture || '';
                 email = req.user.email || '';
-                password = req.user.password || '';
+                password = maskPassword(req.user.password || '');
             }
         }
         res.render('profile', {
@@ -170,6 +173,10 @@ app.get('/profile', (req, res) => {
             title: 'Profile', 
             layout: "accountLayout"})
 });
+
+function maskPassword(password) {
+    return '*'.repeat(password.length);
+}
 
 app.get('/home', isAuthenticated, async (req, res) => {
     try {
