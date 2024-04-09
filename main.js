@@ -148,6 +148,23 @@ function isAuthenticated(req, res, next) {
     }
 }
 
+app.get('/profile', (req, res) => {
+        if (req.user) { // Jika pengguna telah login
+            if (req.user.username) { 
+                name = req.user.username || ''; 
+                pic = '/img/profilepic.jpg'; 
+            } else {
+                name = req.user.displayName || '';
+                pic = req.user.profilePicture || '';
+            }
+        }
+        res.render('profile', {
+            name: name, 
+            pic: pic, 
+            title: 'Profile', 
+            layout: "accountLayout"})
+});
+
 app.get('/home', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
