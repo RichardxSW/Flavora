@@ -2,7 +2,7 @@
     {
         "recipeID": 1,
         "title": "Nasi Goreng",
-        "category": ["Lunch","Breakfast"],
+        "category": ["Breakfast"],
         "nationality": "Asian",
         "featured": "yes",
         "time": "10 Minutes",
@@ -55,7 +55,9 @@
             "date": "3/26/2024",
             "review": "Amazing recipe! Now a favorite dish. Thanks!"
           }
-        ]
+        ],
+        "totalReviews": 5,
+        "averageRating": 4.4
     },
     {
         "recipeID": 2,
@@ -106,7 +108,9 @@
             "date": "3/26/2024",
             "review": "WONDERFUL!!"
           }
-        ]
+        ],
+        "totalReviews": 3,
+        "averageRating": 4.7
     },
     {
         "recipeID": 3,
@@ -164,7 +168,9 @@
             "date": "3/15/2024",
             "review": "Fantastic recipe! My friends couldn't get enough of it."
           }
-        ]
+        ],
+        "totalReviews": 2,
+        "averageRating": 4.5
     },
     {
         "recipeID": 4,
@@ -201,7 +207,9 @@
             "date" : "3/20/2024",
             "review" : "The dish was amazing!"
           }
-        ]
+        ],
+        "totalReviews": 1,
+        "averageRating": 5
     },
     {
         "recipeID": 5,
@@ -251,7 +259,9 @@
             "date" : "3/22/2024",
             "review" : "Absolutely loved it! Best recipe ever."
           }
-        ]
+        ],
+        "totalReviews": 3,
+        "averageRating": 3.7
     },
     {
         "recipeID": 6,
@@ -321,7 +331,9 @@
             "date" : "3/20/2024",
             "review" : "Disappointing experience. Not worth trying."
           }
-        ]
+        ],
+        "totalReviews": 4,
+        "averageRating": 4.3
     },
     {
         "recipeID": 7,
@@ -439,7 +451,9 @@
             "date" : "3/19/2024",
             "review" : "Amazing recipe! A must-try for everyone."
           }
-        ]
+        ],
+        "totalReviews": 10,
+        "averageRating": 3.7
     },
     {
         "recipeID": 8,
@@ -494,7 +508,9 @@
             "date" : "3/2/2024",
             "review" : "Amazing recipe! Highly recommended."
           }
-        ]
+        ],
+        "totalReviews": 2,
+        "averageRating": 4.5
     },
     {
         "recipeID": 9,
@@ -547,7 +563,9 @@
             "date" : "3/7/2024",
             "review" : "Disappointing experience. Not worth it."
           }
-        ]
+        ],
+        "totalReviews": 3,
+        "averageRating": 3
     },
     {
         "recipeID": 10,
@@ -610,7 +628,9 @@
             "date" : "3/8/2024",
             "review" : "Disappointing experience. Not worth it."
           }
-        ]
+        ],
+        "totalReviews": 4,
+        "averageRating": 3.5
     },
     {
         "recipeID": 11,
@@ -667,6 +687,8 @@
             "date" : "3/17/2024",
             "review" : "Disappointing experience. Not worth it."
           }
-        ]
+        ],
+        "totalReviews": 3,
+        "averageRating": 3
     }
 ]

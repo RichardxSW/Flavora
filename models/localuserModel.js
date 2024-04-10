@@ -1,28 +1,22 @@
 const {Schema, model} = require('mongoose')
 
-const localuserSchema = new Schema({
-    fullName: {
-        type: String,
-        required: true, // Jika setiap akun Google harus unik
-    },
-    userName: {
-        type: String,
-        required: true,
-    },
+const LocalUserSchema = new Schema({
     email: {
         type: String,
-        required: true,
-        unique: true
-    },
-    phoneNum: {
-        type: String,
-        required: true, 
-        unique: true // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
+        unique: true,
+        required: true
     },
     password: {
         type: String,
         required: true
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    profilePicture: {
+        type: String, // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
     }
 })
 
-module.exports = model('Localuser', localuserSchema)
+module.exports = model('LocalUser', LocalUserSchema)

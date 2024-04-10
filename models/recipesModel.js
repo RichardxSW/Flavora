@@ -82,7 +82,12 @@ const recipesSchema = new Schema({
             required: true
         }
     }],
-    
+    totalReviews: { 
+        type: Number 
+    },
+    averageRating: {
+        type: Number 
+    }
 })
 
 module.exports = model('Recipe', recipesSchema)
