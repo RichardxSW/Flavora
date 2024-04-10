@@ -1,48 +1,29 @@
-// let recipes = [];
 const recipesObject = JSON.parse(recipes);
-// Mendaftarkan event listener untuk tombol pencarian
-const searchButton = document.querySelector('.navbar__search-button');
-if (searchButton) {
-    searchButton.addEventListener('click', function(event) {
-        // Memanggil fungsi performSearch saat tombol pencarian ditekan
-        performSearch(event);
+
+// Ambil kata kunci pencarian dari URL (misalnya, dari parameter query string)
+const urlParams = new URLSearchParams(window.location.search);
+const searchQuery = urlParams.get('q') || '';  // 'q' adalah parameter untuk kata kunci pencarian
+
+// Mengambil elemen DOM untuk menampilkan total hasil pencarian
+const totalResultsElement = document.getElementById('totalResults');
+
+// Mengambil elemen DOM untuk menampilkan hasil pencarian
+const searchResultsContainer = document.getElementById('searchResults');
+
+// Ambil elemen select dropdown sorting
+const sortSelect = document.getElementById('sortSelect');
+
+// Event listener untuk select dropdown sorting
+if (sortSelect) {
+    sortSelect.addEventListener('change', function(event) {
+        const sortBy = event.target.value; // Ambil nilai sorting yang dipilih
+        const keyword = searchInput.value.trim().toLowerCase(); // Ambil kata kunci pencarian saat ini
+        
+        // Panggil fungsi sortRecipes dengan nilai sorting yang dipilih dan kata kunci pencarian saat ini
+        sortRecipes(sortBy, keyword);
     });
 }
 
-// Fungsi performSearch yang diperbarui
-function performSearch(event) {
-    const searchKeyword = document.querySelector('.navbar__search-input').value.toLowerCase();
-
-    if (event.key === 'Enter' || event.type === 'click') {
-        // Pastikan bahwa recipesObject adalah array sebelum mencari
-        if (Array.isArray(recipesObject)) {
-            // Cari resep yang sesuai dengan kata kunci pencarian
-            const matchedRecipe = recipesObject.find(recipe => 
-                recipe.title.toLowerCase().includes(searchKeyword)
-            );
-
-            if (matchedRecipe) {
-                // Jika resep cocok ditemukan, arahkan pengguna ke halaman detail resep tersebut
-                const recipeID = matchedRecipe.recipeID;
-                window.location.href = `/detail/${recipeID}`;
-            } else {
-                // Jika tidak ada resep yang cocok, beri tahu pengguna atau lakukan tindakan lainnya
-                alert('Recipe not found!');
-            }
-        } else {
-            console.error('recipesObject is not an array:', recipesObject);
-        }
-    }
-}
-
-// Mendaftarkan event listener untuk input pencarian
-const searchInput = document.querySelector('.navbar__search-input');
-if (searchInput) {
-    searchInput.addEventListener('input', function(event) {
-        // Memanggil fungsi performKey saat nilai input berubah
-        performKey(event);
-    });
-}
 
 // Fungsi untuk melakukan pencarian dan menampilkan hasilnya
 let debounceTimer;
@@ -68,9 +49,13 @@ function performKey(event) {
             // Pastikan bahwa recipesObject adalah array sebelum mencari
             if (Array.isArray(recipesObject)) {
                 // Membuat daftar hasil pencarian
-                const searchResults = recipesObject.filter(function(recipe) {
+                let searchResults = recipesObject.filter(function(recipe) {
                     return recipe.title.toLowerCase().includes(keyword);
                 });
+
+                // Lakukan sorting jika diperlukan
+                const sortBy = document.getElementById('sortSelect').value;
+                searchResults = sortRecipes(sortBy, searchResults);
 
                 // Menambahkan hasil pencarian ke elemen ul
                 if (searchResults.length > 0) {
@@ -118,4 +103,52 @@ function performKey(event) {
         searchResultsContainer.innerHTML = ''; // Bersihkan kontainer sebelumnya
         searchResultsContainer.appendChild(resultList);
     }, 800); // Mengatur waktu debounce (misalnya 300ms)
+}
+
+// Mendaftarkan event listener untuk input pencarian
+const searchInput = document.querySelector('.navbar__search-input');
+if (searchInput) {
+    searchInput.addEventListener('input', function(event) {
+        // Memanggil fungsi performKey saat nilai input berubah
+        performKey(event);
+    });
+}
+
+// Filter resep berdasarkan kata kunci pencarian
+function sortRecipes(sortBy, recipes) {
+    let sortedRecipes = [];
+
+    if (sortBy === 'relevance') {
+        // Tidak perlu sortir karena hasil sudah relevan
+        sortedRecipes = recipes;
+    } else if (sortBy === 'name') {
+        // Sortir berdasarkan nama
+        sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortBy === 'time') {
+        // Sortir berdasarkan waktu
+        sortedRecipes = recipes.slice().sort((a, b) => a.time - b.time);
+    }
+
+    return sortedRecipes;
+}
+
+// Fungsi performSearch yang diperbarui
+function performSearch(event) {
+    const searchKeyword = document.querySelector('.navbar__search-input').value.trim();
+
+    if (event.key === 'Enter' || event.type === 'click') {
+        if (searchKeyword !== '') {
+            // Arahkan pengguna ke halaman pencarian dengan kata kunci yang dimasukkan
+            window.location.href = `/search?q=${searchKeyword}`;
+        }
+    }
+}
+
+// Mendaftarkan event listener untuk tombol pencarian
+const searchButton = document.querySelector('.navbar__search-button');
+if (searchButton) {
+    searchButton.addEventListener('click', function(event) {
+        // Memanggil fungsi performSearch saat tombol pencarian ditekan
+        performSearch(event);
+    });
 }

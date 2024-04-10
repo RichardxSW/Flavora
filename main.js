@@ -208,15 +208,30 @@ app.get('/search', async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            res.render('search', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Search', layout: "mainlayout"})
-            // res.render('index', {recipes: recipes, user: req.user , title: 'Home', layout: "mainlayout"})
+            // Mendapatkan kata kunci pencarian dari parameter query 'q'
+            const searchQuery = req.query.q ? req.query.q.trim().toLowerCase() : '';
+
+            // Melakukan filter resep berdasarkan kata kunci pencarian
+            const filteredRecipes = recipes.filter(recipe => {
+                return recipe.title.toLowerCase().includes(searchQuery);
+            });
+
+            res.render('search', {
+                recipes: recipes,
+                filteredRecipes: filteredRecipes, // Menyediakan filteredRecipes ke template
+                name: req.user.displayName,
+                pic: req.user.profilePicture,
+                title: 'Search',
+                layout: "mainlayout"
+            });
         } else {
-            res.status(404).send("Recipe not found")
+            res.status(404).send("Recipe not found");
         }
     } catch (error) { 
-        res.status(500).send("Internal Server Error")
+        res.status(500).send("Internal Server Error");
     }
-})
+});
+
 
 // app.put('/detail/:recipeID', async (req, res) => {
 //     try {

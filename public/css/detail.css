@@ -14,6 +14,7 @@
   }
 
   header{
+    height: 70px;
     position: fixed;
     top: 0;
     left: 0;
@@ -29,7 +30,7 @@
   }
   
   .navbar__brand {
-    font-size: 36px; 
+    font-size: 33px; 
     color: #ff7f50; 
     text-transform: uppercase; 
     letter-spacing: 2px; 
@@ -37,11 +38,11 @@
     text-decoration: none;
     padding: 5px 15px; 
     text-align: center; 
-    transition: 0.6s ease; 
+    transition: 0.6s ease;
     display: inline-block;
     border-radius: 100px;
   }
-
+  
   .navbar__brand:hover {
     background-color: brown;
     text-decoration: none;
@@ -57,19 +58,20 @@
   }
   
   .navbar__item {
-    margin-right: 20px;
+    margin-right: 15px;
   }
   
   .navbar__link {
+    font-size: 15px;
     color: #333;
     text-decoration: none;
     padding: 5px;
   }
-
+  
   .navbar__link:hover {
     color: red;
-    text-decoration: none;
     transition: 0.3s ease;
+    text-decoration: none;
   }
   
   .navbar__search {
@@ -77,19 +79,20 @@
   }
   
   .navbar__search-input {
-    width: 300px;
+    height: 35px;
+    width: 255px;
     padding: 8px;
-    font-size: 16px;
+    font-size: 15px;
     border: 1px solid #ddd;
     border-radius: 15px;
   }
-
+  
   .search-results {
-    width: 300px;
+    width: 255px;
     border-radius: 15px;
-    height: 235px;
+    height: 240px;
     margin-top: 8px;
-    padding: 8px;
+    padding: 5px;
     border: 2px solid #333;
     box-sizing: border-box; 
     display: none;
@@ -101,8 +104,8 @@
   
   .search-results ul {
     overflow-y: auto;
-    width: 287px;
-    height: 220px;
+    width: 247px;
+    height: 230px;
     margin: 0;
     background-color: rgb(255, 255, 255); 
   }
@@ -120,7 +123,7 @@
   
   .search-results a {
     text-decoration: none; 
-    font-size: 15px;
+    font-size: 14px;
     color: #333; 
   }
   
@@ -134,8 +137,8 @@
   }
   
   .thumbnail {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-right: 10px; 
   }
   
@@ -155,12 +158,12 @@
     justify-content: center;
     height: 100%;
     margin: 0;
-    font-size: 13px; 
+    font-size: 12px; 
   }
   
   .navbar__search-button {
     padding: 8px 15px;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
     border-radius: 15px;
     background-color: #333;
@@ -172,7 +175,7 @@
     background-color: red;
     transition: 0.5s ease;
   }
-
+  
   .navbar_profile{
     margin-left: 15px;
   }
@@ -186,8 +189,9 @@
   }
   
   .listItem{
+    font-size: 15px;
     cursor: pointer;
-    padding: 10px;
+    padding: 5px;
   }
   
   .avatar{
@@ -196,6 +200,7 @@
     border-radius: 50%;
     object-fit: cover;
   }
+  
 
   /* Konten  */
 
