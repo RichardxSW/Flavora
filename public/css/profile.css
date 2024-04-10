@@ -52,10 +52,17 @@ table td{
     width: 50%;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 200px; /* Adjust as needed */
+}
+
+#editForm a,
 #logoutForm a{
     margin-top: 20px;
     padding: 15px 20px;
-    width: 200px;
+    width: 100px;
     height: 45px;
     background: #fff;
     border: none;
@@ -67,4 +74,5 @@ table td{
     color: #333;
     font-weight: 600;
     text-decoration: none;
+    text-align: center;
 }

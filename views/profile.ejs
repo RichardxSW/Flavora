@@ -16,10 +16,15 @@
                 <td><%= password%></td>
             </tr>
         </table>
-
-    <form id="logoutForm">
-        <a href="/" onclick="logout()">Logout</a>
-    </form>
+    <div class="button-container">
+        <form id="editForm">
+            <a href="/edit?id" onclick="edit()">Edit</a>
+        </form>
+    
+        <form id="logoutForm">
+            <a href="/" onclick="logout()">Logout</a>
+        </form>
+    </div>
 </div>
 
 <link rel="stylesheet" href="css/profile.css">
