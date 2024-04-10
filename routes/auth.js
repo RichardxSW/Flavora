@@ -1,10 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const User = require("../models/userModel");
-const localUser = require("../models/localuserModel");
-const bcrypt = require('bcrypt');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
 
 const GOOGLE_CLIENT_ID = '103328795113-crtgk3olggmheoqr0fnklvgrv2ak898q.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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'
@@ -39,31 +36,6 @@ async function(request, accessToken, refreshToken, profile, cb) {
         return cb(error);
     }
 }
-));
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    localUser.findOne({ userName: username }, async function (err, user) {
-      if (err) { return done(err); }
-      if (user) {
-        return done(null, false, { message: 'Username already exists.' });
-      } else {
-        try {
-          const newUser = new localUser({
-            fullName: req.body.fullName,
-            userName: req.body.userName,
-            email: req.body.email,
-            phoneNum: req.body.phoneNum,
-            password: req.body.password
-          });
-          const savedUser = await newUser.save();
-          return done(null, savedUser);
-        } catch (error) {
-          return done(error);
-        }
-      }
-    });
-  }
 ));
 
 //google 

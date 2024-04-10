@@ -252,6 +252,7 @@ app.get('/detail/:recipeID', async (req, res) => {
                 }
             }
             res.render('detail', {
+                resep: resep,
                 recipes: recipes ,
                 relatedRecipes: relatedRecipes, 
                 name: name, 
