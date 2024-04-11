@@ -69,7 +69,11 @@ function performKey(event) {
             if (Array.isArray(recipesObject)) {
                 // Membuat daftar hasil pencarian
                 const searchResults = recipesObject.filter(function(recipe) {
-                    return recipe.title.toLowerCase().includes(keyword);
+                    // Tambahkan pengecekan apakah category adalah array sebelum mencoba pencarian
+                    return (
+                        recipe.title.toLowerCase().includes(keyword) ||
+                        (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(keyword)))
+                    );
                 });
 
                 // Menambahkan hasil pencarian ke elemen ul

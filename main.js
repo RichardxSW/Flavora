@@ -198,7 +198,10 @@ app.get('/search', async (req, res) => {
             }
             const searchQuery = req.query.q ? req.query.q.trim().toLowerCase() : '';
             let filteredRecipes = recipes.filter(recipe => {
-                return recipe.title.toLowerCase().includes(searchQuery);
+                return (
+                    recipe.title.toLowerCase().includes(searchQuery) ||
+                    (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(searchQuery))) // Memastikan category adalah array
+                );
             });
 
                 // Menangani sort berdasarkan waktu
