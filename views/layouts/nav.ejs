@@ -11,14 +11,14 @@
         <input type="text" class="navbar__search-input" placeholder="Search..." onkeypress="performSearch(event)">
         <button class="navbar__search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
-      <div class="navbar_profile">
+      <button class="navbar_profile" onclick="window.location.href='/profile'">
         <ul class="list">
           <li class="listItem">
             <img src="<%= pic%>" alt="" class="avatar" />
           </li>
           <li class="listItem"><%= name%></li>
         </ul>
-      </div>
+      </button>
     </div>
   </nav>
 </header>

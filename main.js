@@ -158,11 +158,13 @@ app.get('/profile', (req, res) => {
                 pic = '/img/profilepic.jpg'; 
                 email = req.user.email || '';
                 password = maskPassword(req.user.password || '');
+                _id = req.user._id;
             } else {
                 name = req.user.displayName || '';
                 pic = req.user.profilePicture || '';
                 email = req.user.email || '';
                 password = maskPassword(req.user.password || '');
+                _id = req.user._id;
             }
         }
         res.render('profile', {
@@ -170,6 +172,7 @@ app.get('/profile', (req, res) => {
             pic: pic, 
             email: email,
             password: password,
+            _id: _id,
             title: 'Profile', 
             layout: "accountLayout"})
 });
@@ -177,6 +180,25 @@ app.get('/profile', (req, res) => {
 function maskPassword(password) {
     return '*'.repeat(password.length);
 }
+
+app.get('/edit', isAuthenticated, async(req, res) => {
+    try {
+        const id = req.user._id;
+        const userData = await User.findById(id);
+
+        if(userData){
+            res.render('edit', {
+                user: userData,
+                title: 'Edit', 
+                layout: "accountLayout"});
+        }
+        else{
+            res.redirect('/profile');
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+});
 
 app.get('/home', isAuthenticated, async (req, res) => {
     try {
