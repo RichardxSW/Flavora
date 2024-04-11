@@ -224,7 +224,7 @@ header{
   flex: 1 0 300px;
   margin: 0.3em;
   max-width: 228px;
-  height: 235px; 
+  height: 260px; 
   display: flex;
   transition: transform 0.3s ease;
 }
@@ -255,21 +255,23 @@ header{
 }
 
 .card h5 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   margin-left: 10px;
   margin-top: 5px;
   width: fit-content;
 }
 
-.card .time{
+.result .card .time{
+  flex-direction: column;
   margin-left: 25px;
   margin-right: 40px;
-  margin-top: 15px;
-  width: 200px;
+  margin-top: 10px;
+  height: fit-content;
+  width: fit-content;
 }
 
-.card .time .row {
+.result .card .time .row {
   display: flex; 
   align-items: center;
   margin-bottom: 5px;
@@ -287,9 +289,17 @@ header{
   font-weight: 500; 
 }
 
+.card .time .row span {
+  font-size: 13px;  
+  margin-top: 2px;
+  margin-left: 3px;
+  font-weight: 500;
+  color: black; 
+}
+
 .card button{
   position: absolute;
-  bottom: 40px;
+  bottom: 65px;
   right: 0.3rem;
   border-radius: .5rem;
   color: black;
@@ -319,12 +329,13 @@ header{
 
 .result h3{
   font-weight: 700;
-  margin: 0px 0;
+  margin: 0px 5px;
 }
 
 .result p{
   font-weight: 500;
   font-size: 16px;
+  margin-left: 5px;
 }
 
 .result .cardwrap{
@@ -337,9 +348,27 @@ header{
   justify-content: space-between;
 }
 
-/* .sort{
-  margin-left: auto;
-} */
+.sort {
+  margin-right: 10px;
+}
+
+
+.sort select {
+  font-size: 15px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.sort option {
+  text-align: left;
+  font-size: 15px; 
+  font-weight: 500;
+}
+
+label {
+  font-size: 15px;
+  font-weight: 500;
+}
 
 /* Footer  */
 .footer {

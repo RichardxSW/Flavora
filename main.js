@@ -17,7 +17,6 @@ const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
 const LocalUser = require("./models/localuserModel");
 const bcrypt = require("bcrypt");
-const flash = require("connect-flash");
 const localUser = require("./models/localuserModel");
 dotenv.config();
 
@@ -157,7 +156,7 @@ app.get('/home', isAuthenticated, async (req, res) => {
         if (recipes) {
             let name = '';
             let pic = '';
-            if (req.user) { // Jika pengguna telah login
+            if (req.user) { 
                 if (req.user.username) { 
                     name = req.user.username || ''; 
                     pic = '/img/profilepic.jpg'; 
@@ -186,21 +185,44 @@ app.get('/search', async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            // Mendapatkan kata kunci pencarian dari parameter query 'q'
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
             const searchQuery = req.query.q ? req.query.q.trim().toLowerCase() : '';
-
-            // Melakukan filter resep berdasarkan kata kunci pencarian
-            const filteredRecipes = recipes.filter(recipe => {
+            let filteredRecipes = recipes.filter(recipe => {
                 return recipe.title.toLowerCase().includes(searchQuery);
             });
 
+                // Menangani sort berdasarkan waktu
+              if (req.query.sort === 'time') {
+                filteredRecipes.sort((a, b) => {
+                    return a.minutes - b.minutes;
+                });
+            } else if (req.query.sort === 'averageRating') {
+                filteredRecipes.sort((a, b) => {
+                    return b.averageRating - a.averageRating;
+                });
+            } else if (req.query.sort === 'totalReviews') {
+                filteredRecipes.sort((a, b) => {
+                    return b.totalReviews - a.totalReviews;
+                });
+            }
+
             res.render('search', {
                 recipes: recipes,
-                filteredRecipes: filteredRecipes, // Menyediakan filteredRecipes ke template
-                name: req.user.displayName,
-                pic: req.user.profilePicture,
+                filteredRecipes: filteredRecipes,
+                name: name,
+                pic: pic,
                 title: 'Search',
-                layout: "mainlayout"
+                layout: "mainlayout",
             });
         } else {
             res.status(404).send("Recipe not found");
@@ -209,29 +231,6 @@ app.get('/search', async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
-
-// app.put('/detail/:recipeID', async (req, res) => {
-//     try {
-//         const recipeId = req.body._id; // Menggunakan _id dari MongoDB untuk resep
-//         const userId = req.body._id; // Menggunakan _id dari MongoDB untuk user
-
-//         const recipe = await Recipes.findById(recipeId);
-//         const user = await User.findById(userId);
-
-//         if (!recipe || !user) {
-//             return res.status(404).send("Recipe or User not found");
-//         }
-
-//         user.savedRecipes.push(recipe);
-//         await user.save();
-
-//         res.status(201).json({ savedRecipes: user.savedRecipes });
-//     } catch (error) { 
-//         console.error(error);
-//         res.status(500).send("Internal Server Error");
-//     }
-// });
 
 app.get('/detail/:recipeID', async (req, res) => {
     try {
@@ -312,17 +311,27 @@ app.post('/detail/:recipeID', async (req, res) => {
     }
 });
 
-app.get('/recent', async (req, res) => {
+app.get('/recent' ,async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
             res.render('recent', {
-        recipes: recipes, title: 'Recent', 
-        layout: "mainlayout", 
-        name: req.user.displayName, 
-        pic: req.user.profilePicture, 
-        title: 'Detail', 
-        layout: "mainlayout"});
+            recipes: recipes, 
+            title: 'Recent',  
+            name: name, 
+            pic: pic, 
+            layout: "mainlayout"});
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -335,13 +344,24 @@ app.get('/pinned', async(req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
             res.render('pinned', {
-        recipes: recipes, title: 'Pinned', 
-        layout: "mainlayout", 
-        name: req.user.displayName, 
-        pic: req.user.profilePicture,
-        title: 'Detail', 
-        layout: "mainlayout"});
+            recipes: recipes, 
+            title: 'Pinned', 
+            layout: "mainlayout", 
+            name: name, 
+            pic: pic,
+});
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -349,50 +369,6 @@ app.get('/pinned', async(req, res) => {
             res.status(500).send("Internal Server Error")
         }
     });
-
-// // Register route
-// app.post("/register", async (req, res) => {
-//     try {
-//       const { name, photo, password } = req.body;
-//       // Hash password
-//       const hashedPassword = await bcrypt.hash(password, 10);
-//       // Create new user
-//       const newUser = new User({
-//         name,
-//         photo,
-//         password: hashedPassword,
-//       });
-//       // Save user to database
-//       await newUser.save();
-//       res.status(201).json({ success: true, message: "User created successfully" });
-//     } catch (error) {
-//       console.error("Error registering user:", error);
-//       res.status(500).json({ success: false, message: "Internal server error" });
-//     }
-//   });
-
-// app.get("/login/failed", (req, res) => {
-//     res.status(401).json({
-//       success: false,
-//       message: "failure",
-//     });
-//   });
-  
-//   app.get("/logout", (req, res) => {
-//     req.logout();
-//     res.redirect(CLIENT_URL);
-//   });
-
-//   app.get("/login/success", (req, res) => {
-//     if (req.user) {
-//       res.status(200).json({
-//         success: true,
-//         message: "successfull",
-//         user: req.user,
-//         //   cookies: req.cookies
-//       });
-//     }
-//   });
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

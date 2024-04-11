@@ -4,11 +4,12 @@
     <div class="containerTotal">
       <p id="totalResults"><%= filteredRecipes.length %> Results</p>
       <div class="sort">
-        <label for="sortSelect">Sort by:</label>
+        <label for="sortSelect">Sort by</label>
         <select id="sortSelect">
-          <option value="relevance">Relevance</option>
-          <option value="name">Name</option>
-          <option value="time">Time</option>
+            <option value="1">Relevance</option>
+            <option value="2">Time</option>
+            <option value="3">Highest Rating</option>
+            <option value="4">Most Rated</option>
         </select>
       </div>
     </div>
@@ -24,9 +25,11 @@
   </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/search.css">
 <script>
     const recipes = `<%- JSON.stringify(recipes) %>`;
+    const filteredRecipes =  `<%- JSON.stringify(filteredRecipes) %>`;
 </script>
 <script src="/js/button.js"></script>
 <script src="/js/search.js"></script>

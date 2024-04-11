@@ -28,13 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function initializeSwiper() {
         var productSwiper = new Swiper(".swiper-product", {
+            autoHeight: true,
             slidesPerView: 4,
             spaceBetween: 3,
             runCallbacksOnInit: true,
             observer: true,
-            // observeParents: true,
-            // observeSlideChildren: true,
-            // updateOnImagesReady: true,
         });
     
         // Update Swiper dan scrollbar
@@ -50,18 +48,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
     var swiper1 = new Swiper(".swiper1", {
+        autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
     var swiper2 = new Swiper(".swiper2", {
+        autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
     var swiper3 = new Swiper(".swiper3", {
+        autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
     var swiper4 = new Swiper(".swiper4", {
+        autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });

@@ -5,21 +5,12 @@
         <div class="time">
             <div class="row">
                 <i class="fa fa-clock-o" style="font-size:15px"><p><%= recipe.time %></p></i>
-                <i class="fa fa-cutlery" style="font-size:15px"><p><%= recipe.category %></p></i> 
+                <i class="fa fa-cutlery" style="font-size:15px"><p><%= recipe.category %></p></i>
+                <i class="fa fa-star" style="color: #ff7f50; font-size: 15px;">
+                    <span><%= recipe.averageRating %></span>
+                    <span><%= '(' + recipe.totalReviews + ')'%></span>
+                </i>
             </div>
-        </div>
-
-        <div class="avg-rating">
-            <p>
-                <span class="avg-star">&#9733;</span>
-                <span class="avg-total"><%= recipe.averageRating %></span>
-                <span class="total-rating"><%= '(' + recipe.totalReviews + ')'%></span>
-            </p>
-        </div>
-
-        <div class="view-icon">
-            <i class="fa-solid fa-eye"></i>
-            <span class="view-text">150</span>
         </div>
     </a>
     <button type="button" class="button-circle" onclick="toggleBookmark('<%= recipe.recipeID %>')"><i class="fa-regular fa-bookmark"></i></button>

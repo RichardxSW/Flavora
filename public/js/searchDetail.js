@@ -1,6 +1,18 @@
 // let recipes = [];
 const recipesObject = JSON.parse(resep);
 // Mendaftarkan event listener untuk tombol pencarian
+// Ambil kata kunci pencarian dari URL (misalnya, dari parameter query string)
+const urlParams = new URLSearchParams(window.location.search);
+const searchQuery = urlParams.get('q') || '';  // 'q' adalah parameter untuk kata kunci pencarian
+
+// Mengambil elemen DOM untuk menampilkan total hasil pencarian
+const totalResultsElement = document.getElementById('totalResults');
+
+// Mengambil elemen DOM untuk menampilkan hasil pencarian
+const searchResultsContainer = document.getElementById('searchResults');
+
+
+// Mendaftarkan event listener untuk tombol pencarian
 const searchButton = document.querySelector('.navbar__search-button');
 if (searchButton) {
     searchButton.addEventListener('click', function(event) {
@@ -11,26 +23,15 @@ if (searchButton) {
 
 // Fungsi performSearch yang diperbarui
 function performSearch(event) {
-    const searchKeyword = document.querySelector('.navbar__search-input').value.toLowerCase();
+    const searchKeyword = document.querySelector('.navbar__search-input').value.trim();
 
     if (event.key === 'Enter' || event.type === 'click') {
-        // Pastikan bahwa recipesObject adalah array sebelum mencari
-        if (Array.isArray(recipesObject)) {
-            // Cari resep yang sesuai dengan kata kunci pencarian
-            const matchedRecipe = recipesObject.find(recipe => 
-                recipe.title.toLowerCase().includes(searchKeyword)
-            );
-
-            if (matchedRecipe) {
-                // Jika resep cocok ditemukan, arahkan pengguna ke halaman detail resep tersebut
-                const recipeID = matchedRecipe.recipeID;
-                window.location.href = `/detail/${recipeID}`;
-            } else {
-                // Jika tidak ada resep yang cocok, beri tahu pengguna atau lakukan tindakan lainnya
-                alert('Recipe not found!');
-            }
-        } else {
-            console.error('recipesObject is not an array:', recipesObject);
+        if (searchKeyword !== '') {
+            // Arahkan pengguna ke halaman pencarian dengan kata kunci yang dimasukkan
+            window.location.href = `/search?q=${searchKeyword}`;
+        }
+        else{
+            window.location.href = `/search`;
         }
     }
 }
@@ -117,5 +118,5 @@ function performKey(event) {
         // Setelah menambahkan semua hasil pencarian ke dalam elemen ul, tambahkan ul ke dalam kontainer hasil pencarian
         searchResultsContainer.innerHTML = ''; // Bersihkan kontainer sebelumnya
         searchResultsContainer.appendChild(resultList);
-    }, 800); // Mengatur waktu debounce (misalnya 300ms)
+    }, 200); // Mengatur waktu debounce (misalnya 300ms)
 }
