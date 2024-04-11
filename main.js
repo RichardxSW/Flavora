@@ -200,7 +200,7 @@ app.get('/search', async (req, res) => {
             let filteredRecipes = recipes.filter(recipe => {
                 return (
                     recipe.title.toLowerCase().includes(searchQuery) ||
-                    (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(searchQuery))) // Memastikan category adalah array
+                    (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(searchQuery)))
                 );
             });
 
