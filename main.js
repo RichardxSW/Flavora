@@ -373,26 +373,84 @@ app.get('/recent' ,async (req, res) => {
 //         }
 //     });
 
+// app.post('/save-recipe', async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         const recipeId = req.body.recipeId;
+//         const isPinned = req.body.isPinned;
+
+//         // Temukan pengguna berdasarkan ID
+//         const user = await LocalUser.findById(userId);
+
+//         if (user) {
+//             if (isPinned) {
+//                 user.savedRecipes.addToSet(recipeId);
+//                 // Set isPinned resep menjadi true
+//                 await Recipes.findByIdAndUpdate(recipeId, { isPinned: true });
+//             }
+//             await user.save();
+
+//             // Send updated savedRecipes to client
+//             const updatedUser = await LocalUser.findById(userId).populate('savedRecipes');
+//             res.status(200).json({ message: 'Recipe saved successfully', savedRecipes: updatedUser.savedRecipes });
+//         } else {
+//             res.status(404).json({ error: 'User not found' });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
+
+// app.delete('/unpin-recipe', async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         const recipeId = req.body.recipeId;
+//         const isPinned = req.body.isPinned;
+
+//         // Find the user by ID
+//         const user = await LocalUser.findById(userId);
+
+//         if (user) {
+//             if (!isPinned) {
+//                 // Remove the recipe from savedRecipes
+//                 user.savedRecipes.pull(recipeId);
+//                 await Recipes.findByIdAndUpdate(recipeId, { isPinned: false });
+//             }
+//             await user.save();
+
+//             res.status(200).json({ message: 'Recipe unpinned successfully' });
+//         } else {
+//             res.status(404).json({ error: 'User not found' });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
+
 app.post('/save-recipe', async (req, res) => {
     try {
         const userId = req.user._id;
         const recipeId = req.body.recipeId;
-        const isPinned = req.body.isPinned;
+        const action = req.body.action;
 
         // Temukan pengguna berdasarkan ID
         const user = await LocalUser.findById(userId);
 
         if (user) {
-            if (isPinned) {
+            if (action === 'pin') {
                 user.savedRecipes.addToSet(recipeId);
                 // Set isPinned resep menjadi true
                 await Recipes.findByIdAndUpdate(recipeId, { isPinned: true });
-            }
-            await user.save();
+                await user.save();
 
-            // Send updated savedRecipes to client
-            const updatedUser = await LocalUser.findById(userId).populate('savedRecipes');
-            res.status(200).json({ message: 'Recipe saved successfully', savedRecipes: updatedUser.savedRecipes });
+                // Kirim savedRecipes yang diperbarui ke klien
+                const updatedUser = await LocalUser.findById(userId).populate('savedRecipes');
+                res.status(200).json({ message: 'Recipe pinned successfully', savedRecipes: updatedUser.savedRecipes });
+            } else {
+                res.status(400).json({ error: 'Invalid action' });
+            }
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -402,24 +460,26 @@ app.post('/save-recipe', async (req, res) => {
     }
 });
 
-app.delete('/unpin-recipe', async (req, res) => {
+
+app.delete('/save-recipe', async (req, res) => {
     try {
         const userId = req.user._id;
         const recipeId = req.body.recipeId;
-        const isPinned = req.body.isPinned;
+        const action = req.body.action;
 
         // Find the user by ID
         const user = await LocalUser.findById(userId);
 
         if (user) {
-            if (!isPinned) {
+            if (action === 'unpin') {
                 // Remove the recipe from savedRecipes
                 user.savedRecipes.pull(recipeId);
                 await Recipes.findByIdAndUpdate(recipeId, { isPinned: false });
+                await user.save();
+                res.status(200).json({ message: 'Recipe unpinned successfully' });
+            } else {
+                res.status(400).json({ error: 'Invalid action' });
             }
-            await user.save();
-
-            res.status(200).json({ message: 'Recipe unpinned successfully' });
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -428,6 +488,7 @@ app.delete('/unpin-recipe', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
   app.get('/pinned', async (req, res) => {
     try {
