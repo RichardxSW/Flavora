@@ -76,3 +76,25 @@ table td{
     text-decoration: none;
     text-align: center;
 }
+
+.alert {
+    position: fixed; /* Tetapkan posisi elemen flash message */
+    top: 20px; /* Atur jarak dari atas */
+    right: 20px; /* Atur jarak dari kanan */
+    z-index: 1000; /* Tentukan z-index agar lebih tinggi dari elemen lain */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.alert.hidden {
+    opacity: 0;
+    pointer-events: none; /* Hindari interaksi pengguna saat pesan disembunyikan */
+}
+
+.alert-danger {
+    background-color: #f8d7da; /* Warna latar belakang untuk pesan kesalahan */
+    border-color: #f5c6cb; /* Warna border untuk pesan kesalahan */
+    color: #721c24; /* Warna teks untuk pesan kesalahan */
+    padding: 10px;
+    margin-bottom: 10px;
+}

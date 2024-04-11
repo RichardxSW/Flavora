@@ -152,6 +152,7 @@ app.get('/profile', (req, res) => {
     let name = '';
     let email = '';
     let password = '';
+    let errorMsg = req.flash('error');
         if (req.user) { // Jika pengguna telah login
             if (req.user.username) { 
                 name = req.user.username || ''; 
@@ -173,6 +174,7 @@ app.get('/profile', (req, res) => {
             email: email,
             password: password,
             _id: _id,
+            errorMsg: errorMsg,
             title: 'Profile', 
             layout: "accountLayout"})
 });
@@ -183,8 +185,8 @@ function maskPassword(password) {
 
 app.get('/edit', isAuthenticated, async(req, res) => {
     try {
-        const id = req.user._id;
-        const userData = await User.findById(id);
+        const id = req.query.id;
+        const userData = await LocalUser.findById(id);
 
         if(userData){
             res.render('edit', {
@@ -193,6 +195,7 @@ app.get('/edit', isAuthenticated, async(req, res) => {
                 layout: "accountLayout"});
         }
         else{
+            req.flash('errorMsg', 'Akun tidak dapat dimodifikasi.');
             res.redirect('/profile');
         }
     } catch (error) {
