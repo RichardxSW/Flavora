@@ -87,6 +87,10 @@ const recipesSchema = new Schema({
     },
     averageRating: {
         type: Number 
+    },
+    isPinned: {
+        type: Boolean,
+        default: false
     }
 })
 

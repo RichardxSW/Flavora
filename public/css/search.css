@@ -305,18 +305,22 @@ header{
   color: black;
 }
 
-.button-circle i{
+.pin i{
   cursor: pointer;
   user-select: none;
 }
 
-.button-circle {
+.pin {
   border-radius: 50%;
   border-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
+}
+
+button:focus{
+  outline:none !important;
 }
 
 .result{

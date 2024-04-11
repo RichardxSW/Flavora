@@ -3,22 +3,11 @@
     padding: 0;
 }
 
-body {
+/* body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.content {
-    flex-grow: 1; /* Memungkinkan konten untuk memperluas dan mengisi sisa ruang di halaman */
-    padding: 20px;
-    margin-top: 70px; /* Sesuaikan tinggi navbar Anda */
-    justify-content: space-between;
-    margin-top: 100px;
-    margin-bottom: 20px;
-    margin-left: 4em;
-    margin-right: 4em;
-}
+} */
 
 /* Navbar */
 .navbar {
@@ -264,6 +253,156 @@ header {
     background-color: #e5dc32;
     border-radius: 50px;
   }
+
+/* Card */
+.content {
+  justify-content: space-between;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+.card .time .row p {
+  color: black;
+  font-size: 15px;
+  font-weight: 0;
+  margin-left: 3px;
+}
+
+.result .card {
+ overflow: hidden;
+  border: 1px solid #c0bfbf;
+  flex: 1 0 300px;
+  margin: 0.3em;
+  max-width: 228px;
+  height: 260px; 
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.card a{
+  color: black;
+  text-decoration: none;
+}
+
+.card:hover a {
+  color: black;
+  text-decoration: none;
+}
+
+.card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.005);
+}  
+
+.card img {
+  height: 170px;
+  width: 100%;
+  transition: transform 0.3s ease; 
+}
+
+.card:hover img {
+  transform: scale(1.005); 
+}
+
+.card h5 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-top: 5px;
+  width: fit-content;
+}
+
+.result .card .time{
+  flex-direction: column;
+  margin-left: 25px;
+  margin-right: 40px;
+  margin-top: 10px;
+  height: fit-content;
+  width: fit-content;
+}
+
+.result .card .time .row {
+  display: flex; 
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.card .time .row i {
+  margin-right: 10px; 
+  display: flex;
+  font-weight: 600;
+}
+
+.card .time .row p {
+  font-size: 12px;  
+  margin-left: 3px;
+  font-weight: 500; 
+}
+
+.card .time .row span {
+  font-size: 13px;  
+  margin-top: 2px;
+  margin-left: 3px;
+  font-weight: 500;
+  color: black; 
+}
+
+.card button{
+  position: absolute;
+  bottom: 65px;
+  right: 0.3rem;
+  border-radius: .5rem;
+  color: black;
+}
+
+.pin i{
+  cursor: pointer;
+  user-select: none;
+}
+
+.pin {
+  border-radius: 50%;
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+button:focus{
+  outline:none !important;
+}
+
+.result{
+  padding-bottom: 30px;
+  margin-top: 10px;
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-bottom: 3em;
+}
+
+.result h3{
+  font-weight: 700;
+  margin: 0px 5px;
+}
+
+.result p{
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.result .cardwrap{
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.result .containerTotal{
+  display: flex;
+  justify-content: space-between;
+}
 
 /* Footer */
 .footer {

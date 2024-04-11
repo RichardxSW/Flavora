@@ -343,35 +343,133 @@ app.get('/recent' ,async (req, res) => {
         }
     });
 
-app.get('/pinned', async(req, res) => {
+// app.get('/pinned', async(req, res) => {
+//     try {
+//         const recipes = await Recipes.find();
+//         if (recipes) {
+//             let name = '';
+//             let pic = '';
+//             if (req.user) { 
+//                 if (req.user.username) { 
+//                     name = req.user.username || ''; 
+//                     pic = '/img/profilepic.jpg'; 
+//                 } else {
+//                     name = req.user.displayName || '';
+//                     pic = req.user.profilePicture || '';
+//                 }
+//             }
+//             res.render('pinned', {
+//             recipes: recipes, 
+//             title: 'Pinned', 
+//             layout: "mainlayout", 
+//             name: name, 
+//             pic: pic,
+// });
+//         } else {
+//             res.status(404).send("Recipe not found")
+//         }
+//         } catch (error) { 
+//             res.status(500).send("Internal Server Error")
+//         }
+//     });
+
+app.post('/save-recipe', async (req, res) => {
     try {
-        const recipes = await Recipes.find();
-        if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
-                } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
-                }
+        const userId = req.user._id;
+        const recipeId = req.body.recipeId;
+        const isPinned = req.body.isPinned;
+
+        // Temukan pengguna berdasarkan ID
+        const user = await LocalUser.findById(userId);
+
+        if (user) {
+            if (isPinned) {
+                user.savedRecipes.addToSet(recipeId);
+                // Set isPinned resep menjadi true
+                await Recipes.findByIdAndUpdate(recipeId, { isPinned: true });
             }
-            res.render('pinned', {
-            recipes: recipes, 
-            title: 'Pinned', 
-            layout: "mainlayout", 
-            name: name, 
-            pic: pic,
-});
+            await user.save();
+
+            // Send updated savedRecipes to client
+            const updatedUser = await LocalUser.findById(userId).populate('savedRecipes');
+            res.status(200).json({ message: 'Recipe saved successfully', savedRecipes: updatedUser.savedRecipes });
         } else {
-            res.status(404).send("Recipe not found")
+            res.status(404).json({ error: 'User not found' });
         }
-        } catch (error) { 
-            res.status(500).send("Internal Server Error")
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.delete('/unpin-recipe', async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const recipeId = req.body.recipeId;
+        const isPinned = req.body.isPinned;
+
+        // Find the user by ID
+        const user = await LocalUser.findById(userId);
+
+        if (user) {
+            if (!isPinned) {
+                // Remove the recipe from savedRecipes
+                user.savedRecipes.pull(recipeId);
+                await Recipes.findByIdAndUpdate(recipeId, { isPinned: false });
+            }
+            await user.save();
+
+            res.status(200).json({ message: 'Recipe unpinned successfully' });
+        } else {
+            res.status(404).json({ error: 'User not found' });
         }
-    });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+  app.get('/pinned', async (req, res) => {
+    try {
+        // Ambil ID pengguna dari req.user
+        const userId = req.user._id;
+
+        // Ambil data pengguna termasuk savedRecipes
+        const user = await LocalUser.findById(userId).populate('savedRecipes');
+
+        if (user) {
+            // Ambil daftar resep yang disimpan oleh pengguna
+            const savedRecipes = user.savedRecipes;
+
+            // Ambil semua resep
+            const allRecipes = await Recipes.find();
+
+            // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
+            const recipes = allRecipes.map(recipe => {
+                const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
+                return {
+                    ...recipe._doc,
+                    isPinned: isPinned
+                };
+            });
+
+            res.render('pinned', {
+                savedRecipes: savedRecipes,
+                recipes: recipes,
+                title: 'Pinned',
+                layout: "mainlayout",
+                name: req.user.username || req.user.displayName || '', // Ambil nama pengguna
+                pic: req.user.profilePicture || '', // Ambil foto profil pengguna
+            });
+        } else {
+            res.status(404).send("User not found");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+    
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
