@@ -2,7 +2,7 @@
     {
         "recipeID": 1,
         "title": "Nasi Goreng",
-        "category": ["Breakfast"],
+        "category": "Breakfast",
         "nationality": "Asian",
         "featured": "yes",
         "time": "10 Minutes",
@@ -62,7 +62,7 @@
     {
         "recipeID": 2,
         "title": "Pancake",
-        "category": ["Breakfast"],
+        "category": "Breakfast",
         "nationality": "Western",
         "featured": "yes",
         "time": "30 Minutes",
@@ -115,7 +115,7 @@
     {
         "recipeID": 3,
         "title": "Spaghetti Bolognese",
-        "category": ["Dinner"],
+        "category": "Dinner",
         "nationality": "Western",
         "time": "45 Minutes",
         "img": "/img/spaget.png",
@@ -175,7 +175,7 @@
     {
         "recipeID": 4,
         "title": "Popcorn Caramel",
-        "category": ["Snack"],
+        "category": "Snack",
         "nationality": "Western",
         "featured": "yes",
         "time": "5 Minutes",
@@ -214,7 +214,7 @@
     {
         "recipeID": 5,
         "title": "Omelette",
-        "category": ["Breakfast"],
+        "category": "Breakfast",
         "nationality": "Western",
         "featured":"yes",
         "time": "5 Minutes",
@@ -266,7 +266,7 @@
     {
         "recipeID": 6,
         "title": "Chicken Congee",
-        "category": ["Breakfast"],
+        "category": "Breakfast",
         "nationality": "Asian",
         "featured":"yes",
         "time": "60 Minutes",
@@ -338,7 +338,7 @@
     {
         "recipeID": 7,
         "title": "Banh Mi",
-        "category": ["Lunch"],
+        "category": "Lunch",
         "nationality": "Asian",
         "featured":"yes",
         "time": "50 Minutes",
@@ -458,7 +458,7 @@
     {
         "recipeID": 8,
         "title": "Pad Thai",
-        "category": ["Lunch"],
+        "category": "Lunch",
         "nationality": "Asian",
         "featured":"yes",
         "time": "45 Minutes",
@@ -515,7 +515,7 @@
     {
         "recipeID": 9,
         "title": "Churros",
-        "category": ["Snack"],
+        "category": "Snack",
         "nationality": "Western",
         "time": "20 Minutes",
         "img": "/img/churros.jpg",
@@ -570,7 +570,7 @@
     {
         "recipeID": 10,
         "title": "French Fries",
-        "category": ["Snack"],
+        "category": "Snack",
         "nationality": "Western",
         "time": "25 Minutes",
         "img": "/img/fries.jpg",

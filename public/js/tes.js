@@ -1,17 +1,5 @@
 "use strict";
 
-// window.addEventListener('beforeunload', () => {
-//     sessionStorage.setItem('scrollPosition', window.scrollY);
-// });
-
-// window.addEventListener('load', () => {
-//     const scrollPosition = sessionStorage.getItem('scrollPosition');
-//     if (scrollPosition) {
-//         window.scrollTo(0, scrollPosition);
-//         sessionStorage.removeItem('scrollPosition');
-//     }
-// });
-
 const swiperWrapper = document.querySelector(".swiper-wrapper"); // Menambahkan ini di sini untuk mengakses elemen swiper-wrapper
 document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi Swiper untuk konten default saat halaman dimuat
@@ -28,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function initializeSwiper() {
         var productSwiper = new Swiper(".swiper-product", {
-            autoHeight: true,
+            // autoHeight: true,
             slidesPerView: 4,
             spaceBetween: 3,
             runCallbacksOnInit: true,
@@ -48,22 +36,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
     var swiper1 = new Swiper(".swiper1", {
-        autoHeight: true,
+        //autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
     var swiper2 = new Swiper(".swiper2", {
-        autoHeight: true,
+        //autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
     var swiper3 = new Swiper(".swiper3", {
-        autoHeight: true,
+        //autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
     var swiper4 = new Swiper(".swiper4", {
-        autoHeight: true,
+        //autoHeight: true,
         slidesPerView: 4,
         spaceBetween: 3,
     });
@@ -71,8 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Fungsi untuk mengubah kategori
 function changeCategory(category) {
-    // Ubah menjadi array jika kategori merupakan array
-    const categories = Array.isArray(category) ? category : [category];
+    // Ubah menjadi array jika kategori merupakan string
+    const categories = typeof category === 'string' ? [category] : category;
 
     var categoryItems = document.querySelectorAll('.categories__item');
     
@@ -90,8 +78,11 @@ function changeCategory(category) {
     foodCards.forEach(function(card) {
         var cardCategories = card.getAttribute('data-category');
 
-        // Mengecek apakah kategori kartu makanan termasuk dalam kategori yang dipilih
-        var match = categories.includes('All') || categories.some(cat => cardCategories.includes(cat));
-        card.style.display = match ? 'block' : 'none';
+        // Mengecek apakah cardCategories tidak null atau undefined sebelum menggunakan includes()
+        if (cardCategories) {
+            // Mengecek apakah kategori kartu makanan termasuk dalam kategori yang dipilih
+            var match = categories.includes('All') || categories.some(cat => cardCategories.includes(cat));
+            card.style.display = match ? 'block' : 'none';
+        }
     });
 }
