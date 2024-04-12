@@ -125,6 +125,7 @@ app.post('/register', async (req, res) => {
       await localuser.save();
       res.redirect('/local');
     } catch (error){
+        console.error(error); 
       res.redirect('/register');
     }
   });
