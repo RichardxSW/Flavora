@@ -157,14 +157,17 @@ app.get('/profile', (req, res) => {
     let name = '';
     let email = '';
     let password = '';
-    let userData = {}; // Inisialisasi objek userData
+    let userData = req.session.freshUserData || {};; // Inisialisasi objek userData
     let errorMsg = req.flash('error');
     let successMsg = req.flash('success');
-        if (req.user) { // Jika pengguna telah login
+
+    if (req.user) { // Jika pengguna telah login
+        if (!userData || Object.keys(userData).length === 0) {
+            // Jika userData kosong, isi dengan data pengguna dari req.user
             if (req.user.username) { 
                 userData = {
                     name: req.user.username || '', 
-                    pic: '/img/profilepic.jpg',
+                    profilePicture: '/img/profilepic.jpg',
                     email: req.user.email || '',
                     password: maskPassword(req.user.password || ''),
                     _id: req.user._id
@@ -172,13 +175,18 @@ app.get('/profile', (req, res) => {
             } else {
                 userData = {
                     name: req.user.displayName || '',
-                    pic: req.user.profilePicture || '',
+                    profilePicture: req.user.profilePicture || '',
                     email: req.user.email || '',
                     password: maskPassword(req.user.password || ''),
                     _id: req.user._id
                 };
             }
+        } else {
+            // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+            userData.name = userData.username;
+            userData.password = maskPassword(userData.password || ''); // Ubah password menjadi masked version
         }
+    }
         res.render('profile', {
             user: userData,
             errorMsg: errorMsg,
@@ -249,6 +257,12 @@ app.post('/edit', upload.single('image'), async(req, res) => {
 
         // Update data pengguna di MongoDB
         const updatedUserData = await LocalUser.findByIdAndUpdate(id, { $set: userData }, { new: true });
+
+        // Ambil data terbaru dari MongoDB
+        const freshUserData = await LocalUser.findById(id);
+
+        // Simpan freshUserData di dalam sesi atau cookie
+        req.session.freshUserData = freshUserData;
 
         // Redirect ke halaman profil setelah berhasil update
         req.flash('successMsg', 'Account updated successfully.');

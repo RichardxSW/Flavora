@@ -11,13 +11,13 @@
 <% } %>
 
 <div class="wrapper">
-    <h1>Welcome, <%= user.name || user.username%></h1>
+    <h1>Welcome, <%= user.name %></h1>
 
-    <img src="<%= user.pic%>" alt="<%= user.pic%>">
+    <img src="userImages/<%= user.profilePicture %>">
         <table>
             <tr>
                 <td>Username</td>
-                <td><%= user.name || user.username%></td>
+                <td><%= user.name %></td>
             </tr>
             <tr>
                 <td>Email</td>
