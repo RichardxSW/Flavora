@@ -17,7 +17,6 @@ const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
 const LocalUser = require("./models/localuserModel");
 const bcrypt = require("bcrypt");
-const localUser = require("./models/localuserModel");
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
