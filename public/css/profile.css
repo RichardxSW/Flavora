@@ -55,9 +55,10 @@ table td{
 .button-container {
     display: flex;
     justify-content: space-between;
-    width: 200px; /* Adjust as needed */
+    width: 400px; /* Adjust as needed */
 }
 
+#backForm a,
 #editForm a,
 #logoutForm a{
     margin-top: 20px;
@@ -75,6 +76,7 @@ table td{
     font-weight: 600;
     text-decoration: none;
     text-align: center;
+    margin-right: 10px;
 }
 
 .alert {
