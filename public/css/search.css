@@ -3,6 +3,14 @@
   padding: 0;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 200px;
+}
+
 /* Navbar */
 
 .navbar {
@@ -381,9 +389,11 @@ label {
   color: white;
   text-align: center;
   font-size: 14px;
-  left: 0;
   bottom: 0;
   width: 100%;
+  position: absolute;
+  margin-top: auto;
+  height: 190px;
 }
 
 .footer a {

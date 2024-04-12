@@ -13,9 +13,11 @@
             </div>
         </div>
     </a>
-    <% if (recipe.isPinned) { %>
-        <button type="button" class="pin" data-id="<%= recipe._id %>"><i class="fa-solid fa-bookmark"></i></button>
-    <% } else { %>
-        <button type="button" class="pin" data-id="<%= recipe._id %>"><i class="fa-regular fa-bookmark"></i></button>
-    <% } %>
+    <button type="button" class="pin" data-id="<%= recipe._id %>" data-isPinned="<%= recipe.isPinned %>">
+        <% if(recipe.isPinned) { %>
+            <i class="fa-solid fa-bookmark"></i>
+        <% } else { %>
+            <i class="fa-regular fa-bookmark"></i>
+        <% } %>
+    </button>
 </div>

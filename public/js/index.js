@@ -1,47 +1,63 @@
-$(document).ready(function() {
-  // Event listener untuk tombol yang memiliki kelas "pin"
-  $('.pin').on('click', function(e) {
-    e.preventDefault(); // Mencegah aksi default dari tombol
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.pin').forEach(button => {
+      const recipeId = button.dataset.id;
+      const isPinned = sessionStorage.getItem('isPinned_' + recipeId) === 'true';
 
-    // Simpan konteks tombol dalam variabel
-    const button = $(this);
-
-    // Ambil ID resep dari atribut data-id tombol yang diklik
-    const recipeId = button.data('id');
-
-    // Periksa apakah tombol sebelumnya di-toggle atau tidak
-    const isPinned = button.hasClass('pinned');
-
-    // Tentukan metode HTTP berdasarkan status isPinned
-    const method = isPinned ? 'DELETE' : 'POST';
-
-    // Tentukan action berdasarkan status isPinned
-    const action = isPinned ? 'unpin' : 'pin';
-
-    // Kirim permintaan AJAX ke server untuk menyimpan atau menghapus resep
-    $.ajax({
-      method: method, // Gunakan metode POST atau DELETE sesuai kondisi
-      url: '/save-recipe', // Tentukan URL endpoint untuk menyimpan atau menghapus resep
-      data: { recipeId: recipeId, isPinned: !isPinned, action: action }, // Kirim ID resep, status toggle, dan action
-      success: function(response) {
-        // Tampilkan pesan sukses atau lakukan tindakan lain yang sesuai
-        console.log(response);
-        
-        // Update button state based on response
-        if (!isPinned) {
-          console.log('Tombol telah dipinned');
-          button.addClass('pinned');
-          button.find('i').removeClass('fa-regular').addClass('fa-solid');
-        } else {
-          console.log('Tombol telah diunpinned');
-          button.removeClass('pinned');
-          button.find('i').removeClass('fa-solid').addClass('fa-regular');
-        }
-      },
-      error: function(err) {
-        // Tangani kesalahan jika permintaan gagal
-        console.error('Error:', err);
+      if (isPinned) {
+          button.innerHTML = '<i class="fa-solid fa-bookmark"></i>';
+      } else {
+          button.innerHTML = '<i class="fa-regular fa-bookmark"></i>';
       }
-    });
+      button.dataset.isPinned = isPinned.toString();
+  });
+});
+
+document.querySelectorAll('.pin').forEach(button => {
+  button.addEventListener('click', async () => {
+      const recipeId = button.dataset.id;
+      const isPinned = button.dataset.isPinned === 'true';
+      const url = isPinned ? '/delete-recipe' : '/save-recipe';
+
+      try {
+          const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ recipeId })
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+              button.innerHTML = isPinned ? '<i class="fa-regular fa-bookmark"></i>' : '<i class="fa-solid fa-bookmark"></i>';
+              button.dataset.isPinned = !isPinned;
+              sessionStorage.setItem('isPinned_' + recipeId, !isPinned);
+          } else {
+              console.error(data.error);
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  });
+});
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('pin')) {
+      const recipeId = event.target.dataset.id;
+      const isPinned = event.target.dataset.isPinned === 'true';
+      
+      // Pemicuan Custom Event
+      const pinEvent = new CustomEvent('recipePinToggle', { detail: { recipeId, isPinned } });
+      document.dispatchEvent(pinEvent);
+  }
+});
+
+document.addEventListener('recipePinToggle', (event) => {
+  const { recipeId, isPinned } = event.detail;
+
+  // Temukan tombol pin dengan resepId yang cocok dan sesuaikan status pin
+  document.querySelectorAll(`.pin[data-id="${recipeId}"]`).forEach(button => {
+      button.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>';
+      button.dataset.isPinned = isPinned.toString();
   });
 });

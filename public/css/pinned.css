@@ -3,11 +3,13 @@
     padding: 0;
 }
 
-/* body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-} */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 200px;
+}
 
 /* Navbar */
 .navbar {
@@ -406,11 +408,16 @@ button:focus{
 
 /* Footer */
 .footer {
-    padding: 20px;
-    background-color: #222;
-    color: white;
-    text-align: center;
-    font-size: 14px;
+  padding: 20px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  margin-top: auto;
+  height: 190px;
 }
 
 .footer a {
