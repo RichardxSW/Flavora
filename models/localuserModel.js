@@ -16,7 +16,11 @@ const LocalUserSchema = new Schema({
     },
     profilePicture: {
         type: String, // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
-    }
+    },
+    savedRecipes: [{
+        type: Schema.Types.ObjectId, 
+        ref: "Recipe"
+    }]
 })
 
 module.exports = model('LocalUser', LocalUserSchema)

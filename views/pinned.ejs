@@ -1,25 +1,29 @@
 <div class="content">
-  <h2>Pinned Recipes</h2>
-  <div class="categories">
-    <ul class="categories__list">
-      <li class="categories__item active"><a href="#" data-id="All" onclick="changeCategory('All')">All</a></li>
-      <li class="categories__item"><a href="#" data-id="Breakfast" onclick="changeCategory('Breakfast')">Breakfast</a></li>
-      <li class="categories__item"><a href="#" data-id="Lunch" onclick="changeCategory('Lunch')">Lunch</a></li>
-      <li class="categories__item"><a href="#" data-id="Dinner" onclick="changeCategory('Dinner')">Dinner</a></li>
-      <li class="categories__item"><a href="#" data-id="Snack" onclick="changeCategory('Snack')">Snack</a></li>
-    </ul>    
+  <div class="result">
+    <h3>Pinned Recipes</h3>
+    <div class="containerTotal">
+      <p id="totalResults"><%= savedRecipes.length %> recipes</p>
+    </div>
+    <div class="cardwrap">
+      <% if (savedRecipes.length > 0) { %>
+        <% savedRecipes.forEach((recipe) => { %>
+          <%- include('layouts/card', { recipe: recipe}) %>
+        <% }); %>
+      <% } else { %>
+        <p>You haven't saved anything yet. Start browsing!</p>
+      <% } %>
+    </div>
   </div>
-  <!-- <div class="pinned-recipes">
-    
-  </div> -->
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="js/pinned.js"></script>
+<link rel="stylesheet" href="/css/pinned.css">
+<script src="/js/pinned.js"></script>
+<script src="/js/index.js"></script>
 <script>
   const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
 <script src="/js/search.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/css/pinned.css">
+

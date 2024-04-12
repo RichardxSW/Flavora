@@ -11,22 +11,21 @@
 
   <script>
     async function logout() {
-    
     try {
-                const response = await fetch(`/`, {
-                    method: 'DELETE',
-                });
+      const response = await fetch(`/`, {
+          method: 'DELETE',
+      });
 
-                if (!response.ok) {
-                    throw new Error('Failed to LOGOUT');
-                } else {
-                  console.log('Logout succes')
-                }
+      if (!response.ok) {
+          throw new Error('Failed to LOGOUT');
+      } else {
+        console.log('Logout succes')
+      }
 
-                // Refresh halaman untuk memperbarui daftar review
-              } catch (error) {
-                  console.error(error);
-                  alert('Failed to logout');
-              }
-            }
+      // Refresh halaman untuk memperbarui daftar review
+    } catch (error) {
+        console.error(error);
+        alert('Failed to logout');
+    }
+    }
   </script>
