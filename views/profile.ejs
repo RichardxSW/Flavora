@@ -5,26 +5,26 @@
     <% } %>
 
 <div class="wrapper">
-    <h1>Welcome, <%= name%></h1>
+    <h1>Welcome, <%= user.name || user.username%></h1>
 
-    <img src="<%= pic%>" alt="">
+    <img src="<%= user.pic%>" alt="<%= user.pic%>">
         <table>
             <tr>
                 <td>Username</td>
-                <td><%= name%></td>
+                <td><%= user.name || user.username%></td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td><%= email%></td>
+                <td><%= user.email%></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><%= password%></td>
+                <td><%= user.password%></td>
             </tr>
         </table>
     <div class="button-container">
         <form id="editForm">
-            <a href="/edit?id=<%= _id%>">Edit</a>
+            <a href="/edit?id=<%= user._id%>">Edit</a>
         </form>
     
         <form id="logoutForm">

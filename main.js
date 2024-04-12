@@ -17,6 +17,9 @@ const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
 const LocalUser = require("./models/localuserModel");
 const bcrypt = require("bcrypt");
+const multer = require('multer');
+const path = require('path');
+const { profile } = require('console');
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -67,6 +70,7 @@ app.use(passport.session());
 app.use(flash());
 app.use("/auth", authGoogle);
 app.use("/auth", authLocal);
+app.use(express.static('public'));
 
 app.use(
     cors({
@@ -114,7 +118,8 @@ app.post('/register', async (req, res) => {
     const localuser = new LocalUser({ 
         email : req.body.email,
         username: req.body.username, 
-        password: req.body.password });
+        password: req.body.password,
+        profilePicture: 'profilepic.jpg'});
     try {
       await localuser.save();
       res.redirect('/local');
@@ -152,28 +157,29 @@ app.get('/profile', (req, res) => {
     let name = '';
     let email = '';
     let password = '';
+    let userData = {}; // Inisialisasi objek userData
     let errorMsg = req.flash('error');
         if (req.user) { // Jika pengguna telah login
             if (req.user.username) { 
-                name = req.user.username || ''; 
-                pic = '/img/profilepic.jpg'; 
-                email = req.user.email || '';
-                password = maskPassword(req.user.password || '');
-                _id = req.user._id;
+                userData = {
+                    name: req.user.username || '', 
+                    pic: '/img/profilepic.jpg',
+                    email: req.user.email || '',
+                    password: maskPassword(req.user.password || ''),
+                    _id: req.user._id
+                };
             } else {
-                name = req.user.displayName || '';
-                pic = req.user.profilePicture || '';
-                email = req.user.email || '';
-                password = maskPassword(req.user.password || '');
-                _id = req.user._id;
+                userData = {
+                    name: req.user.displayName || '',
+                    pic: req.user.profilePicture || '',
+                    email: req.user.email || '',
+                    password: maskPassword(req.user.password || ''),
+                    _id: req.user._id
+                };
             }
         }
         res.render('profile', {
-            name: name, 
-            pic: pic, 
-            email: email,
-            password: password,
-            _id: _id,
+            user: userData,
             errorMsg: errorMsg,
             title: 'Profile', 
             layout: "accountLayout"})
@@ -199,6 +205,53 @@ app.get('/edit', isAuthenticated, async(req, res) => {
             res.redirect('/profile');
         }
     } catch (error) {
+        console.log(error.message);
+    }
+});
+
+// Konfigurasi penyimpanan file dengan multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '/public/userImages')) // Menentukan direktori penyimpanan file
+    },
+    filename: function (req, file, cb) {
+        const name = Date.now() + '-' + file.originalname;
+        cb(null, name) // Menentukan nama file yang diunggah
+    }
+});
+
+// Inisialisasi multer dengan konfigurasi penyimpanan
+const upload = multer({ storage: storage });
+
+app.post('/edit', upload.single('image'), async(req, res) => {
+    try {
+        let userData = {};
+        const id = req.body.user_id;
+
+        if (req.file) {
+            // Jika ada file yang diunggah, simpan informasi file ke dalam userData
+            userData = {
+                username: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                profilePicture: req.file.filename // Gunakan req.file.filename untuk mendapatkan nama file yang disimpan oleh multer
+            };
+        } else {
+            // Jika tidak ada file yang diunggah, hanya simpan informasi pengguna
+            userData = {
+                username: req.body.name,
+                email: req.body.email,
+                password: req.body.password
+            };
+        }
+
+        // Update data pengguna di MongoDB
+        const updatedUserData = await LocalUser.findByIdAndUpdate(id, { $set: userData }, { new: true });
+
+        // Redirect ke halaman profil setelah berhasil update
+        res.redirect('/profile');
+
+    } catch (error) { 
         console.log(error.message);
     }
 });

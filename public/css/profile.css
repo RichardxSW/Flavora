@@ -36,8 +36,8 @@ body {
 }
 
 img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     vertical-align: middle;
 }
 
@@ -101,7 +101,7 @@ table td{
 
 .wrapperedit {
     width: 540px;
-    height: 520px;
+    height: 570px;
     background: #41557e;
     color: #fff;
     border-radius: 10px;

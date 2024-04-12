@@ -1,9 +1,10 @@
 <div class="wrapperedit">
     <h1>Edit Profile</h1>
-    <img src="/img/profilepic.jpg" >
+    <img src="userImages/<%= user.profilePicture %>" >
 
-    <form action="" method="POST" enctype="multipart/form-data" class="form-grid">
+    <form action="/edit" method="POST" enctype="multipart/form-data" class="form-grid">
         <input type="file" name="image">
+        <input type="hidden" name="user_id" value="<%= user._id %>">
 
         <div class="form-grid-split">
             <div class="form-grid-item">
