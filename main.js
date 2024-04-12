@@ -343,36 +343,6 @@ app.get('/recent' ,async (req, res) => {
         }
     });
 
-// app.get('/pinned', async(req, res) => {
-//     try {
-//         const recipes = await Recipes.find();
-//         if (recipes) {
-//             let name = '';
-//             let pic = '';
-//             if (req.user) { 
-//                 if (req.user.username) { 
-//                     name = req.user.username || ''; 
-//                     pic = '/img/profilepic.jpg'; 
-//                 } else {
-//                     name = req.user.displayName || '';
-//                     pic = req.user.profilePicture || '';
-//                 }
-//             }
-//             res.render('pinned', {
-//             recipes: recipes, 
-//             title: 'Pinned', 
-//             layout: "mainlayout", 
-//             name: name, 
-//             pic: pic,
-// });
-//         } else {
-//             res.status(404).send("Recipe not found")
-//         }
-//         } catch (error) { 
-//             res.status(500).send("Internal Server Error")
-//         }
-//     });
-
 app.post('/save-recipe', async (req, res) => {
     try {
         const userId = req.user._id;
