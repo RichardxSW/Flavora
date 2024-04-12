@@ -69,30 +69,29 @@
             <div class="recipe-info">
                 <div class="recipe-title">
                     <div class="foodName"><%= recipes.title %></div>
-
-                    <button class="unsaved">
-                        <span class="iconUnsaved"><i class="fa-regular fa-bookmark"></i></span>
-                        <span class="save-text">Pin</span>
-                    </button>
-
-                    <button class="saved">
-                        <span class="iconSaved"><i class="fa-solid fa-bookmark"></i></span>
-                        <span class="unsaved-text">Unpin</span>
+                    <button type="button" class="pin" data-id="<%= recipes._id %>" data-isPinned="<%= recipes.isPinned %>">
+                        <% if(recipes.isPinned) { %>
+                            <i class="fa-solid fa-bookmark"></i>
+                        <% } else { %>
+                            <i class="fa-regular fa-bookmark"></i>
+                        <% } %>
                     </button>
                 </div>  
-                <% if (recipes.totalReviews > 0) { %>
-                    <div class="avg-rating">
-                        <p>
-                            <span class="avg-star">&#9733;</span>
-                            <span class="avg-total"><%= recipes.averageRating %></span>
-                            <span class="total-rating"><%= '(' + recipes.totalReviews + ')'%></span>
-                        </p>
-                    </div>
-                    <% } else { %>
+                <div class="rating">
+                    <% if (recipes.totalReviews > 0) { %>
                         <div class="avg-rating">
-                            <p>Be first to rate & review</p>
+                            <p>
+                                <span class="avg-star">&#9733;</span>
+                                <span class="avg-total"><%= recipes.averageRating %></span>
+                                <span class="total-rating"><%= '(' + recipes.totalReviews + ')'%></span>
+                            </p>
                         </div>
-                    <% } %>
+                        <% } else { %>
+                            <div class="avg-rating">
+                                <p>Be first to rate & review</p>
+                            </div>
+                        <% } %>
+                </div>
 
                 <div class="detail-stats">
 
@@ -158,7 +157,6 @@
                         <li class="inst-item">Remove from heat and serve with complementary fried rice. </li> -->
                     </ol>
                 </details>
-
             </div>
         </div> 
 
@@ -176,10 +174,12 @@
     const nameValue = "<%= name %>";
     const idValue = "<%= recipes.recipeID %>";
     const recipes = `<%- JSON.stringify(recipes) %>`;
+    const resep = `<%- JSON.stringify(resep) %>`;
 </script>
 
-<script src="/js/search.js"></script>
+<script src="/js/searchDetail.js"></script>
 <script src="/js/btnDetail.js"></script>
 <script src="/js/detail.js"></script>
+<script src="/js/index.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/detail.css">

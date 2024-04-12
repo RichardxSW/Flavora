@@ -1,0 +1,37 @@
+<div class="content">
+  <div class="result">
+    <h3>Search Result</h3>
+    <div class="containerTotal">
+      <p id="totalResults"><%= filteredRecipes.length %> Results</p>
+      <div class="sort">
+        <label for="sortSelect">Sort by</label>
+        <select id="sortSelect">
+            <option value="1">Relevance</option>
+            <option value="2">Time</option>
+            <option value="3">Highest Rating</option>
+            <option value="4">Most Rated</option>
+        </select>
+      </div>
+    </div>
+    <div class="cardwrap" id="searchResults">
+      <% if (filteredRecipes.length > 0) { %>
+        <% filteredRecipes.forEach((recipe) => { %>
+          <%- include('layouts/card', { recipe: recipe}) %>
+        <% }); %>
+      <% } else { %>
+        <p>No recipes found with that keyword</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/search.css">
+<script>
+    const recipes = `<%- JSON.stringify(recipes) %>`;
+    const filteredRecipes =  `<%- JSON.stringify(filteredRecipes) %>`;
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/sort.js"></script>
+<script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>

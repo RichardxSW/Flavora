@@ -1,5 +1,6 @@
-const recipesObject = JSON.parse(recipes);
-
+// let recipes = [];
+const recipesObject = JSON.parse(resep);
+// Mendaftarkan event listener untuk tombol pencarian
 // Ambil kata kunci pencarian dari URL (misalnya, dari parameter query string)
 const urlParams = new URLSearchParams(window.location.search);
 const searchQuery = urlParams.get('q') || '';  // 'q' adalah parameter untuk kata kunci pencarian
@@ -69,7 +70,6 @@ function performKey(event) {
             if (Array.isArray(recipesObject)) {
                 // Membuat daftar hasil pencarian
                 const searchResults = recipesObject.filter(function(recipe) {
-                    // Tambahkan pengecekan apakah category adalah array sebelum mencoba pencarian
                     return (
                         recipe.title.toLowerCase().includes(keyword) ||
                         (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(keyword)))

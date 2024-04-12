@@ -8,8 +8,9 @@
         <li class="navbar__item"><a href="/pinned" class="navbar__link">Pinned</a></li>
       </ul>
       <div class="navbar__search">
-        <input type="text" class="navbar__search-input" placeholder="Search..." onkeypress="performSearch(event)">
+        <input type="text" class="navbar__search-input" placeholder="Search..." onkeyup="performKey(event)" onkeypress="performSearch(event)">
         <button class="navbar__search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <div id="searchResults" class="search-results"></div>
       </div>
       <button class="navbar_profile" onclick="window.location.href='/profile'">
         <ul class="list">

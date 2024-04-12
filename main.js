@@ -30,6 +30,7 @@ app.use(express.static('public'));
 app.use(expressLayouts); 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(flash());
 app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
 
 mongoose.connect(MONGO_URL)
@@ -103,7 +104,7 @@ app.delete('/', isLoggedIn, async (req, res) => {
         await User.findByIdAndDelete(req.user._id);
         req.logout();
         res.sendStatus(200);
-        // res.redirect('/'); 
+        res.redirect('/'); 
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -279,7 +280,7 @@ app.get('/home', isAuthenticated, async (req, res) => {
         if (recipes) {
             let name = '';
             let pic = '';
-            if (req.user) { // Jika pengguna telah login
+            if (req.user) { 
                 if (req.user.username) { 
                     name = req.user.username || ''; 
                     pic = '/img/profilepic.jpg'; 
@@ -302,6 +303,60 @@ app.get('/home', isAuthenticated, async (req, res) => {
     } catch (error) { 
         res.status(500).send("Internal Server Error");
     }
+})
+
+app.get('/search', async (req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
+            const searchQuery = req.query.q ? req.query.q.trim().toLowerCase() : '';
+            let filteredRecipes = recipes.filter(recipe => {
+                return (
+                    recipe.title.toLowerCase().includes(searchQuery) ||
+                    (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(searchQuery)))
+                );
+            });
+
+                // Menangani sort berdasarkan waktu
+              if (req.query.sort === 'time') {
+                filteredRecipes.sort((a, b) => {
+                    return a.minutes - b.minutes;
+                });
+            } else if (req.query.sort === 'averageRating') {
+                filteredRecipes.sort((a, b) => {
+                    return b.averageRating - a.averageRating;
+                });
+            } else if (req.query.sort === 'totalReviews') {
+                filteredRecipes.sort((a, b) => {
+                    return b.totalReviews - a.totalReviews;
+                });
+            }
+
+            res.render('search', {
+                recipes: recipes,
+                filteredRecipes: filteredRecipes,
+                name: name,
+                pic: pic,
+                title: 'Search',
+                layout: "mainlayout",
+            });
+        } else {
+            res.status(404).send("Recipe not found");
+        }
+    } catch (error) { 
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.get('/detail/:recipeID', async (req, res) => {
@@ -309,6 +364,7 @@ app.get('/detail/:recipeID', async (req, res) => {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
         const relatedRecipes = await Recipes.find({ category: recipes.category, _id: { $ne: recipes._id } });
+        const resep = await Recipes.find()
         if (recipes) {
             let name = '';
             let pic = '';
@@ -322,6 +378,7 @@ app.get('/detail/:recipeID', async (req, res) => {
                 }
             }
             res.render('detail', {
+                resep: resep,
                 recipes: recipes ,
                 relatedRecipes: relatedRecipes, 
                 name: name, 
@@ -381,69 +438,156 @@ app.post('/detail/:recipeID', async (req, res) => {
     }
 });
 
-app.get('/recent', (req, res) => {
-    res.render('recent', {
-        title: 'Recent', 
-        layout: "mainlayout", 
-        name: req.user.displayName, 
-        pic: req.user.profilePicture, 
-        title: 'Detail', 
-        layout: "mainlayout"});
-});
+app.get('/recent' ,async (req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
+            res.render('recent', {
+            recipes: recipes, 
+            title: 'Recent',  
+            name: name, 
+            pic: pic, 
+            layout: "mainlayout"});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
 
-app.get('/pinned', (req, res) => {
-    res.render('pinned', {
-        title: 'Pinned', 
-        layout: "mainlayout", 
-        name: req.user.displayName, 
-        pic: req.user.profilePicture,
-        title: 'Detail', 
-        layout: "mainlayout"});
-});
-
-// // Register route
-// app.post("/register", async (req, res) => {
+// app.get('/pinned', async(req, res) => {
 //     try {
-//       const { name, photo, password } = req.body;
-//       // Hash password
-//       const hashedPassword = await bcrypt.hash(password, 10);
-//       // Create new user
-//       const newUser = new User({
-//         name,
-//         photo,
-//         password: hashedPassword,
-//       });
-//       // Save user to database
-//       await newUser.save();
-//       res.status(201).json({ success: true, message: "User created successfully" });
-//     } catch (error) {
-//       console.error("Error registering user:", error);
-//       res.status(500).json({ success: false, message: "Internal server error" });
-//     }
-//   });
-
-// app.get("/login/failed", (req, res) => {
-//     res.status(401).json({
-//       success: false,
-//       message: "failure",
+//         const recipes = await Recipes.find();
+//         if (recipes) {
+//             let name = '';
+//             let pic = '';
+//             if (req.user) { 
+//                 if (req.user.username) { 
+//                     name = req.user.username || ''; 
+//                     pic = '/img/profilepic.jpg'; 
+//                 } else {
+//                     name = req.user.displayName || '';
+//                     pic = req.user.profilePicture || '';
+//                 }
+//             }
+//             res.render('pinned', {
+//             recipes: recipes, 
+//             title: 'Pinned', 
+//             layout: "mainlayout", 
+//             name: name, 
+//             pic: pic,
+// });
+//         } else {
+//             res.status(404).send("Recipe not found")
+//         }
+//         } catch (error) { 
+//             res.status(500).send("Internal Server Error")
+//         }
 //     });
-//   });
-  
-//   app.get("/logout", (req, res) => {
-//     req.logout();
-//     res.redirect(CLIENT_URL);
-//   });
 
-//   app.get("/login/success", (req, res) => {
-//     if (req.user) {
-//       res.status(200).json({
-//         success: true,
-//         message: "successfull",
-//         user: req.user,
-//         //   cookies: req.cookies
-//       });
-//     }
-//   });
+app.post('/save-recipe', async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const recipeId = req.body.recipeId;
+
+        // Temukan pengguna berdasarkan ID
+        const user = await LocalUser.findById(userId);
+
+        if (user) {
+                user.savedRecipes.addToSet(recipeId);
+                // Set isPinned resep menjadi true
+                await Recipes.findByIdAndUpdate(recipeId, { isPinned: true });
+                await user.save();
+
+                // Kirim savedRecipes yang diperbarui ke klien
+                const updatedUser = await LocalUser.findById(userId).populate('savedRecipes');
+                res.status(200).json({ message: 'Recipe pinned successfully', savedRecipes: updatedUser.savedRecipes });
+            
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/delete-recipe', async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const recipeId = req.body.recipeId;
+
+        // Find the user by ID
+        const user = await LocalUser.findById(userId);
+
+        if (user) {
+                user.savedRecipes.pull(recipeId);
+                await Recipes.findByIdAndUpdate(recipeId, { isPinned: false });
+                await user.save();
+                res.status(200).json({ message: 'Recipe unpinned successfully' });
+           
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error(error);
+       res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/pinned', async (req, res) => {
+    try {
+        // Ambil ID pengguna dari req.user
+        const userId = req.user._id;
+
+        // Ambil data pengguna termasuk savedRecipes
+        const user = await LocalUser.findById(userId).populate('savedRecipes');
+
+        if (user) {
+            // Ambil daftar resep yang disimpan oleh pengguna
+            const savedRecipes = user.savedRecipes;
+
+            // Ambil semua resep
+            const allRecipes = await Recipes.find();
+
+            // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
+            const recipes = allRecipes.map(recipe => {
+                const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
+                return {
+                    ...recipe._doc,
+                    isPinned: isPinned
+                };
+            });
+
+            res.render('pinned', {
+                savedRecipes: savedRecipes,
+                recipes: recipes,
+                title: 'Pinned',
+                layout: "mainlayout",
+                name: req.user.username || req.user.displayName || '', 
+                pic: req.user.profilePicture || '/img/profilepic.jpg', 
+            });
+        } else {
+            res.status(404).send("User not found");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+    
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

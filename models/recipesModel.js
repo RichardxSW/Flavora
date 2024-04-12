@@ -45,7 +45,7 @@ const recipesSchema = new Schema({
         required: true
     },
     minutes: {
-        type: String,
+        type: Number,
         required: true
     },
     calories: {
@@ -81,14 +81,16 @@ const recipesSchema = new Schema({
             type: String,
             required: true
         }
-        // type: Schema.Types.ObjectId,
-        // ref: 'Review'
     }],
     totalReviews: { 
         type: Number 
     },
     averageRating: {
         type: Number 
+    },
+    isPinned: {
+        type: Boolean,
+        default: false
     }
 })
 
