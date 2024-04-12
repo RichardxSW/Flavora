@@ -159,6 +159,7 @@ app.get('/profile', (req, res) => {
     let password = '';
     let userData = {}; // Inisialisasi objek userData
     let errorMsg = req.flash('error');
+    let successMsg = req.flash('success');
         if (req.user) { // Jika pengguna telah login
             if (req.user.username) { 
                 userData = {
@@ -181,6 +182,7 @@ app.get('/profile', (req, res) => {
         res.render('profile', {
             user: userData,
             errorMsg: errorMsg,
+            successMsg: successMsg,
             title: 'Profile', 
             layout: "accountLayout"})
 });
@@ -201,7 +203,7 @@ app.get('/edit', isAuthenticated, async(req, res) => {
                 layout: "accountLayout"});
         }
         else{
-            req.flash('errorMsg', 'Akun tidak dapat dimodifikasi.');
+            req.flash('errorMsg', 'Account can not be modified.');
             res.redirect('/profile');
         }
     } catch (error) {
@@ -249,6 +251,7 @@ app.post('/edit', upload.single('image'), async(req, res) => {
         const updatedUserData = await LocalUser.findByIdAndUpdate(id, { $set: userData }, { new: true });
 
         // Redirect ke halaman profil setelah berhasil update
+        req.flash('successMsg', 'Account updated successfully.');
         res.redirect('/profile');
 
     } catch (error) { 

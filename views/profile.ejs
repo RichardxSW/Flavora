@@ -2,7 +2,13 @@
     <div class="alert alert-danger" role="alert">
         <%= messages.errorMsg %>
     </div>
-    <% } %>
+<% } %>
+
+<% if (messages.successMsg) { %>
+    <div class="alert alert-success" role="alert">
+        <%= messages.successMsg %>
+    </div>
+<% } %>
 
 <div class="wrapper">
     <h1>Welcome, <%= user.name || user.username%></h1>
