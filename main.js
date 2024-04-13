@@ -694,12 +694,30 @@ app.get('/addRecipe', async(req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+const storageRecipe = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '/public/img')) // Menentukan direktori penyimpanan file
+    },
+    filename: function (req, file, cb) {
+        const name = file.originalname;
+        cb(null, name) // Menentukan nama file yang diunggah
+    }
+});
+
+// Inisialisasi multer dengan konfigurasi penyimpanan
+const uploadRecipe = multer({ storage: storageRecipe });
     
 
-    app.post('/addRecipe', async (req, res) => {
+    app.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => {
         try {
+
+            if (!req.file) {
+                return res.status(400).send("No image uploaded");
+            }
+            
             const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
-            const recipes = await Recipes.find();
+
         let recipeID;
 
         if (lastRecipe) {
@@ -714,7 +732,6 @@ app.get('/addRecipe', async(req, res) => {
                 category,
                 nationality,
                 featured,
-                // img,
                 desc,
                 serving,
                 length,
@@ -724,6 +741,8 @@ app.get('/addRecipe', async(req, res) => {
                 cara 
             } = req.body;
 
+            const img = '/img/' + req.file.filename;
+
             const time = minutes + ' Minutes';
 
             const newRecipe = new Recipes({
@@ -732,7 +751,7 @@ app.get('/addRecipe', async(req, res) => {
                 category,
                 nationality,
                 featured,
-                // img,
+                img,
                 desc,
                 serving,
                 length,
@@ -750,59 +769,59 @@ app.get('/addRecipe', async(req, res) => {
         }
     })
 
-    app.post('/addRecipe', async (req, res) => {
-        try {
-            const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
-            const recipes = await Recipes.find();
-        let recipeID;
+    // app.post('/addRecipe', async (req, res) => {
+    //     try {
+    //         const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
+    //         const recipes = await Recipes.find();
+    //     let recipeID;
 
-        if (lastRecipe) {
-            // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
-            recipeID = lastRecipe.recipeID + 1;
-        } else {
-            // Jika tidak ada recipe, set recipeID menjadi 1
-            recipeID = 1;
-        }
-            const {
-                title,
-                category,
-                nationality,
-                featured,
-                // img,
-                desc,
-                serving,
-                length,
-                minutes,
-                calories,
-                bahan,
-                cara 
-            } = req.body;
+    //     if (lastRecipe) {
+    //         // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
+    //         recipeID = lastRecipe.recipeID + 1;
+    //     } else {
+    //         // Jika tidak ada recipe, set recipeID menjadi 1
+    //         recipeID = 1;
+    //     }
+    //         const {
+    //             title,
+    //             category,
+    //             nationality,
+    //             featured,
+    //             // img,
+    //             desc,
+    //             serving,
+    //             length,
+    //             minutes,
+    //             calories,
+    //             bahan,
+    //             cara 
+    //         } = req.body;
 
-            const time = minutes + ' Minutes';
+    //         const time = minutes + ' Minutes';
 
-            const newRecipe = new Recipes({
-                recipeID,
-                title,
-                category,
-                nationality,
-                featured,
-                // img,
-                desc,
-                serving,
-                length,
-                time,
-                minutes,
-                calories,
-                bahan,
-                cara
-            });
-            await newRecipe.save();
-            res.status(201).send("Recipe added successfully");
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Internal Server Error");
-        }
-    })
+    //         const newRecipe = new Recipes({
+    //             recipeID,
+    //             title,
+    //             category,
+    //             nationality,
+    //             featured,
+    //             // img,
+    //             desc,
+    //             serving,
+    //             length,
+    //             time,
+    //             minutes,
+    //             calories,
+    //             bahan,
+    //             cara
+    //         });
+    //         await newRecipe.save();
+    //         res.status(201).send("Recipe added successfully");
+    //     } catch (error) {
+    //         console.error(error);
+    //         res.status(500).send("Internal Server Error");
+    //     }
+    // })
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
