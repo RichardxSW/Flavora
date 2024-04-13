@@ -17,6 +17,10 @@ const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
 const LocalUser = require("./models/localuserModel");
 const bcrypt = require("bcrypt");
+const multer = require('multer');
+const path = require('path');
+const { profile } = require('console');
+const { userInfo } = require('os');
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -33,6 +37,12 @@ app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
 mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
+
+        try {
+            await createAdmin();
+        } catch (error) {
+            console.error('Error creating admin account:', error);
+        }
 
         const count = await Recipes.countDocuments();
         if (count == 0) {
@@ -52,6 +62,31 @@ mongoose.connect(MONGO_URL)
     })
     .catch(err => console.log(err))
 
+    async function createAdmin() {
+        try {
+            // Cek apakah sudah ada admin
+            const existingAdmin = await LocalUser.findOne({ isAdmin: true });
+            if (!existingAdmin) {
+                // Jika tidak ada admin, buat satu
+                const adminData = {
+                    email: 'admin@admin',
+                    password: 'admin', // Gunakan kata sandi mentah
+                    username: 'Admin',
+                    profilePicture: 'profilepic.jpg',
+                    isAdmin: true
+                };
+    
+                // Buat objek admin baru
+                const newAdmin = new LocalUser(adminData);
+    
+                // Simpan objek admin ke database
+                await newAdmin.save();
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
 app.use(
     cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
 );
@@ -65,9 +100,9 @@ app.use(session({
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 app.use("/auth", authGoogle);
 app.use("/auth", authLocal);
+app.use(express.static('public'));
 
 app.use(
     cors({
@@ -95,12 +130,15 @@ app.get('/', (req, res) => {
 function isLoggedIn(req,res,next){
     req.user? next(): res.sendStatus(401);
 }
+
 app.delete('/', isLoggedIn, async (req, res) => {
     try {
         await User.findByIdAndDelete(req.user._id);
         req.logout();
+        if (req.session.freshUserData) {
+            delete req.session.freshUserData;
+        };
         res.sendStatus(200);
-        res.redirect('/'); 
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -115,7 +153,8 @@ app.post('/register', async (req, res) => {
     const localuser = new LocalUser({ 
         email : req.body.email,
         username: req.body.username, 
-        password: req.body.password });
+        password: req.body.password,
+        profilePicture: 'profilepic.jpg'});
     try {
       await localuser.save();
       res.redirect('/local');
@@ -150,44 +189,171 @@ function isAuthenticated(req, res, next) {
     }
 }
 
+app.get('/profile', (req, res) => {
+    let name = '';
+    let email = '';
+    let password = '';
+    let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+    let errorMsg = req.flash('error');
+    let successMsg = req.flash('success');
+
+    if (!req.user) {
+        // Jika pengguna belum login, hapus session.freshUserData jika ada
+        if (req.session.freshUserData) {
+            delete req.session.freshUserData;
+        }
+    } else {
+        // Jika pengguna sudah login
+        if (!userData || Object.keys(userData).length === 0) {
+            // Jika userData kosong, isi dengan data pengguna dari req.user
+            if (req.user.username) { 
+                userData = {
+                    name: req.user.username || '', 
+                    profilePicture: req.user.profilePicture,
+                    email: req.user.email || '',
+                    password: maskPassword(req.user.password || ''),
+                    _id: req.user._id
+                };
+            } else {
+                userData = {
+                    name: req.user.displayName || '',
+                    profilePicture: req.user.profilePicture || '',
+                    email: req.user.email || '',
+                    password: maskPassword(req.user.password || ''),
+                    _id: req.user._id
+                };
+            }
+        } else {
+            // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+            userData.name = userData.username;
+            userData.password = maskPassword(userData.password || ''); // Ubah password menjadi masked version
+        }
+    }
+
+    res.render('profile', {
+        user: userData,
+        errorMsg: errorMsg,
+        successMsg: successMsg,
+        title: 'Profile', 
+        layout: 'accountLayout'
+    });
+});
+
+function maskPassword(password) {
+    return '*'.repeat(password.length);
+}
+
+app.get('/edit', isAuthenticated, async(req, res) => {
+    try {
+        const id = req.query.id;
+        const userData = await LocalUser.findById(id);
+
+        if(userData){
+            res.render('edit', {
+                user: userData,
+                title: 'Edit', 
+                layout: "accountLayout"});
+        }
+        else{
+            req.flash('errorMsg', 'Account can not be modified.');
+            res.redirect('/profile');
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+// Konfigurasi penyimpanan file dengan multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '/public/userImages')) // Menentukan direktori penyimpanan file
+    },
+    filename: function (req, file, cb) {
+        const name = Date.now() + '-' + file.originalname;
+        cb(null, name) // Menentukan nama file yang diunggah
+    }
+});
+
+// Inisialisasi multer dengan konfigurasi penyimpanan
+const upload = multer({ storage: storage });
+
+app.post('/edit', upload.single('image'), async(req, res) => {
+    try {
+        let userData = {};
+        const id = req.body.user_id;
+
+        if (req.file) {
+            // Jika ada file yang diunggah, simpan informasi file ke dalam userData
+            userData = {
+                username: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                profilePicture: req.file.filename // Gunakan req.file.filename untuk mendapatkan nama file yang disimpan oleh multer
+            };
+        } else {
+            // Jika tidak ada file yang diunggah, hanya simpan informasi pengguna
+            userData = {
+                username: req.body.name,
+                email: req.body.email,
+                password: req.body.password
+            };
+        }
+
+        // Update data pengguna di MongoDB
+        const updatedUserData = await LocalUser.findByIdAndUpdate(id, { $set: userData }, { new: true });
+
+        // Ambil data terbaru dari MongoDB
+        const freshUserData = await LocalUser.findById(id);
+
+        // Simpan freshUserData di dalam sesi atau cookie
+        req.session.freshUserData = freshUserData;
+
+        // Redirect ke halaman profil setelah berhasil update
+        req.flash('successMsg', 'Account updated successfully.');
+        res.redirect('/profile');
+
+    } catch (error) { 
+        console.log(error.message);
+    }
+});
+
 app.get('/home', isAuthenticated, async (req, res) => {
     try {
-        // Ambil ID pengguna dari req.user
-        const userId = req.user._id;
-
-        // Ambil data pengguna termasuk savedRecipes
-        const user = await LocalUser.findById(userId).populate('savedRecipes');
-
-        if (user) {
-            // Ambil daftar resep yang disimpan oleh pengguna
-            const savedRecipes = user.savedRecipes;
-
-            // Ambil semua resep beserta status isPinned
-            const recipes = await Recipes.find().lean(); // Gunakan lean() agar hasil query dapat dimodifikasi
-
-            // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
-            const updatedRecipes = recipes.map(recipe => {
-                const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
-                return {
-                    ...recipe,
-                    isPinned: isPinned
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
                 };
-            });
-
-            let name = '';
-            let pic = '';
-            if (req.user.username) { 
-                name = req.user.username || ''; 
-                pic = '/img/profilepic.jpg'; 
             } else {
-                name = req.user.displayName || '';
-                pic = req.user.profilePicture || '';
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
+                } else {
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
+                }
             }
 
             res.render('index', {
                 recipes: updatedRecipes, 
-                name: name, 
-                pic: pic, 
+                user: userData,
+                isAdmin: req.user.isAdmin,
                 title: 'Home', 
                 layout: "mainlayout"
             });
@@ -251,26 +417,43 @@ app.get('/home', isAuthenticated, async (req, res) => {
 // });
 
 
-app.get('/search', async (req, res) => {
+app.get('/search', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             const searchQuery = req.query.q ? req.query.q.trim().toLowerCase() : '';
             let filteredRecipes = recipes.filter(recipe => {
                 return (
                     recipe.title.toLowerCase().includes(searchQuery) ||
-                    (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(searchQuery))) // Memastikan category adalah array
+                    (Array.isArray(recipe.category) && recipe.category.some(cat => cat.toLowerCase().includes(searchQuery)))
                 );
             });
 
@@ -292,8 +475,10 @@ app.get('/search', async (req, res) => {
             res.render('search', {
                 recipes: recipes,
                 filteredRecipes: filteredRecipes,
+                user: userData,
                 name: name,
                 pic: pic,
+                isAdmin: req.user.isAdmin,
                 title: 'Search',
                 layout: "mainlayout",
             });
@@ -305,30 +490,47 @@ app.get('/search', async (req, res) => {
     }
 });
 
-app.get('/detail/:recipeID', async (req, res) => {
+app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
     try {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
         const relatedRecipes = await Recipes.find({ category: recipes.category, _id: { $ne: recipes._id } });
         const resep = await Recipes.find()
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { // Jika pengguna telah login
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             res.render('detail', {
                 resep: resep,
                 recipes: recipes ,
                 relatedRecipes: relatedRecipes, 
-                name: name, 
-                pic: pic, 
+                user: userData,
+                isAdmin: req.user.isAdmin,
                 title: 'Detail', 
                 layout: "mainlayout"})
         } else {
@@ -403,7 +605,8 @@ app.get('/recent' ,async (req, res) => {
             recipes: recipes, 
             title: 'Recent',  
             name: name, 
-            pic: pic, 
+            pic: pic,
+            isAdmin: req.user.isAdmin, 
             layout: "mainlayout"});
         } else {
             res.status(404).send("Recipe not found")
@@ -470,7 +673,34 @@ app.get('/pinned', async (req, res) => {
 
         // Ambil data pengguna termasuk savedRecipes
         const user = await LocalUser.findById(userId).populate('savedRecipes');
-
+        let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
+                } else {
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
+                }
+            }
         if (user) {
             // Ambil daftar resep yang disimpan oleh pengguna
             const savedRecipes = user.savedRecipes;
@@ -492,9 +722,103 @@ app.get('/pinned', async (req, res) => {
                 recipes: recipes,
                 title: 'Pinned',
                 layout: "mainlayout",
-                name: req.user.username || req.user.displayName || '', 
-                pic: req.user.profilePicture || '/img/profilepic.jpg', 
-            });
+                user: userData,
+                isAdmin: req.user.isAdmin,
+});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
+
+app.get('/dashboard', async(req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
+                } else {
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
+                }
+            }
+            res.render('dashboard', {
+            recipes: recipes, 
+            title: 'Dashboard', 
+            layout: "mainlayout",
+            user: userData,
+            isAdmin: req.user.isAdmin,
+});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
+
+app.get('/addRecipe', async(req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
+                } else {
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
+                }
+            }
+            res.render('addRecipe', {
+            recipes: recipes, 
+            title: 'Add new Recipe', 
+            layout: "mainlayout", 
+            user: userData,
+            isAdmin: req.user.isAdmin,
+});
         } else {
             res.status(404).send("User not found");
         }
@@ -503,7 +827,134 @@ app.get('/pinned', async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+const storageRecipe = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '/public/img')) // Menentukan direktori penyimpanan file
+    },
+    filename: function (req, file, cb) {
+        const name = file.originalname;
+        cb(null, name) // Menentukan nama file yang diunggah
+    }
+});
+
+// Inisialisasi multer dengan konfigurasi penyimpanan
+const uploadRecipe = multer({ storage: storageRecipe });
     
+
+    app.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => {
+        try {
+
+            if (!req.file) {
+                return res.status(400).send("No image uploaded");
+            }
+            
+            const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
+
+        let recipeID;
+
+        if (lastRecipe) {
+            // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
+            recipeID = lastRecipe.recipeID + 1;
+        } else {
+            // Jika tidak ada recipe, set recipeID menjadi 1
+            recipeID = 1;
+        }
+            const {
+                title,
+                category,
+                nationality,
+                featured,
+                desc,
+                serving,
+                length,
+                minutes,
+                calories,
+                bahan,
+                cara 
+            } = req.body;
+
+            const img = '/img/' + req.file.filename;
+
+            const time = minutes + ' Minutes';
+
+            const newRecipe = new Recipes({
+                recipeID,
+                title,
+                category,
+                nationality,
+                featured,
+                img,
+                desc,
+                serving,
+                length,
+                time,
+                minutes,
+                calories,
+                bahan,
+                cara
+            });
+            await newRecipe.save();
+            res.status(201).send("Recipe added successfully");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        }
+    })
+
+    // app.post('/addRecipe', async (req, res) => {
+    //     try {
+    //         const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
+    //         const recipes = await Recipes.find();
+    //     let recipeID;
+
+    //     if (lastRecipe) {
+    //         // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
+    //         recipeID = lastRecipe.recipeID + 1;
+    //     } else {
+    //         // Jika tidak ada recipe, set recipeID menjadi 1
+    //         recipeID = 1;
+    //     }
+    //         const {
+    //             title,
+    //             category,
+    //             nationality,
+    //             featured,
+    //             // img,
+    //             desc,
+    //             serving,
+    //             length,
+    //             minutes,
+    //             calories,
+    //             bahan,
+    //             cara 
+    //         } = req.body;
+
+    //         const time = minutes + ' Minutes';
+
+    //         const newRecipe = new Recipes({
+    //             recipeID,
+    //             title,
+    //             category,
+    //             nationality,
+    //             featured,
+    //             // img,
+    //             desc,
+    //             serving,
+    //             length,
+    //             time,
+    //             minutes,
+    //             calories,
+    //             bahan,
+    //             cara
+    //         });
+    //         await newRecipe.save();
+    //         res.status(201).send("Recipe added successfully");
+    //     } catch (error) {
+    //         console.error(error);
+    //         res.status(500).send("Internal Server Error");
+    //     }
+    // })
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

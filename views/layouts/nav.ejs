@@ -6,20 +6,23 @@
         <li class="navbar__item"><a href="/home" class="navbar__link">Home</a></li>
         <li class="navbar__item"><a href="/recent" class="navbar__link">Recent</a></li>
         <li class="navbar__item"><a href="/pinned" class="navbar__link">Pinned</a></li>
+        <% if (isAdmin) { %>
+          <li class="navbar__item"><a href="/dashboard" class="navbar__link">Dashboard</a></li>
+      <% } %>
       </ul>
       <div class="navbar__search">
         <input type="text" class="navbar__search-input" placeholder="Search..." onkeyup="performKey(event)" onkeypress="performSearch(event)">
         <button class="navbar__search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
           <div id="searchResults" class="search-results"></div>
       </div>
-      <div class="navbar_profile">
+      <button class="navbar_profile" onclick="window.location.href='/profile'">
         <ul class="list">
           <li class="listItem">
-            <img src="<%= pic%>" alt="" class="avatar" />
+            <img src="<%= user.profilePicture.startsWith('http') ? user.profilePicture : '/userImages/' + user.profilePicture %>" alt="" class="avatar" />
           </li>
-          <li class="listItem"><%= name%></li>
+          <li class="listItem"><%= user.name%></li>
         </ul>
-      </div>
+      </button>
     </div>
   </nav>
 </header>

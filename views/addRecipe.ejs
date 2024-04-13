@@ -1,0 +1,288 @@
+<div class="content">
+    <h1>Add new recipe</h1>
+
+    <form action="/addRecipe" method="POST" enctype="multipart/form-data">
+        <div class="input-box">
+            <label class="input-label" for="title">
+                Food Name
+            </label>
+                <input 
+                    type="text" 
+                    name="title" 
+                    placeholder="Enter food name" 
+                    required
+                />
+        </div>  
+        <div class="input-box">
+            <label class="input-label" for="category">
+                Category
+            </label>
+                <input 
+                    type="radio" 
+                    name="category" 
+                    value="Breakfast"
+                    required
+                >
+                <label class="radio-label" for="category">
+                    Breakfast
+                </label>
+                <input 
+                    type="radio" 
+                    name="category" 
+                    value="Lunch"
+                    required
+                >
+                <label class="radio-label" for="category">
+                    Lunch
+                </label>
+                <input 
+                    type="radio" 
+                    name="category" 
+                    value="Dinner"
+                    required
+                >
+                <label class="radio-label" for="category">
+                    Dinner
+                </label>
+                <input 
+                    type="radio" 
+                    name="category" 
+                    value="Snack"
+                    required
+                >
+                <label class="radio-label" for="category">
+                    Snack
+                </label>
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="nationality">
+                Nationality
+            </label>
+                <input 
+                    type="radio" 
+                    name="nationality" 
+                    value="Asian"
+                    required
+                >
+                <label class="radio-label" for="nationality">
+                    Asian
+                </label>
+                <input 
+                    type="radio" 
+                    name="nationality" 
+                    value="Western"
+                    required
+                >
+                <label class="radio-label" for="nationality">
+                    Western
+                </label>
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="featured">
+                Featured
+            </label>
+                <input 
+                    type="radio" 
+                    name="featured" 
+                    value="yes"
+                    required
+                >
+                <label class="radio-label" for="featured">
+                    Yes
+                </label>
+                <input 
+                    type="radio" 
+                    name="featured" 
+                    value="no"
+                    required
+                >
+                <label class="radio-label" for="featured">
+                    No
+                </label>
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="img">
+                Food Image
+            </label>
+              <input
+                type="file"
+                name="img"
+                required
+              >
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="desc">
+                Description
+            </label>
+                <input 
+                    type="text" 
+                    name="desc" 
+                    placeholder="Enter food description" 
+                    required
+                >
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="serving">
+                Food Serving
+            </label>
+                <input 
+                    type="text" 
+                    name="serving" 
+                    placeholder="Enter food serving" 
+                    required
+                >
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="length">
+                Total Ingredients
+            </label>
+                <input 
+                    type="text" 
+                    name="length" 
+                    placeholder="Enter Total Ingredients" 
+                    required
+                >
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="minutes">
+                Cooking Time
+            </label>
+                <input 
+                    type="text" 
+                    name="minutes" 
+                    placeholder="Enter Cooking Time"  
+                    required
+                >
+        </div>
+        <div class="input-box">
+            <label class="input-label" for="calories">
+                Calories
+            </label>
+                <input 
+                    type="text" 
+                    name="calories" 
+                    placeholder="Enter food calories" 
+                    required
+                >
+        </div>
+        <div id="ingredients">
+            <div class="input-box">
+                <label class="input-label" for="bahan1">
+                    Ingredient 1
+                </label>
+                <input 
+                    type="text" 
+                    name="bahan[]" 
+                    id="bahan1" 
+                    placeholder="Enter ingredient" 
+                    required
+                >
+                <button type="button" class="delete-button" onclick="removeInputBox(this)">Delete</button>
+
+            </div>
+        </div>
+        <button type="button" id="addIngredient">Add Ingredient</button>
+
+        <div id="instructions">
+            <div class="input-box">
+                <label class="input-label" for="cara1">
+                    Instruction 1
+                </label>
+                <input 
+                    type="text" 
+                    name="cara[]" 
+                    id="cara1" 
+                    placeholder="Enter instruction" 
+                    required
+                >
+                <button type="button" class="delete-button" onclick="removeInputBox(this)">Delete</button>
+
+            </div>
+        </div>
+        <button type="button" id="addInstruction">Add Instruction</button>
+        <br>
+        <button type="submit">Submit</button>
+</div>
+
+<script>
+    document.getElementById('addIngredient').addEventListener('click', function() {
+        const ingredientsDiv = document.getElementById('ingredients');
+        const ingredientCount = ingredientsDiv.children.length;
+
+        const newDiv = document.createElement('div');
+        newDiv.classList.add('input-box');
+
+        const newLabel = document.createElement('label');
+        newLabel.classList.add('input-label');
+        newLabel.textContent = 'Ingredient ' + (ingredientCount + 1);
+        newLabel.htmlFor = 'bahan' + (ingredientCount + 1);
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.name = 'bahan[]';
+        newInput.id = 'bahan' + (ingredientCount + 1);
+        newInput.placeholder = 'Enter ingredient';
+        newInput.required = true;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.classList.add('delete-button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function() {
+        ingredientsDiv.removeChild(newDiv);
+        });
+
+        newDiv.appendChild(newLabel);
+        newDiv.appendChild(newInput);
+        newDiv.appendChild(deleteButton);
+
+        ingredientsDiv.appendChild(newDiv);
+    });
+
+    function removeInputBox(button) {
+        const ingredientsDiv = document.getElementById('ingredients');
+        const inputBox = button.parentNode;
+        ingredientsDiv.removeChild(inputBox);
+    }
+
+    document.getElementById('addInstruction').addEventListener('click', function() {
+        const instructionsDiv = document.getElementById('instructions');
+        const instructionCount = instructionsDiv.children.length;
+
+        const newDiv = document.createElement('div');
+        newDiv.classList.add('input-box');
+
+        const newLabel = document.createElement('label');
+        newLabel.classList.add('input-label');
+        newLabel.textContent = 'Instruction ' + (instructionCount + 1);
+        newLabel.htmlFor = 'cara' + (instructionCount + 1);
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.name = 'cara[]';
+        newInput.id = 'cara' + (instructionCount + 1);
+        newInput.placeholder = 'Enter instruction';
+        newInput.required = true;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.classList.add('delete-button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function() {
+            instructionsDiv.removeChild(newDiv);
+        });
+
+        newDiv.appendChild(newLabel);
+        newDiv.appendChild(newInput);
+        newDiv.appendChild(deleteButton);
+
+        instructionsDiv.appendChild(newDiv);
+    });
+
+    function removeInputBox(button) {
+        const instructionsDiv = document.getElementById('instructions');
+        const inputBox = button.parentNode;
+        instructionsDiv.removeChild(inputBox);
+    }
+</script>
+<link rel="stylesheet" href="/css/addRecipe.css">

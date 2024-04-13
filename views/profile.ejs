@@ -1,0 +1,77 @@
+<% if (messages.errorMsg) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= messages.errorMsg %>
+    </div>
+<% } %>
+
+<% if (messages.successMsg) { %>
+    <div class="alert alert-success" role="alert">
+        <%= messages.successMsg %>
+    </div>
+<% } %>
+
+<div class="wrapper">
+    <h1>Welcome, <%= user.name %></h1>
+
+    <img src="<%= user.profilePicture.startsWith('http') ? user.profilePicture : 'userImages/' + user.profilePicture %>">
+        <table>
+            <tr>
+                <td>Username</td>
+                <td><%= user.name %></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><%= user.email%></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><%= user.password%></td>
+            </tr>
+        </table>
+    <div class="button-container">
+        <form id="backForm">
+            <a href="/home">Back</a>
+        </form>
+
+        <form id="editForm">
+            <a href="/edit?id=<%= user._id%>">Edit</a>
+        </form>
+    
+        <form id="logoutForm">
+            <a href="/" onclick="logout()">Logout</a>
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="css/profile.css">
+<script>
+    async function logout() {
+    
+    try {
+        const response = await fetch(`/`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to LOGOUT');
+        } else {
+            console.log('Logout succes')
+        }
+
+        // Refresh halaman untuk memperbarui daftar review
+    } catch (error) {
+        console.error(error);
+        alert('Failed to logout');
+    }
+    }
+
+    const alertElement = document.querySelector('.alert');
+
+    // Periksa apakah elemen ada sebelum melanjutkan
+    if (alertElement) {
+        // Tunggu 3 detik sebelum menyembunyikan pesan
+        setTimeout(function() {
+            alertElement.classList.add('hidden');
+        }, 3000); // Waktu dalam milidetik (3 detik)
+    }
+</script>

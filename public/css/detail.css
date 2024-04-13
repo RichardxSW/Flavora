@@ -186,6 +186,19 @@
   
   .navbar_profile{
     margin-left: 15px;
+    border-radius: 50px;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    transition: 0.6s ease;
+  }
+  
+  .navbar_profile:hover{
+    border-radius: 50px;
+    background-color: red;
   }
   
   .list{

@@ -1,0 +1,28 @@
+<div class="content">
+    <div class="dashboard-title">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="result">
+        <div class="containerTotal">
+          <p id="totalResults"><%= recipes.length %> Results</p>
+        </div>
+        <div class="cardwrap" id="searchResults">
+          <% if (recipes.length > 0) { %>
+            <% recipes.forEach((recipe) => { %>
+              <%- include('layouts/card', { recipe: recipe}) %>
+            <% }); %>
+          <% } else { %>
+            <p>No recipes found with that keyword</p>
+          <% } %>
+        </div>
+    </div>
+    <button class="add">
+        <a href="/addRecipe">Add Recipe</a>
+    </button>
+</div>
+<script>
+    const recipes = `<%- JSON.stringify(recipes) %>`;
+</script>
+<script src="/js/index.js"></script>
+<script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/dashboard.css">

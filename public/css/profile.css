@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('/img/banner.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+}
+
+.wrapper {
+    width: 550px;
+    height: 450px;
+    background: #41557e;
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    margin: 0 auto; /* Menengahkan wrapper horizontal */
+    display: flex; /* Menggunakan flexbox untuk menengahkan elemen */
+    flex-direction: column; /* Mengatur arah flexbox menjadi vertikal */
+    align-items: center; /* Menengahkan elemen secara horizontal */
+    justify-content: center;
+}
+
+.wrapper h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+    vertical-align: middle;
+}
+
+table {
+    margin-top: 20px;
+    vertical-align: middle;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+table td{
+    width: 50%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 400px; /* Adjust as needed */
+}
+
+#backForm a,
+#editForm a,
+#logoutForm a{
+    margin-top: 20px;
+    padding: 15px 20px;
+    width: 100px;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.alert {
+    position: fixed; /* Tetapkan posisi elemen flash message */
+    top: 20px; /* Atur jarak dari atas */
+    right: 20px; /* Atur jarak dari kanan */
+    z-index: 1000; /* Tentukan z-index agar lebih tinggi dari elemen lain */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.alert.hidden {
+    opacity: 0;
+    pointer-events: none; /* Hindari interaksi pengguna saat pesan disembunyikan */
+}
+
+.alert-danger {
+    background-color: #f8d7da; /* Warna latar belakang untuk pesan kesalahan */
+    border-color: #f5c6cb; /* Warna border untuk pesan kesalahan */
+    color: #721c24; /* Warna teks untuk pesan kesalahan */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.alert-success {
+    background-color: #d4edda; /* Warna latar belakang untuk pesan kesuksesan */
+    border-color: #c3e6cb; /* Warna border untuk pesan kesuksesan */
+    color: #155724; /* Warna teks untuk pesan kesuksesan */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.wrapperedit {
+    width: 540px;
+    height: 570px;
+    background: #41557e;
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    margin: 0 auto; /* Menengahkan wrapper horizontal */
+    display: flex; /* Menggunakan flexbox untuk menengahkan elemen */
+    flex-direction: column; /* Mengatur arah flexbox menjadi vertikal */
+    align-items: center; /* Menengahkan elemen secara horizontal */
+    justify-content: center;
+}
+
+.wrapperedit h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    width: 100%;
+    max-width: 400px; /* Untuk membatasi lebar form */
+    margin-top: 20px; /* Jarak antara gambar dan form */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-grid-split {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-grid-item {
+    display: flex;
+    align-items: center;
+}
+
+.form-grid-item label {
+    flex-basis: 30%; /* Lebar label */
+    text-align: left;
+    margin-right: 10px; /* Jarak antara label dan input */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    flex: 1; /* Mengisi ruang yang tersedia */
+    margin-bottom: 5px; /* Jarak antara input box */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="file"]{
+    width: 70%;
+    margin-bottom: 5px; /* Jarak antara input box */
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    margin-left: 30px;
+}
+
+input[type="submit"]{
+    margin-top: 20px;
+    padding: 15px 10px;
+    width: 130px;
+    height: 50px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+}
