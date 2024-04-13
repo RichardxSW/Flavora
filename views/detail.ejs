@@ -170,8 +170,8 @@
         </div>
         
 <script>
-    const picValue = "<%= pic %>";
-    const nameValue = "<%= name %>";
+    const picValue = "<%= user.profilePicture.startsWith('http') ? user.profilePicture : 'userImages/' + user.profilePicture %>";
+    const nameValue = "<%= user.name %>";
     const idValue = "<%= recipes.recipeID %>";
     const recipes = `<%- JSON.stringify(recipes) %>`;
     const resep = `<%- JSON.stringify(resep) %>`;
