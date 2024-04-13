@@ -616,7 +616,7 @@ app.get('/recent' ,async (req, res) => {
         }
     });
 
-app.post('/save-recipe', async (req, res) => {
+app.post('/pinrecipe', async (req, res) => {
     try {
         const userId = req.user._id;
         const recipeId = req.body.recipeId;
@@ -643,7 +643,7 @@ app.post('/save-recipe', async (req, res) => {
     }
 });
 
-app.post('/delete-recipe', async (req, res) => {
+app.post('/unpinrecipe', async (req, res) => {
     try {
         const userId = req.user._id;
         const recipeId = req.body.recipeId;

@@ -16,7 +16,7 @@ document.querySelectorAll('.pin').forEach(button => {
   button.addEventListener('click', async () => {
       const recipeId = button.dataset.id;
       const isPinned = button.dataset.isPinned === 'true';
-      const url = isPinned ? '/delete-recipe' : '/save-recipe';
+      const url = isPinned ? '/unpinrecipe' : '/pinrecipe';
 
       try {
           const response = await fetch(url, {
