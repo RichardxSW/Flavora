@@ -37,6 +37,12 @@ mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
 
+        try {
+            await createAdmin();
+        } catch (error) {
+            console.error('Error creating admin account:', error);
+        }
+
         const count = await Recipes.countDocuments();
         if (count == 0) {
             const dataJSON = fs.readFileSync('public/recipes.json');
@@ -54,6 +60,30 @@ mongoose.connect(MONGO_URL)
         }
     })
     .catch(err => console.log(err))
+
+    async function createAdmin() {
+        try {
+            // Cek apakah sudah ada admin
+            const existingAdmin = await LocalUser.findOne({ isAdmin: true });
+            if (!existingAdmin) {
+                // Jika tidak ada admin, buat satu
+                const adminData = {
+                    email: 'admin@admin',
+                    password: 'admin', // Gunakan kata sandi mentah
+                    username: 'Admin',
+                    isAdmin: true
+                };
+    
+                // Buat objek admin baru
+                const newAdmin = new LocalUser(adminData);
+    
+                // Simpan objek admin ke database
+                await newAdmin.save();
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
 app.use(
     cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
@@ -320,6 +350,7 @@ app.get('/home', isAuthenticated, async (req, res) => {
             res.render('index', {
                 recipes: recipes, 
                 user: userData,
+                isAdmin: req.user.isAdmin,
                 title: 'Home', 
                 layout: "mainlayout"
             });
@@ -390,6 +421,9 @@ app.get('/search', isAuthenticated, async (req, res) => {
                 recipes: recipes,
                 filteredRecipes: filteredRecipes,
                 user: userData,
+                name: name,
+                pic: pic,
+                isAdmin: req.user.isAdmin,
                 title: 'Search',
                 layout: "mainlayout",
             });
@@ -441,6 +475,9 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
                 recipes: recipes ,
                 relatedRecipes: relatedRecipes, 
                 user: userData,
+                name: name, 
+                pic: pic, 
+                isAdmin: req.user.isAdmin,
                 title: 'Detail', 
                 layout: "mainlayout"})
         } else {
@@ -515,7 +552,8 @@ app.get('/recent' ,async (req, res) => {
             recipes: recipes, 
             title: 'Recent',  
             name: name, 
-            pic: pic, 
+            pic: pic,
+            isAdmin: req.user.isAdmin, 
             layout: "mainlayout"});
         } else {
             res.status(404).send("Recipe not found")
@@ -636,7 +674,70 @@ app.get('/pinned', async (req, res) => {
                 layout: "mainlayout",
                 name: req.user.username || req.user.displayName || '', 
                 pic: req.user.profilePicture || '/img/profilepic.jpg', 
-            });
+                        isAdmin: req.user.isAdmin,
+});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
+
+app.get('/dashboard', async(req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
+            res.render('dashboard', {
+            recipes: recipes, 
+            title: 'Dashboard', 
+            layout: "mainlayout", 
+            name: name, 
+            pic: pic,
+            isAdmin: req.user.isAdmin,
+});
+        } else {
+            res.status(404).send("Recipe not found")
+        }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    });
+
+app.get('/addRecipe', async(req, res) => {
+    try {
+        const recipes = await Recipes.find();
+        if (recipes) {
+            let name = '';
+            let pic = '';
+            if (req.user) { 
+                if (req.user.username) { 
+                    name = req.user.username || ''; 
+                    pic = '/img/profilepic.jpg'; 
+                } else {
+                    name = req.user.displayName || '';
+                    pic = req.user.profilePicture || '';
+                }
+            }
+            res.render('addRecipe', {
+            recipes: recipes, 
+            title: 'Add new Recipe', 
+            layout: "mainlayout", 
+            name: name, 
+            pic: pic,
+            isAdmin: req.user.isAdmin,
+});
         } else {
             res.status(404).send("User not found");
         }
@@ -646,6 +747,114 @@ app.get('/pinned', async (req, res) => {
     }
 });
     
+
+    app.post('/addRecipe', async (req, res) => {
+        try {
+            const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
+            const recipes = await Recipes.find();
+        let recipeID;
+
+        if (lastRecipe) {
+            // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
+            recipeID = lastRecipe.recipeID + 1;
+        } else {
+            // Jika tidak ada recipe, set recipeID menjadi 1
+            recipeID = 1;
+        }
+            const {
+                title,
+                category,
+                nationality,
+                featured,
+                // img,
+                desc,
+                serving,
+                length,
+                minutes,
+                calories,
+                bahan,
+                cara 
+            } = req.body;
+
+            const time = minutes + ' Minutes';
+
+            const newRecipe = new Recipes({
+                recipeID,
+                title,
+                category,
+                nationality,
+                featured,
+                // img,
+                desc,
+                serving,
+                length,
+                time,
+                minutes,
+                calories,
+                bahan,
+                cara
+            });
+            await newRecipe.save();
+            res.status(201).send("Recipe added successfully");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        }
+    })
+
+    app.post('/addRecipe', async (req, res) => {
+        try {
+            const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
+            const recipes = await Recipes.find();
+        let recipeID;
+
+        if (lastRecipe) {
+            // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
+            recipeID = lastRecipe.recipeID + 1;
+        } else {
+            // Jika tidak ada recipe, set recipeID menjadi 1
+            recipeID = 1;
+        }
+            const {
+                title,
+                category,
+                nationality,
+                featured,
+                // img,
+                desc,
+                serving,
+                length,
+                minutes,
+                calories,
+                bahan,
+                cara 
+            } = req.body;
+
+            const time = minutes + ' Minutes';
+
+            const newRecipe = new Recipes({
+                recipeID,
+                title,
+                category,
+                nationality,
+                featured,
+                // img,
+                desc,
+                serving,
+                length,
+                time,
+                minutes,
+                calories,
+                bahan,
+                cara
+            });
+            await newRecipe.save();
+            res.status(201).send("Recipe added successfully");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        }
+    })
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
