@@ -91,10 +91,18 @@ const recipesSchema = new Schema({
         type: Number,
         default: 0
     },
-    isPinned: {
-        type: Boolean,
-        default: false
-    }
+     // Properti lainnya
+    pinnedBy: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "LocalUser"
+        },
+        status: {
+            type: String,
+            enum: ['pinned', 'unpinned'], 
+            default: 'unpinned'
+        }
+    }]
 })
 
 module.exports = model('Recipe', recipesSchema)
