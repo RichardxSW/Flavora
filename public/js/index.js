@@ -53,11 +53,11 @@ document.addEventListener('click', (event) => {
 });
 
 document.addEventListener('recipePinToggle', (event) => {
-  const { recipeId, isPinned } = event.detail;
+    const { recipeId, isPinned } = event.detail;
 
-  // Temukan tombol pin dengan resepId yang cocok dan sesuaikan status pin
-  document.querySelectorAll(`.pin[data-id="${recipeId}"]`).forEach(button => {
-      button.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>';
-      button.dataset.isPinned = isPinned.toString();
-  });
+    // Temukan tombol pin dengan resepId yang cocok dan sesuaikan status pin
+    document.querySelectorAll(`.pin[data-id="${recipeId}"]`).forEach(button => {
+        button.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>';
+        button.dataset.isPinned = isPinned.toString();
+    });
 });

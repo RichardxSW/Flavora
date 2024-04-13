@@ -120,6 +120,7 @@ app.post('/register', async (req, res) => {
       await localuser.save();
       res.redirect('/local');
     } catch (error){
+        console.error(error); 
       res.redirect('/register');
     }
   });
@@ -151,34 +152,104 @@ function isAuthenticated(req, res, next) {
 
 app.get('/home', isAuthenticated, async (req, res) => {
     try {
-        const recipes = await Recipes.find();
-        if (recipes) {
+        // Ambil ID pengguna dari req.user
+        const userId = req.user._id;
+
+        // Ambil data pengguna termasuk savedRecipes
+        const user = await LocalUser.findById(userId).populate('savedRecipes');
+
+        if (user) {
+            // Ambil daftar resep yang disimpan oleh pengguna
+            const savedRecipes = user.savedRecipes;
+
+            // Ambil semua resep beserta status isPinned
+            const recipes = await Recipes.find().lean(); // Gunakan lean() agar hasil query dapat dimodifikasi
+
+            // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
+            const updatedRecipes = recipes.map(recipe => {
+                const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
+                return {
+                    ...recipe,
+                    isPinned: isPinned
+                };
+            });
+
             let name = '';
             let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
-                } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
-                }
+            if (req.user.username) { 
+                name = req.user.username || ''; 
+                pic = '/img/profilepic.jpg'; 
+            } else {
+                name = req.user.displayName || '';
+                pic = req.user.profilePicture || '';
             }
-    
+
             res.render('index', {
-                recipes: recipes, 
-                name: name, // Nama pengguna
-                pic: pic, // URL gambar profil
+                recipes: updatedRecipes, 
+                name: name, 
+                pic: pic, 
                 title: 'Home', 
                 layout: "mainlayout"
             });
         } else {
-            res.status(404).send("Recipe not found");
+            res.status(404).send("User not found");
         }
     } catch (error) { 
         res.status(500).send("Internal Server Error");
     }
-})
+});
+
+
+// app.get('/home', isAuthenticated, async (req, res) => {
+//     try {
+//         // Ambil ID pengguna dari req.user
+//         const userId = req.user._id;
+
+//         // Ambil data pengguna termasuk savedRecipes
+//         const user = await LocalUser.findById(userId).populate('savedRecipes');
+
+//         if (user) {
+//             // Ambil daftar resep yang disimpan oleh pengguna
+//             const savedRecipes = user.savedRecipes;
+
+//             // Ambil semua resep
+//             const recipes = await Recipes.find();
+
+//             // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
+//             const updatedRecipes = recipes.map(recipe => {
+//                 const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
+//                 return {
+//                     ...recipe._doc,
+//                     isPinned: isPinned
+//                 };
+//             });
+
+//             let name = '';
+//             let pic = '';
+//             if (req.user.username) { 
+//                 name = req.user.username || ''; 
+//                 pic = '/img/profilepic.jpg'; 
+//             } else {
+//                 name = req.user.displayName || '';
+//                 pic = req.user.profilePicture || '';
+//             }
+
+//             res.render('index', {
+//                 recipes: updatedRecipes, 
+//                 name: name, 
+//                 pic: pic, 
+//                 title: 'Home', 
+//                 layout: "mainlayout"
+//             });
+//         } else {
+//             res.status(404).send("User not found");
+//         }
+//     } catch (error) { 
+//         console.error(error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// });
+
 
 app.get('/search', async (req, res) => {
     try {
