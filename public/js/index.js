@@ -13,51 +13,43 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.querySelectorAll('.pin').forEach(button => {
-  button.addEventListener('click', async () => {
-      const recipeId = button.dataset.id;
-      const isPinned = button.dataset.isPinned === 'true';
-      const url = isPinned ? '/unpinrecipe' : '/pinrecipe';
+    button.addEventListener('click', async () => {
+        const recipeId = button.dataset.id;
+        const isPinned = button.dataset.isPinned === 'true';
+        const url = isPinned ? '/unpinrecipe' : '/pinrecipe';
 
-      try {
-          const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ recipeId })
-          });
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ recipeId })
+            });
 
-          const data = await response.json();
-          if (response.ok) {
-              button.innerHTML = isPinned ? '<i class="fa-regular fa-bookmark"></i>' : '<i class="fa-solid fa-bookmark"></i>';
-              button.dataset.isPinned = !isPinned;
-              sessionStorage.setItem('isPinned_' + recipeId, !isPinned);
-          } else {
-              console.error(data.error);
-          }
-      } catch (error) {
-          console.error('Error:', error);
-      }
-  });
+            const data = await response.json();
+            if (response.ok) {
+                // Perbarui tampilan tombol pin
+                button.innerHTML = isPinned ? '<i class="fa-regular fa-bookmark"></i>' : '<i class="fa-solid fa-bookmark"></i>';
+                button.dataset.isPinned = !isPinned;
+                sessionStorage.setItem('isPinned_' + recipeId, !isPinned);
+
+                // Perbarui tampilan kartu sesuai status pin
+                updateCard(recipeId, !isPinned);
+            } else {
+                console.error(data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 });
 
-document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('pin')) {
-      const recipeId = event.target.dataset.id;
-      const isPinned = event.target.dataset.isPinned === 'true';
-      
-      // Pemicuan Custom Event
-      const pinEvent = new CustomEvent('recipePinToggle', { detail: { recipeId, isPinned } });
-      document.dispatchEvent(pinEvent);
-  }
-});
-
-document.addEventListener('recipePinToggle', (event) => {
-    const { recipeId, isPinned } = event.detail;
-
-    // Temukan tombol pin dengan resepId yang cocok dan sesuaikan status pin
-    document.querySelectorAll(`.pin[data-id="${recipeId}"]`).forEach(button => {
+// Fungsi untuk memperbarui tampilan kartu berdasarkan status pin yang baru
+function updateCard(recipeId, isPinned) {
+    const cardButtons = document.querySelectorAll(`.pin[data-id="${recipeId}"]`);
+    cardButtons.forEach(button => {
         button.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>';
         button.dataset.isPinned = isPinned.toString();
     });
-});
+}

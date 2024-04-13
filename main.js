@@ -476,8 +476,6 @@ app.get('/search', isAuthenticated, async (req, res) => {
                 recipes: recipes,
                 filteredRecipes: filteredRecipes,
                 user: userData,
-                name: name,
-                pic: pic,
                 isAdmin: req.user.isAdmin,
                 title: 'Search',
                 layout: "mainlayout",
