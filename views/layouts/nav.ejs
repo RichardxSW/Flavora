@@ -18,9 +18,9 @@
       <button class="navbar_profile" onclick="window.location.href='/profile'">
         <ul class="list">
           <li class="listItem">
-            <img src="<%= pic%>" alt="" class="avatar" />
+            <img src="<%= user.profilePicture.startsWith('http') ? user.profilePicture : '/userImages/' + user.profilePicture %>" alt="" class="avatar" />
           </li>
-          <li class="listItem"><%= name%></li>
+          <li class="listItem"><%= user.name%></li>
         </ul>
       </button>
     </div>

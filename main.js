@@ -20,6 +20,7 @@ const bcrypt = require("bcrypt");
 const multer = require('multer');
 const path = require('path');
 const { profile } = require('console');
+const { userInfo } = require('os');
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -71,6 +72,7 @@ mongoose.connect(MONGO_URL)
                     email: 'admin@admin',
                     password: 'admin', // Gunakan kata sandi mentah
                     username: 'Admin',
+                    profilePicture: 'profilepic.jpg',
                     isAdmin: true
                 };
     
@@ -318,22 +320,38 @@ app.get('/home', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
     
             res.render('index', {
                 recipes: recipes, 
-                name: name, // Nama pengguna
-                pic: pic, // URL gambar profil
+                user: userData,
                 isAdmin: req.user.isAdmin,
                 title: 'Home', 
                 layout: "mainlayout"
@@ -346,19 +364,36 @@ app.get('/home', isAuthenticated, async (req, res) => {
     }
 })
 
-app.get('/search', async (req, res) => {
+app.get('/search', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             const searchQuery = req.query.q ? req.query.q.trim().toLowerCase() : '';
@@ -387,6 +422,7 @@ app.get('/search', async (req, res) => {
             res.render('search', {
                 recipes: recipes,
                 filteredRecipes: filteredRecipes,
+                user: userData,
                 name: name,
                 pic: pic,
                 isAdmin: req.user.isAdmin,
@@ -401,30 +437,46 @@ app.get('/search', async (req, res) => {
     }
 });
 
-app.get('/detail/:recipeID', async (req, res) => {
+app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
     try {
         const recipeID = req.params.recipeID
         const recipes = await Recipes.findOne({ recipeID })
         const relatedRecipes = await Recipes.find({ category: recipes.category, _id: { $ne: recipes._id } });
         const resep = await Recipes.find()
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { // Jika pengguna telah login
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             res.render('detail', {
                 resep: resep,
                 recipes: recipes ,
                 relatedRecipes: relatedRecipes, 
-                name: name, 
-                pic: pic, 
+                user: userData,
                 isAdmin: req.user.isAdmin,
                 title: 'Detail', 
                 layout: "mainlayout"})
@@ -598,7 +650,34 @@ app.get('/pinned', async (req, res) => {
 
         // Ambil data pengguna termasuk savedRecipes
         const user = await LocalUser.findById(userId).populate('savedRecipes');
-
+        let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
+                } else {
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
+                }
+            }
         if (user) {
             // Ambil daftar resep yang disimpan oleh pengguna
             const savedRecipes = user.savedRecipes;
@@ -620,9 +699,8 @@ app.get('/pinned', async (req, res) => {
                 recipes: recipes,
                 title: 'Pinned',
                 layout: "mainlayout",
-                name: req.user.username || req.user.displayName || '', 
-                pic: req.user.profilePicture || '/img/profilepic.jpg', 
-                        isAdmin: req.user.isAdmin,
+                user: userData,
+                isAdmin: req.user.isAdmin,
 });
         } else {
             res.status(404).send("Recipe not found")
@@ -636,23 +714,39 @@ app.get('/dashboard', async(req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             res.render('dashboard', {
             recipes: recipes, 
             title: 'Dashboard', 
-            layout: "mainlayout", 
-            name: name, 
-            pic: pic,
+            layout: "mainlayout",
+            user: userData,
             isAdmin: req.user.isAdmin,
 });
         } else {
@@ -667,23 +761,39 @@ app.get('/addRecipe', async(req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             res.render('addRecipe', {
             recipes: recipes, 
             title: 'Add new Recipe', 
             layout: "mainlayout", 
-            name: name, 
-            pic: pic,
+            user: userData,
             isAdmin: req.user.isAdmin,
 });
         } else {
