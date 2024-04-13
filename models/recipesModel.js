@@ -26,11 +26,12 @@ const recipesSchema = new Schema({
     },
     img: {
         type: String,
-        required: true
+        // required: true
     },
     url: {
         type: String,
-        required: true
+        required: true,
+        default: '/detail'
     },
     desc: {
         type: String,
