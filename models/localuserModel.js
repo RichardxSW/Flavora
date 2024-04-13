@@ -16,6 +16,10 @@ const LocalUserSchema = new Schema({
     },
     profilePicture: {
         type: String, // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 })
 
