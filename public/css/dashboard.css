@@ -305,23 +305,27 @@
   .card button{
     position: absolute;
     bottom: 65px;
-    right: 0.3rem;
+    right: .5rem;
     border-radius: .5rem;
     color: black;
   }
   
-  .button-circle i{
+  .pin i{
     cursor: pointer;
     user-select: none;
   }
   
-  .button-circle {
+  .pin {
     border-radius: 50%;
     border-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
+  }
+  
+  button:focus{
+    outline:none !important;
   }
   
   .result{
