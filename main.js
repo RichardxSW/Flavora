@@ -351,7 +351,7 @@ app.get('/home', isAuthenticated, async (req, res) => {
             }
 
             res.render('index', {
-                recipes: updatedRecipes, 
+                recipes: recipes, 
                 user: userData,
                 isAdmin: req.user.isAdmin,
                 title: 'Home', 
