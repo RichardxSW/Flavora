@@ -37,6 +37,12 @@ mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
 
+        try {
+            await createAdmin();
+        } catch (error) {
+            console.error('Error creating admin account:', error);
+        }
+
         const count = await Recipes.countDocuments();
         if (count == 0) {
             const dataJSON = fs.readFileSync('public/recipes.json');
@@ -54,6 +60,30 @@ mongoose.connect(MONGO_URL)
         }
     })
     .catch(err => console.log(err))
+
+    async function createAdmin() {
+        try {
+            // Cek apakah sudah ada admin
+            const existingAdmin = await LocalUser.findOne({ isAdmin: true });
+            if (!existingAdmin) {
+                // Jika tidak ada admin, buat satu
+                const adminData = {
+                    email: 'admin@admin',
+                    password: 'admin', // Gunakan kata sandi mentah
+                    username: 'Admin',
+                    isAdmin: true
+                };
+    
+                // Buat objek admin baru
+                const newAdmin = new LocalUser(adminData);
+    
+                // Simpan objek admin ke database
+                await newAdmin.save();
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
 app.use(
     cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
