@@ -13,7 +13,7 @@
 <div class="wrapper">
     <h1>Welcome, <%= user.name %></h1>
 
-    <img src="userImages/<%= user.profilePicture %>">
+    <img src="<%= user.profilePicture.startsWith('http') ? user.profilePicture : 'userImages/' + user.profilePicture %>">
         <table>
             <tr>
                 <td>Username</td>

@@ -68,7 +68,6 @@ app.use(session({
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 app.use("/auth", authGoogle);
 app.use("/auth", authLocal);
 app.use(express.static('public'));
@@ -99,12 +98,15 @@ app.get('/', (req, res) => {
 function isLoggedIn(req,res,next){
     req.user? next(): res.sendStatus(401);
 }
+
 app.delete('/', isLoggedIn, async (req, res) => {
     try {
         await User.findByIdAndDelete(req.user._id);
         req.logout();
+        if (req.session.freshUserData) {
+            delete req.session.freshUserData;
+        };
         res.sendStatus(200);
-        res.redirect('/'); 
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -158,17 +160,23 @@ app.get('/profile', (req, res) => {
     let name = '';
     let email = '';
     let password = '';
-    let userData = req.session.freshUserData || {};; // Inisialisasi objek userData
+    let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
     let errorMsg = req.flash('error');
     let successMsg = req.flash('success');
 
-    if (req.user) { // Jika pengguna telah login
+    if (!req.user) {
+        // Jika pengguna belum login, hapus session.freshUserData jika ada
+        if (req.session.freshUserData) {
+            delete req.session.freshUserData;
+        }
+    } else {
+        // Jika pengguna sudah login
         if (!userData || Object.keys(userData).length === 0) {
             // Jika userData kosong, isi dengan data pengguna dari req.user
             if (req.user.username) { 
                 userData = {
                     name: req.user.username || '', 
-                    profilePicture: '/img/profilepic.jpg',
+                    profilePicture: req.user.profilePicture,
                     email: req.user.email || '',
                     password: maskPassword(req.user.password || ''),
                     _id: req.user._id
@@ -188,12 +196,14 @@ app.get('/profile', (req, res) => {
             userData.password = maskPassword(userData.password || ''); // Ubah password menjadi masked version
         }
     }
-        res.render('profile', {
-            user: userData,
-            errorMsg: errorMsg,
-            successMsg: successMsg,
-            title: 'Profile', 
-            layout: "accountLayout"})
+
+    res.render('profile', {
+        user: userData,
+        errorMsg: errorMsg,
+        successMsg: successMsg,
+        title: 'Profile', 
+        layout: 'accountLayout'
+    });
 });
 
 function maskPassword(password) {
