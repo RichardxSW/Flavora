@@ -84,10 +84,12 @@ const recipesSchema = new Schema({
         }
     }],
     totalReviews: { 
-        type: Number 
+        type: Number,
+        default: 0 
     },
     averageRating: {
-        type: Number 
+        type: Number,
+        default: 0
     },
     isPinned: {
         type: Boolean,
