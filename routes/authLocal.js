@@ -11,7 +11,9 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
         if (!user) {
             return done(null, false, { message: 'Incorrect email' });
         }
-        if (password == user.password) {
+
+        const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
+        if (passwordMatch) {
             return done(null, user);
         } else {
             return done(null, false, { message: 'Incorrect password' });

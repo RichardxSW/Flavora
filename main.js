@@ -150,9 +150,13 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    
     const localuser = new LocalUser({ 
         email : req.body.email,
-        username: req.body.username, 
+        username: req.body.username,
+        hashedPassword: hashedPassword, 
         password: req.body.password,
         profilePicture: 'profilepic.jpg'});
     try {
