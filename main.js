@@ -75,6 +75,11 @@ mongoose.connect(MONGO_URL)
                     profilePicture: 'profilepic.jpg',
                     isAdmin: true
                 };
+
+                 // Hash kata sandi
+                const hashedPassword = await bcrypt.hash(adminData.password, 10);
+                // Simpan kedua versi kata sandi
+                adminData.hashedPassword = hashedPassword; // Simpan kata sandi yang di-hash
     
                 // Buat objek admin baru
                 const newAdmin = new LocalUser(adminData);
