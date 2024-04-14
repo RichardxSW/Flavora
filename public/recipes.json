@@ -690,5 +690,42 @@
         ],
         "totalReviews": 3,
         "averageRating": 3
+    },
+    {
+        "recipeID": 12,
+        "title": "Bakso",
+        "category": ["Lunch"],
+        "nationality": "Asian",
+        "time": "60 Minutes",
+        "img": "/img/bakso1.jpg",
+        "url": "/detail",
+        "desc": "Beef meatballs are generally served as a soupy food with a savory taste. Beef meatball soup tastes very delicious and can warm the body. That's why beef meatball recipes are much sought after, especially when the rainy season arrives.",
+        "serving": "5",
+        "length": "10",
+        "minutes": 60,
+        "calories": "444",
+        "bahan": [
+          "1 kg beef",
+          "250 g ice cubes",
+          "250 g sago flour",
+          "5 tbsp fried shallots",
+          "3 tbsp fried garlic",
+          "1 large egg white",
+          "1 tsp salt",
+          "1 tsp ground pepper",
+          "1 tsp stock powder",
+          "2 tsp baking powder"
+        ],
+        "cara": [
+          "Clean the beef and bones. Finely chop the beef or you can use a choper.",
+          "Then mix all meatball ingredients and knead evenly. Let stand for 10 minutes for the dough to rest. Then shape the dough into a round.",
+          "Boil the meatballs until cooked and drain. Boil egg noodles and rice noodles, drain.",
+          "Prepare the soup along with vegetables (carrots and potatoes) or according to taste. Add shallots and celery. Serve warm."
+        ],
+        "reviews":[
+      
+        ],
+        "totalReviews": 0,
+        "averageRating": 0
     }
 ]

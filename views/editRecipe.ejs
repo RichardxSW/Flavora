@@ -1,18 +1,21 @@
 <div class="content">
-    <h1>Add new recipe</h1>
+    <h1>Edit Recipe</h1>
 
-    <form action="/addRecipe" method="POST" enctype="multipart/form-data">
+    <form id="editForm" action="/editRecipe/<%= recipes.recipeID %>" method="POST" enctype="multipart/form-data">
         <div class="input-box">
             <label class="input-label" for="title">
                 Food Name
             </label>
                 <input 
-                    type="text" 
+                    type="text"
+                    value="<%= recipes.title %>" 
                     name="title" 
                     placeholder="Enter food name" 
                     required
                 />
         </div>  
+
+        <img src="<%= recipes.img %>">
 
         <div class="input-box">
             <label class="input-label" for="img">
@@ -21,7 +24,6 @@
               <input
                 type="file"
                 name="img"
-                required
               >
         </div>
 
@@ -33,6 +35,7 @@
                     type="radio" 
                     name="category" 
                     value="Breakfast"
+                    <%= recipes.category == 'Breakfast' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="category">
@@ -42,6 +45,7 @@
                     type="radio" 
                     name="category" 
                     value="Lunch"
+                    <%= recipes.category == 'Lunch' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="category">
@@ -51,6 +55,7 @@
                     type="radio" 
                     name="category" 
                     value="Dinner"
+                    <%= recipes.category == 'Dinner' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="category">
@@ -60,6 +65,7 @@
                     type="radio" 
                     name="category" 
                     value="Snack"
+                    <%= recipes.category == 'Snack' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="category">
@@ -74,6 +80,7 @@
                     type="radio" 
                     name="nationality" 
                     value="Asian"
+                    <%= recipes.nationality == 'Asian' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="nationality">
@@ -83,6 +90,7 @@
                     type="radio" 
                     name="nationality" 
                     value="Western"
+                    <%= recipes.nationality == 'Western' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="nationality">
@@ -97,6 +105,7 @@
                     type="radio" 
                     name="featured" 
                     value="yes"
+                    <%= recipes.featured == 'yes' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="featured">
@@ -106,6 +115,7 @@
                     type="radio" 
                     name="featured" 
                     value="no"
+                    <%= recipes.featured == 'no' ? 'checked' : '' %>
                     required
                 >
                 <label class="radio-label" for="featured">
@@ -118,6 +128,8 @@
                 Description
             </label>
                 <textarea
+                    cols="50"
+                    rows="8"
                     name="desc" 
                     placeholder="Enter food description" 
                     required
@@ -128,7 +140,8 @@
                 Food Serving
             </label>
                 <input 
-                    type="text" 
+                    type="text"
+                    value="<%= recipes.serving %>" 
                     name="serving" 
                     placeholder="Enter food serving" 
                     required
@@ -140,6 +153,7 @@
             </label>
                 <input 
                     type="text" 
+                    value="<%= recipes.length %>"
                     name="length" 
                     placeholder="Enter Total Ingredients" 
                     required
@@ -150,7 +164,8 @@
                 Cooking Time
             </label>
                 <input 
-                    type="text" 
+                    type="text"
+                    value="<%= recipes.minutes %>" 
                     name="minutes" 
                     placeholder="Enter Cooking Time"  
                     required
@@ -161,45 +176,52 @@
                 Calories
             </label>
                 <input 
-                    type="text" 
+                    type="text"
+                    value="<%= recipes.calories %>" 
                     name="calories" 
                     placeholder="Enter food calories" 
                     required
                 >
         </div>
         <div id="ingredients">
+            <% recipes.bahan.forEach((bahan, index) => { %>
             <div class="input-box">
-                <label class="input-label" for="bahan1">
-                    Ingredient 1
+                <label class="input-label" for="bahan<%= index + 1 %>">
+                    Ingredient <%= index + 1 %>
                 </label>
                 <input 
                     type="text" 
                     name="bahan[]" 
-                    id="bahan1" 
+                    value="<%= bahan %>"
+                    id="bahan<%= index + 1 %>" 
                     placeholder="Enter ingredient" 
                     required
                 >
                 <button type="button" class="delete-button" onclick="removeInputBox(this)">Delete</button>
 
             </div>
+            <% }) %>
         </div>
         <button type="button" id="addIngredient">Add Ingredient</button>
 
         <div id="instructions">
+            <% recipes.cara.forEach((cara, index) => { %>
             <div class="input-box">
-                <label class="input-label" for="cara1">
-                    Instruction 1
+                <label class="input-label" for="cara<%= index + 1 %>">
+                    Instruction <%= index + 1 %>
                 </label>
                 <input 
                     type="text" 
-                    name="cara[]" 
-                    id="cara1" 
+                    name="cara[]"
+                    value="<%= cara %>" 
+                    id="cara<%= index + 1 %>" 
                     placeholder="Enter instruction" 
                     required
                 >
                 <button type="button" class="delete-button" onclick="removeInputBox(this)">Delete</button>
 
             </div>
+            <% }) %>
         </div>
         <button type="button" id="addInstruction">Add Instruction</button>
         <br>
@@ -207,84 +229,7 @@
 </div>
 
 <script>
-    document.getElementById('addIngredient').addEventListener('click', function() {
-        const ingredientsDiv = document.getElementById('ingredients');
-        const ingredientCount = ingredientsDiv.children.length;
-
-        const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
-
-        const newLabel = document.createElement('label');
-        newLabel.classList.add('input-label');
-        newLabel.textContent = 'Ingredient ' + (ingredientCount + 1);
-        newLabel.htmlFor = 'bahan' + (ingredientCount + 1);
-
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'bahan[]';
-        newInput.id = 'bahan' + (ingredientCount + 1);
-        newInput.placeholder = 'Enter ingredient';
-        newInput.required = true;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.classList.add('delete-button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function() {
-        ingredientsDiv.removeChild(newDiv);
-        });
-
-        newDiv.appendChild(newLabel);
-        newDiv.appendChild(newInput);
-        newDiv.appendChild(deleteButton);
-
-        ingredientsDiv.appendChild(newDiv);
-    });
-
-    function removeInputBox(button) {
-        const ingredientsDiv = document.getElementById('ingredients');
-        const inputBox = button.parentNode;
-        ingredientsDiv.removeChild(inputBox);
-    }
-
-    document.getElementById('addInstruction').addEventListener('click', function() {
-        const instructionsDiv = document.getElementById('instructions');
-        const instructionCount = instructionsDiv.children.length;
-
-        const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
-
-        const newLabel = document.createElement('label');
-        newLabel.classList.add('input-label');
-        newLabel.textContent = 'Instruction ' + (instructionCount + 1);
-        newLabel.htmlFor = 'cara' + (instructionCount + 1);
-
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'cara[]';
-        newInput.id = 'cara' + (instructionCount + 1);
-        newInput.placeholder = 'Enter instruction';
-        newInput.required = true;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.classList.add('delete-button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function() {
-            instructionsDiv.removeChild(newDiv);
-        });
-
-        newDiv.appendChild(newLabel);
-        newDiv.appendChild(newInput);
-        newDiv.appendChild(deleteButton);
-
-        instructionsDiv.appendChild(newDiv);
-    });
-
-    function removeInputBox(button) {
-        const instructionsDiv = document.getElementById('instructions');
-        const inputBox = button.parentNode;
-        instructionsDiv.removeChild(inputBox);
-    }
+    
 </script>
-<link rel="stylesheet" href="/css/addRecipe.css">
+<script src="/js/editRecipe.js"></script>
+<link rel="stylesheet" href="/css/editRecipe.css">

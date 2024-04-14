@@ -973,6 +973,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
                 cara
             });
             await newRecipe.save();
+            res.redirect('/dashboard/')
             res.status(201).send("Recipe added successfully");
         } catch (error) {
             console.error(error);
@@ -980,59 +981,144 @@ const uploadRecipe = multer({ storage: storageRecipe });
         }
     })
 
-    // app.post('/addRecipe', async (req, res) => {
-    //     try {
-    //         const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
-    //         const recipes = await Recipes.find();
-    //     let recipeID;
+    app.get('/editRecipe/:recipeID', isAuthenticated, async (req, res) => {
+        try {
+            const recipeID = req.params.recipeID
+            // const resep = await Recipes.find()
+            const recipes = await Recipes.findOne({ recipeID })
+            if (recipes) {
+                let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+                if (!req.user) {
+                    // Jika pengguna belum login, hapus session.freshUserData jika ada
+                    if (req.session.freshUserData) {
+                        delete req.session.freshUserData;
+                    };
+                } else {
+                    // Jika pengguna sudah login
+                    if (!userData || Object.keys(userData).length === 0) {
+                        // Jika userData kosong, isi dengan data pengguna dari req.user
+                        if (req.user.username) { 
+                            userData = {
+                                name: req.user.username || '', 
+                                profilePicture: req.user.profilePicture,
+                                _id: req.user._id
+                            };
+                        } else {
+                            userData = {
+                                name: req.user.displayName || '',
+                                profilePicture: req.user.profilePicture || '',
+                                _id: req.user._id
+                            };
+                        }
+                    } else {
+                        // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                        userData.name = userData.username;
+                    }
+                }
+                res.render('editRecipe', {
+                    // resep: resep,
+                    recipes: recipes ,
+                    user: userData,
+                    isAdmin: req.user.isAdmin,
+                    title: 'Edit Recipe', 
+                    layout: "mainlayout"})
+            } else {
+                res.status(404).send("Recipe not found")
+            }
+        } catch (error) { 
+            res.status(500).send("Internal Server Error")
+        }
+    })
 
-    //     if (lastRecipe) {
-    //         // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
-    //         recipeID = lastRecipe.recipeID + 1;
-    //     } else {
-    //         // Jika tidak ada recipe, set recipeID menjadi 1
-    //         recipeID = 1;
-    //     }
-    //         const {
-    //             title,
-    //             category,
-    //             nationality,
-    //             featured,
-    //             // img,
-    //             desc,
-    //             serving,
-    //             length,
-    //             minutes,
-    //             calories,
-    //             bahan,
-    //             cara 
-    //         } = req.body;
+    app.post('/editRecipe/:recipeID', uploadRecipe.single('img') , async (req, res) => {
+        try {
+            const { recipeID } = req.params;
 
-    //         const time = minutes + ' Minutes';
+            // Temukan resep yang akan diupdate
+            const existingRecipe = await Recipes.findOne({recipeID});
 
-    //         const newRecipe = new Recipes({
-    //             recipeID,
-    //             title,
-    //             category,
-    //             nationality,
-    //             featured,
-    //             // img,
-    //             desc,
-    //             serving,
-    //             length,
-    //             time,
-    //             minutes,
-    //             calories,
-    //             bahan,
-    //             cara
-    //         });
-    //         await newRecipe.save();
-    //         res.status(201).send("Recipe added successfully");
-    //     } catch (error) {
-    //         console.error(error);
-    //         res.status(500).send("Internal Server Error");
-    //     }
-    // })
+            if (!existingRecipe) {
+                return res.status(404).send("Recipe not found");
+            }
+
+            // Persiapan data pembaruan resep
+            const updatedRecipeData = {};
+
+            // Periksa perubahan untuk setiap bidang
+            if (req.body.title && req.body.title !== existingRecipe.title) {
+                updatedRecipeData.title = req.body.title;
+            }
+            if (req.body.category && req.body.category !== existingRecipe.category) {
+                updatedRecipeData.category = req.body.category;
+            }
+            if (req.body.nationality && req.body.nationality !== existingRecipe.nationality) {
+                updatedRecipeData.nationality = req.body.nationality;
+            }
+            if (req.body.featured && req.body.featured !== existingRecipe.featured) {
+                updatedRecipeData.featured = req.body.featured;
+            }
+            if (req.body.desc && req.body.desc !== existingRecipe.desc) {
+                updatedRecipeData.desc = req.body.desc;
+            }
+            if (req.body.serving && req.body.serving !== existingRecipe.serving) {
+                updatedRecipeData.serving = req.body.serving;
+            }
+            if (req.body.length && req.body.length !== existingRecipe.length) {
+                updatedRecipeData.length = req.body.length;
+            }
+            if (req.body.minutes && req.body.minutes !== existingRecipe.minutes) {
+                updatedRecipeData.minutes = req.body.minutes;
+            }
+            if (req.body.calories && req.body.calories !== existingRecipe.calories) {
+                updatedRecipeData.calories = req.body.calories;
+            }
+            // Temukan bahan yang ditambahkan
+            const addedBahan = req.body.bahan.filter(bahan => !existingRecipe.bahan.includes(bahan));
+            // Temukan bahan yang dihapus
+            const removedBahan = existingRecipe.bahan.filter(bahan => !req.body.bahan.includes(bahan));
+
+            // Sama seperti untuk langkah, temukan langkah yang ditambahkan dan dihapus
+            const addedCara = req.body.cara.filter(cara => !existingRecipe.cara.includes(cara));
+            const removedCara = existingRecipe.cara.filter(cara => !req.body.cara.includes(cara));
+
+            // Perbarui data resep di MongoDB untuk menambah dan menghapus bahan yang sesuai
+            if (addedBahan.length > 0) {
+                await Recipes.findOneAndUpdate({ recipeID }, { $push: { bahan: { $each: addedBahan } } });
+            }
+            if (removedBahan.length > 0) {
+                await Recipes.findOneAndUpdate({ recipeID }, { $pull: { bahan: { $in: removedBahan } } });
+            }
+
+            // Perbarui data resep di MongoDB untuk menambah dan menghapus cara yang sesuai
+            if (addedCara.length > 0) {
+                await Recipes.findOneAndUpdate({ recipeID }, { $push: { cara: { $each: addedCara } } });
+            }
+            if (removedCara.length > 0) {
+                await Recipes.findOneAndUpdate({ recipeID }, { $pull: { cara: { $in: removedCara } } });
+            }
+
+            const newTime = req.body.minutes + ' Minutes';
+            if (newTime !== existingRecipe.time) {
+                updatedRecipeData.time = newTime;
+            }
+
+            if (req.file) {
+                updatedRecipeData.img = '/img/' + req.file.filename;
+            }
+
+            // Jika ada perubahan yang harus dilakukan, lakukan pembaruan
+        if (Object.keys(updatedRecipeData).length > 0) {
+            const updatedRecipe = await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
+            // res.status(200).send('Recipe updated successfully');
+            res.redirect('/dashboard/')
+        } else {
+            res.send('No changes to update');
+        }
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        }
+    })
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
