@@ -1,0 +1,26 @@
+<div class="content">
+    <div class="dashboard-title">
+        <h1>Latest Seen</h1>
+    </div>
+    <div class="result">
+        <div class="containerTotal">
+          <p id="totalResults"><%= latestSeenRecipes.length %> Results</p>
+        </div>
+        <div class="cardwrap" id="searchResults">
+          <% if (latestSeenRecipes.length > 0) { %>
+            <% latestSeenRecipes.forEach((recipe) => { %>
+              <%- include('layouts/card', { recipe: recipe}) %>
+            <% }); %>
+          <% } else { %>
+            <p>No recipe opened yet</p>
+          <% } %>
+        </div>
+    </div>
+</div>
+<script>
+        const latestSeenRecipes = `<%- JSON.stringify(latestSeenRecipes) %>`;
+</script>
+<script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+<script src="/js/index.js"></script>
+<script src="/js/searchRecent.js"></script>
+<link rel="stylesheet" href="/css/latestSeen.css">
