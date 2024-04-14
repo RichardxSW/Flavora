@@ -481,32 +481,6 @@ header{
   color: black; 
 }
 
-/* .avg-rating {
-  margin-left: 7px;
-}
-
-.avg-rating p {
-  display: flex;
-  align-items: center;
-}
-
-.avg-star {
-  color: #ff7f50;
-  font-size: 25px;
-}
-
-.avg-total {
-  margin-left: 5px;
-  margin-top: 2px;
-  font-size: 18px;
-}
-
-.total-rating {
-  margin-top: 2px;
-  margin-left: 3px;
-  font-size: 18px;
-} */
-
 .card button{
   position: absolute;
   bottom: 65px;
