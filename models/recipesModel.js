@@ -18,7 +18,8 @@ const recipesSchema = new Schema({
         required: true
     },
     featured: {
-        type: String
+        type: String,
+        default: 'no'
     },
     time: {
         type: String,
