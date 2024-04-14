@@ -13,6 +13,18 @@
                     required
                 />
         </div>  
+
+        <div class="input-box">
+            <label class="input-label" for="img">
+                Food Image
+            </label>
+              <input
+                type="file"
+                name="img"
+                required
+              >
+        </div>
+
         <div class="input-box">
             <label class="input-label" for="category">
                 Category
@@ -100,26 +112,16 @@
                     No
                 </label>
         </div>
-        <div class="input-box">
-            <label class="input-label" for="img">
-                Food Image
-            </label>
-              <input
-                type="file"
-                name="img"
-                required
-              >
-        </div>
+        
         <div class="input-box">
             <label class="input-label" for="desc">
                 Description
             </label>
-                <input 
-                    type="text" 
+                <textarea
                     name="desc" 
                     placeholder="Enter food description" 
                     required
-                >
+                ><%= recipes.desc %></textarea>
         </div>
         <div class="input-box">
             <label class="input-label" for="serving">
