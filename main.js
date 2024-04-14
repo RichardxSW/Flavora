@@ -879,6 +879,23 @@ app.get('/dashboard', async(req, res) => {
         }
     });
 
+    app.delete('/dashboard/:recipeID', async (req, res) => {
+        try {
+            // Ambil ID resep dari parameter route
+            const recipeID = req.params.recipeID;
+    
+            // Lakukan operasi penghapusan resep di database (contoh: menggunakan model Recipes)
+            await Recipes.findOneAndDelete({recipeID: recipeID});
+    
+            // Kirim respon yang berhasil
+            res.status(200).json({ message: 'Recipe deleted successfully' });
+        } catch (error) {
+            // Tangani kesalahan jika terjadi
+            console.error('Error deleting recipe:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+
 app.get('/addRecipe', async(req, res) => {
     try {
         const recipes = await Recipes.find();

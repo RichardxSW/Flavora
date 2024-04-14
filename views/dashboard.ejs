@@ -22,6 +22,29 @@
 </div>
 <script>
     const recipes = `<%- JSON.stringify(recipes) %>`;
+
+    function deleteRecipe(recipeID) {
+    if (confirm("Apakah Anda yakin ingin menghapus resep ini?")) {
+        fetch(`/dashboard/${recipeID}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message); // Tampilkan pesan sukses
+            // Lakukan tindakan tambahan setelah resep dihapus, misalnya: perbarui tampilan halaman
+            location.reload(); // Refresh halaman setelah menghapus resep
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('An error occurred while deleting the recipe'); // Tampilkan pesan kesalahan
+        });
+    }
+}
 </script>
 <script src="/js/index.js"></script>
 <script src="/js/searchDashboard.js"></script>
