@@ -1,5 +1,3 @@
-var app = angular.module('myApp', []);
-
 document.addEventListener("DOMContentLoaded", function () {
         var detailsElements = document.querySelectorAll('details');
 
