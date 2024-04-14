@@ -9,7 +9,7 @@
         <div class="cardwrap" id="searchResults">
           <% if (recipes.length > 0) { %>
             <% recipes.forEach((recipe) => { %>
-              <%- include('layouts/card', { recipe: recipe}) %>
+              <%- include('layouts/cardDashboard', { recipe: recipe}) %>
             <% }); %>
           <% } else { %>
             <p>No recipes found with that keyword</p>
