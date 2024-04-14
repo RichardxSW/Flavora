@@ -315,22 +315,33 @@
     color: black; 
   }
   
-  .card button{
-    position: absolute;
-    bottom: 65px;
-    right: .5rem;
-    border-radius: .5rem;
-    color: black;
-  }
-  
-  .pin i{
+  /* .pin i{
     cursor: pointer;
     user-select: none;
-  }
+  } */
   
-  .pin {
-    border-radius: 50%;
-    border-color: transparent;
+  .editbtn {
+    position: absolute;
+    bottom: 5px;
+    right: 4.2em;
+    border-radius: .5rem;
+    color: black;
+    /* border-radius: 50%; */
+    /* border-color: transparent; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+  }
+
+  .delbtn {
+    position: absolute;
+    bottom: 5px;
+    right: 0.5em;
+    border-radius: .5rem;
+    color: black;
+    /* border-radius: 50%; */
+    /* border-color: transparent; */
     display: flex;
     align-items: center;
     justify-content: center;
