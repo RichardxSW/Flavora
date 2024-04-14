@@ -290,6 +290,16 @@ app.post('/edit', upload.single('image'), async(req, res) => {
                 password: req.body.password,
                 profilePicture: req.file.filename // Gunakan req.file.filename untuk mendapatkan nama file yang disimpan oleh multer
             };
+
+            // Menghapus foto lama jika ada dan bukan 'profilepic.jpg'
+            const oldUserData = await LocalUser.findById(id);
+            if (oldUserData.profilePicture && oldUserData.profilePicture !== 'profilepic.jpg') {
+                const oldImagePath = path.join(__dirname, '/public/userImages', oldUserData.profilePicture);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                    console.log(`File ${oldUserData.profilePicture} telah dihapus.`);
+                }
+            }
         } else {
             // Jika tidak ada file yang diunggah, hanya simpan informasi pengguna
             userData = {
