@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require("cors");
-const passportSetup = require("./passport");
 const passport = require("passport");
 const authGoogle = require("./routes/auth")
 const authLocal = require("./routes/authLocal")
