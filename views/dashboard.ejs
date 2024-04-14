@@ -12,17 +12,18 @@
               <%- include('layouts/cardDashboard', { recipe: recipe}) %>
             <% }); %>
           <% } else { %>
-            <p>No recipes found with that keyword</p>
+            <p>No recipe</p>
           <% } %>
         </div>
+        <button class="add">
+          <a href="/addRecipe">Add Recipe</a>
+      </button>
     </div>
-    <button class="add">
-        <a href="/addRecipe">Add Recipe</a>
-    </button>
 </div>
 <script>
     const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
 <script src="/js/index.js"></script>
+<script src="/js/searchDashboard.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/dashboard.css">
