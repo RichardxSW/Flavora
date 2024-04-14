@@ -14,6 +14,10 @@ const userSchema = new Schema({
     profilePicture: {
         type: String, // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     savedRecipes: [{
         type: Schema.Types.ObjectId, 
         ref: "Recipe"

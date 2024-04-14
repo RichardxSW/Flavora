@@ -11,20 +11,15 @@
                         <span><%= recipe.averageRating %></span>
                         <span><%= '(' + recipe.totalReviews + ')'%></span>
                     </i>
-                    <% } else { %>
-                        <div class="avg-rating">
-                            <p>Be first to rate & review</p>
-                        </div>
-                    <% } %>
-                
+                <% } else { %>
+                    <div class="avg-rating">
+                        <p>Be first to rate & review</p>
+                    </div>
+                <% } %>
             </div>
         </div>
     </a>
-    <button type="button" class="pin" data-id="<%= recipe._id %>" data-isPinned="<%= recipe.isPinned %>">
-        <% if(recipe.isPinned) { %>
-            <i class="fa-solid fa-bookmark"></i>
-        <% } else { %>
-            <i class="fa-regular fa-bookmark"></i>
-        <% } %>
-    </button>
+    <% console.log('Pinned By:', recipe.pinnedBy); %>
+    <% console.log('User ID:', user._id); %>
+    <button type="button" class="pin" data-id="<%= recipe._id %>"></button>
 </div>

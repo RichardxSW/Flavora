@@ -91,11 +91,21 @@ const recipesSchema = new Schema({
         type: Number,
         default: 0
     },
-     // Properti lainnya
     pinnedBy: [{
         user: {
             type: Schema.Types.ObjectId,
             ref: "LocalUser"
+        },
+        status: {
+            type: String,
+            enum: ['pinned', 'unpinned'], 
+            default: 'unpinned'
+        }
+    }],
+    pinnedByGoogle: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "User" 
         },
         status: {
             type: String,
