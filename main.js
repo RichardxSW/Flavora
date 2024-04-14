@@ -157,9 +157,10 @@ app.post('/register', async (req, res) => {
         profilePicture: 'profilepic.jpg'});
     try {
       await localuser.save();
+      req.flash('successMsg', 'Successfully registered')
       res.redirect('/local');
     } catch (error){
-        console.error(error); 
+      req.flash('errorMsg', 'Registration failed')
       res.redirect('/register');
     }
   });
