@@ -133,7 +133,7 @@ function isLoggedIn(req,res,next){
 
 app.delete('/', isLoggedIn, async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.user._id);
+        // await User.findByIdAndDelete(req.user._id);
         req.logout();
         if (req.session.freshUserData) {
             delete req.session.freshUserData;
@@ -732,7 +732,7 @@ app.get('/pinned', async (req, res) => {
                 layout: "mainlayout",
                 user: userData,
                 isAdmin: req.user.isAdmin,
-});
+            });
         } else {
             res.status(404).send("Recipe not found")
         }
