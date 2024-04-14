@@ -113,6 +113,16 @@ const recipesSchema = new Schema({
             enum: ['pinned', 'unpinned'], 
             default: 'unpinned'
         }
+    }],
+    lastSeenBy: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "LocalUser"
+        },
+        lastSeenAt: {
+            type: Date,
+            // default: Date.now
+        }
     }]
 })
 
