@@ -973,8 +973,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
                 cara
             });
             await newRecipe.save();
-            res.redirect('/dashboard/')
-            res.status(201).send("Recipe added successfully");
+            res.status(200).redirect('/dashboard/')
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
@@ -1109,8 +1108,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
             // Jika ada perubahan yang harus dilakukan, lakukan pembaruan
         if (Object.keys(updatedRecipeData).length > 0) {
             const updatedRecipe = await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
-            // res.status(200).send('Recipe updated successfully');
-            res.redirect('/dashboard/')
+            res.status(200).redirect('/dashboard/')
         } else {
             res.send('No changes to update');
         }
