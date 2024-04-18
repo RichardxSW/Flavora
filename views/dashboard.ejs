@@ -2,6 +2,30 @@
     <div class="dashboard-title">
         <h1>Dashboard</h1>
     </div>
+    <% if (messages.noChangeMsg) { %>
+      <div class="alert alert-danger" role="alert">
+              <%= messages.noChangeMsg %>
+      </div>
+  <% } %>
+
+  <% if (messages.changeMsg) { %>
+      <div class="alert alert-success" role="alert">
+              <%= messages.changeMsg %>
+      </div>
+  <% } %>
+
+  <% if (messages.successAddMsg) { %>
+      <div class="alert alert-success" role="alert">
+              <%= messages.successAddMsg %>
+      </div>
+  <% } %>
+
+  <% if (messages.deletedMsg) { %>
+      <div class="alert alert-success" role="alert">
+              <%= messages.deletedMsg %>
+      </div>
+  <% } %>
+
     <div class="result">
         <div class="containerTotal">
           <p id="totalResults"><%= recipes.length %> Results</p>
@@ -21,30 +45,35 @@
     </div>
 </div>
 <script>
+    const alertElement = document.querySelector('.alert');
+
+    // Periksa apakah elemen ada sebelum melanjutkan
+    if (alertElement) {
+        // Tunggu 3 detik sebelum menyembunyikan pesan
+        setTimeout(function() {
+            alertElement.style.display = 'none';
+        }, 3000); // Waktu dalam milidetik (3 detik)
+    }
+
     const recipes = `<%- JSON.stringify(recipes) %>`;
 
-    function deleteRecipe(recipeID) {
-    if (confirm("Apakah Anda yakin ingin menghapus resep ini?")) {
-        fetch(`/dashboard/${recipeID}`, {
+        function deleteRecipe(recipeID) {
+        // Kirim permintaan DELETE ke server
+        fetch(`/deleteRecipe/${recipeID}`, {
             method: 'DELETE'
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => {
-            alert(data.message); // Tampilkan pesan sukses
-            // Lakukan tindakan tambahan setelah resep dihapus, misalnya: perbarui tampilan halaman
-            location.reload(); // Refresh halaman setelah menghapus resep
+            // Jika berhasil, perbarui tampilan atau lakukan tindakan lain
+            location.reload(); // Reload halaman setelah menghapus resep
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
             alert('An error occurred while deleting the recipe'); // Tampilkan pesan kesalahan
         });
     }
-}
 </script>
 <script src="/js/index.js"></script>
 <script src="/js/searchDashboard.js"></script>
