@@ -2,7 +2,7 @@
     <h1>Edit Recipe</h1>
 
     <form id="editForm" action="/editRecipe/<%= recipes.recipeID %>" method="POST" enctype="multipart/form-data">
-        <div class="input-box">
+        <div class="input-box food-name">
             <label class="input-label" for="title">
                 Food Name
             </label>
@@ -15,11 +15,12 @@
                 />
         </div>  
 
-        <img src="<%= recipes.img %>">
-
         <div class="input-box">
-            <label class="input-label" for="img">
+            <label class="input-label image" for="img">
                 Food Image
+                <span class="image-wrapper">
+                    <img src="<%= recipes.img %>">
+                </span>
             </label>
               <input
                 type="file"
@@ -135,7 +136,7 @@
                     required
                 ><%= recipes.desc %></textarea>
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="serving">
                 Food Serving
             </label>
@@ -147,7 +148,7 @@
                     required
                 >
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="length">
                 Total Ingredients
             </label>
@@ -159,7 +160,7 @@
                     required
                 >
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="minutes">
                 Cooking Time
             </label>
@@ -171,7 +172,7 @@
                     required
                 >
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="calories">
                 Calories
             </label>
@@ -185,7 +186,7 @@
         </div>
         <div id="ingredients">
             <% recipes.bahan.forEach((bahan, index) => { %>
-            <div class="input-box">
+            <div class="input-box long">
                 <label class="input-label" for="bahan<%= index + 1 %>">
                     Ingredient <%= index + 1 %>
                 </label>
@@ -206,7 +207,7 @@
 
         <div id="instructions">
             <% recipes.cara.forEach((cara, index) => { %>
-            <div class="input-box">
+            <div class="input-box long">
                 <label class="input-label" for="cara<%= index + 1 %>">
                     Instruction <%= index + 1 %>
                 </label>
@@ -225,7 +226,7 @@
         </div>
         <button type="button" id="addInstruction">Add Instruction</button>
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit" class="submitBtn">Submit</button>
 </div>
 
 <script>
