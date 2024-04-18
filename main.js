@@ -888,7 +888,7 @@ app.get('/dashboard', async(req, res) => {
         }
     });
 
-    app.delete('/dashboard/:recipeID', async (req, res) => {
+    app.delete('/deleteRecipe/:recipeID', async (req, res) => {
         try {
             // Ambil ID resep dari parameter route
             const recipeID = req.params.recipeID;
@@ -897,7 +897,8 @@ app.get('/dashboard', async(req, res) => {
             await Recipes.findOneAndDelete({recipeID: recipeID});
     
             // Kirim respon yang berhasil
-            res.status(200).json({ message: 'Recipe deleted successfully' });
+            req.flash('deletedMsg','Recipe deleted successfully');
+            res.status(200).end();
         } catch (error) {
             // Tangani kesalahan jika terjadi
             console.error('Error deleting recipe:', error);
@@ -1020,6 +1021,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
                 cara
             });
             await newRecipe.save();
+            req.flash('successAddMsg', 'Recipe Added')
             res.status(200).redirect('/dashboard/')
         } catch (error) {
             console.error(error);
@@ -1155,9 +1157,10 @@ const uploadRecipe = multer({ storage: storageRecipe });
             // Jika ada perubahan yang harus dilakukan, lakukan pembaruan
         if (Object.keys(updatedRecipeData).length > 0) {
             const updatedRecipe = await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
+            req.flash('changeMsg', 'Recipe updated successfully')
             res.status(200).redirect('/dashboard/')
         } else {
-            res.send('No changes to update');
+            req.flash('noChangeMsg','No changes to update');
         }
         } catch (error) {
             console.error(error);
