@@ -221,6 +221,7 @@
   margin-bottom: 20px;
   margin-left: 4em;
   margin-right: 4em;
+  min-height: 60vh;
   }
 
   .dashboard-title {
@@ -230,6 +231,13 @@
   .dashboard-title h1{
     font-size: 28px;
     font-weight: bolder;
+  }
+
+  .alert {
+    margin-left: 80px;
+    margin-right: 120px;
+    z-index: 1000;
+    position: fixed;
   }
 
   .card .time .row p {
