@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const ingredientCount = ingredientsDiv.children.length;
 
         const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
+        newDiv.classList.add('input-box', 'long');
 
         const newLabel = document.createElement('label');
         newLabel.classList.add('input-label');
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const instructionCount = instructionsDiv.children.length;
 
         const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
+        newDiv.classList.add('input-box', 'long');
 
         const newLabel = document.createElement('label');
         newLabel.classList.add('input-label');
