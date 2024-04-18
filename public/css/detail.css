@@ -231,6 +231,7 @@
     margin-top: 150px;
     margin-bottom: 30px;
     padding-bottom: 50px;
+    min-height: 60vh;
 }
 
 .recipe-image {
