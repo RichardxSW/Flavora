@@ -579,7 +579,7 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
     }
 })
 
-app.post('/detail/:recipeID', async (req, res) => {
+app.post('/postReview/:recipeID', async (req, res) => {
     try {
         const { recipeID } = req.params;
         const { rating, review, date, name , photo } = req.body;
@@ -623,6 +623,53 @@ app.post('/detail/:recipeID', async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+// Endpoint untuk menghapus komentar dari resep
+app.delete('/deleteComment/:recipeID/:commentID', async (req, res) => {
+    try {
+        // Ambil ID resep dan ID komentar dari parameter route
+        const recipeID = req.params.recipeID;
+        const commentID = req.params.commentID;
+
+        // Lakukan operasi penghapusan komentar dari resep di database
+        // Misalnya, menggunakan model Recipes
+        await Recipes.updateOne({ recipeID: recipeID }, { $pull: { reviews: { _id: commentID } } });
+
+        // Kirim respon yang berhasil
+        res.status(200).end();
+    } catch (error) {
+        // Tangani kesalahan jika terjadi
+        console.error('Error deleting comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.put('/editComment/:commentID', async (req, res) => {
+    try {
+        const commentID = req.params.commentID;
+        const { newComment } = req.body;
+
+        // Lakukan operasi pengeditan komentar di database (contoh: menggunakan model Recipes)
+        const updatedReview = await Recipes.findOneAndUpdate(
+            { 'reviews._id': commentID },
+            { $set: { 'reviews.$.review': newComment } },
+            { new: true }
+        );
+
+        if (!updatedReview) {
+            return res.status(404).json({ error: 'Review not found' });
+        }
+
+        // Kirim respon yang berhasil
+        res.status(200).json({ message: 'Comment updated successfully', updatedReview });
+    } catch (error) {
+        // Tangani kesalahan jika terjadi
+        console.error('Error editing comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 
 app.get('/recent' ,async (req, res) => {
     try {
@@ -1157,8 +1204,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
             // Jika ada perubahan yang harus dilakukan, lakukan pembaruan
         if (Object.keys(updatedRecipeData).length > 0) {
             const updatedRecipe = await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
-            req.flash('changeMsg', 'Recipe updated successfully')
-            res.status(200).redirect('/dashboard/')
+            res.status(200).end()
         } else {
             req.flash('noChangeMsg','No changes to update');
         }
