@@ -126,4 +126,16 @@ const recipesSchema = new Schema({
     }]
 })
 
+// Hook pre-save untuk menghitung averageRating
+recipesSchema.pre('save', function(next) {
+    const totalReviews = this.reviews.length;
+    let totalRating = 0;
+    for (const review of this.reviews) {
+        totalRating += parseInt(review.rating);
+    }
+    this.totalReviews = totalReviews;
+    this.averageRating = totalReviews > 0 ? (totalRating / totalReviews).toFixed(1) : 0;
+    next();
+});
+
 module.exports = model('Recipe', recipesSchema)
