@@ -45,37 +45,11 @@
     </div>
 </div>
 <script>
-    const alertElement = document.querySelector('.alert');
-
-    // Periksa apakah elemen ada sebelum melanjutkan
-    if (alertElement) {
-        // Tunggu 3 detik sebelum menyembunyikan pesan
-        setTimeout(function() {
-            alertElement.style.display = 'none';
-        }, 3000); // Waktu dalam milidetik (3 detik)
-    }
-
     const recipes = `<%- JSON.stringify(recipes) %>`;
-
-        function deleteRecipe(recipeID) {
-        // Kirim permintaan DELETE ke server
-        fetch(`/deleteRecipe/${recipeID}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            // Jika berhasil, perbarui tampilan atau lakukan tindakan lain
-            location.reload(); // Reload halaman setelah menghapus resep
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-            alert('An error occurred while deleting the recipe'); // Tampilkan pesan kesalahan
-        });
-    }
 </script>
 <script src="/js/index.js"></script>
+<script src="/js/dashboard.js"></script>
 <script src="/js/searchDashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/dashboard.css">
