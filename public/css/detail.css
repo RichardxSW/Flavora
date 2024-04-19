@@ -234,6 +234,13 @@
     min-height: 60vh;
 }
 
+.alert {
+  margin-left: 80px;
+  margin-right: 120px;
+  z-index: 1000;
+  position: fixed;
+}
+
 .recipe-image {
     width: 30%;
     height: auto;
@@ -443,6 +450,32 @@
 .sub-name {
   font-weight: 600;
   margin-left: 15px;
+}
+
+.button-wrapper {
+  display: flex;
+  margin-left: auto;
+}
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  margin-left: 5px;
+}
+
+.delete-button:hover {
+  color: red;
+}
+
+.edit-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.1em;
+}
+
+.edit-button:hover {
+  color: red;
 }
 
 .sub-rating-date {
