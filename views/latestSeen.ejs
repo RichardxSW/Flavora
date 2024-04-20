@@ -1,26 +1,167 @@
 <div class="content">
-    <div class="dashboard-title">
-        <h1>Latest Seen</h1>
+  <div class="popup" id="popup">
+    <div class="top">
+      <i class="fa-solid fa-folder-plus fa-lg" style="color: #ffffff;"></i><p>New Folder</p>
+      <span class="close" onclick="closePopup()"><i class="fa fa-close" style="color: #ffffff;"></i></span>
     </div>
-    <div class="result">
-        <div class="containerTotal">
-          <p id="totalResults"><%= latestSeenRecipes.length %> Results</p>
+    <div class="popup-content">
+      <form id="folderForm">
+        <div class="name">
+          <label for="folderName">Folder Name</label><br>
+          <input type="text" id="folderName" name="folderName" maxlength="10" placeholder="Give your folder a name"><br>
         </div>
-        <div class="cardwrap" id="searchResults">
-          <% if (latestSeenRecipes.length > 0) { %>
-            <% latestSeenRecipes.forEach((recipe) => { %>
-              <%- include('layouts/card', { recipe: recipe}) %>
-            <% }); %>
-          <% } else { %>
-            <p>No recipe opened yet</p>
-          <% } %>
+        <div class="desc">
+        <label for="description">Description (optional)</label><br>
+          <textarea id="description" name="description" maxlength="300" placeholder="Describe your folder"></textarea><br>
+          <div class="count" id="charCount">0/300 characters</div>
         </div>
+        <div class="button-container">
+          <a href="#" class="cancel" onclick="closePopup()">Cancel</a>
+          <button type="submit" id="confirmButton">Create Folder</button>
+        </div> 
+      </form>
     </div>
+  </div>
+  <div class="selection">
+    <div class="select">
+      <a href="/pinned" id="savedBtn"><i class="fa-solid fa-bookmark"></i>Pinned Recipes</a>
+      <a href="#" id="recentBtn" class="active"><i class="fa-regular fa-clock"></i>Recently Viewed</a>
+    </div>
+    <div class="my-folder">
+      <p>MY FOLDERS</p>
+      <button onclick="openPopup()">
+        <i class="fa-solid fa-plus"></i>
+        <p>New Folder</p>
+      </button>
+      <div class="created">
+        <% folders.forEach(folder => { %>
+          <a class="folder" href="/folder/<%= folder._id %>">
+            <img src="/img/recipe-add-photo.png"/>
+            <%= folder.name %>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+  <div class="result">
+    <h3>Latest Seen</h3>
+    <div class="containerTotal">
+      <p id="totalResults"><%= latestSeenRecipes.length %> results</p>
+    </div>
+    <div class="cardwrap">
+      <% if (latestSeenRecipes.length  > 0) { %>
+        <% latestSeenRecipes.forEach((recipe) => { %>
+          <%- include('layouts/card', { recipe: recipe}) %>
+        <% }); %>
+      <% } else { %>
+        <h4>No recipe opened yet</h4>
+      <% } %>
+    </div>
+  </div>
 </div>
+
+<div id="overlay"></div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-        const latestSeenRecipes = `<%- JSON.stringify(latestSeenRecipes) %>`;
+  const latestSeenRecipes = `<%- JSON.stringify(latestSeenRecipes) %>`;
 </script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
 <script src="/js/index.js"></script>
 <script src="/js/searchRecent.js"></script>
 <link rel="stylesheet" href="/css/latestSeen.css">
+<script>
+  function openPopup() {
+  document.getElementById('popup').style.display = 'block';
+  document.getElementById('overlay').style.display = 'block';
+  document.body.classList.add('popup-open'); 
+  }
+
+  function closePopup() {
+    document.getElementById('folderName').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    document.body.classList.remove('popup-open'); 
+  }
+
+  document.getElementById('folderForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  let folderName = document.getElementById('folderName').value;
+  let description = document.getElementById('description').value;
+});
+
+// Mengambil elemen textarea dan elemen untuk menampilkan jumlah karakter
+const descriptionInput = document.getElementById('description');
+const charCountDisplay = document.getElementById('charCount');
+
+// Menambahkan event listener untuk input pada textarea
+descriptionInput.addEventListener('input', function() {
+  // Mengambil jumlah karakter yang diketik
+  const charCount = descriptionInput.value.length;
+  // Menampilkan jumlah karakter di dalam elemen
+  charCountDisplay.textContent = charCount + '/300 characters' ;
+});
+
+// Menggunakan jQuery untuk melakukan AJAX request, Anda dapat menyesuaikan dengan metode lain jika diperlukan
+$('#folderForm').submit(function(event) {
+    event.preventDefault();
+    let folderName = $('#folderName').val();
+    let description = $('#description').val();
+    
+    // Mendapatkan daftar nama folder yang sudah ada
+    let existingFolders = $('.created .folder').map(function() {
+        return $(this).text().trim();
+    }).get();
+
+    // Memeriksa apakah nama folder sudah ada sebelumnya
+    if (existingFolders.includes(folderName)) {
+        // Jika nama folder sudah ada, tampilkan SweetAlert untuk memberitahu pengguna
+        Swal.fire({
+            title: 'Error!',
+            text: 'Folder with the same name already exists.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // Hapus nilai input nama folder dan deskripsi
+            $('#folderName').val('');
+            $('#description').val('');
+        });
+        return; // Menghentikan eksekusi selanjutnya
+    }  
+    else if (folderName.trim() === '') {
+        // Jika kosong, tampilkan alert
+        Swal.fire({
+            title: 'Error!',
+            text: 'Please enter a folder name.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    // Jika nama folder belum ada sebelumnya, lanjutkan proses pembuatan folder
+    $.ajax({
+        type: 'POST',
+        url: '/folders', // Ganti URL dengan endpoint Anda yang sesuai
+        data: { folderName, description },
+        success: function(response) {
+            closePopup();
+            // Tampilkan SweetAlert2 setelah folder berhasil dibuat
+            Swal.fire({
+                title: 'Folder Created!',
+                text: 'Your folder has been created.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Refresh halaman setelah menutup SweetAlert2
+                window.location.reload();
+            });
+        },
+        error: function(error) {
+            console.error(error);
+            // Handle error jika ada
+        }
+    });
+});
+</script>

@@ -1485,57 +1485,56 @@ const uploadRecipe = multer({ storage: storageRecipe });
                 return res.redirect('/'); // Redirect ke halaman login jika pengguna belum terotentikasi
             }
     
-            // Ambil ID pengguna dari sesi
-            const userID = req.user._id;
-    
-            // Temukan resep-resep yang terakhir dilihat oleh pengguna
-            const latestSeenRecipes = await Recipes.find({ 'lastSeenBy.user': userID })
-                 .sort({ 'lastSeenBy.lastSeenAt': -1 }) // Urutkan berdasarkan waktu terakhir dilihat secara menurun
-                 .populate('lastSeenBy.user')
-                 .limit(10); // Populate field 'user' di dalam array 'lastSeenBy' untuk mendapatkan informasi pengguna
-    
-            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
-            if (!req.user) {
-                // Jika pengguna belum login, hapus session.freshUserData jika ada
-                if (req.session.freshUserData) {
-                    delete req.session.freshUserData;
-                }
-            } else {
-                // Jika pengguna sudah login
-                if (!userData || Object.keys(userData).length === 0) {
-                    // Jika userData kosong, isi dengan data pengguna dari req.user
-                    if (req.user.username) { 
-                        userData = {
-                            name: req.user.username || '', 
-                            profilePicture: req.user.profilePicture,
-                            _id: req.user._id
-                        };
-                    } else {
-                        userData = {
-                            name: req.user.displayName || '',
-                            profilePicture: req.user.profilePicture || '',
-                            _id: req.user._id
-                        };
-                    }
-                } else {
-                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
-                    userData.name = userData.username;
-                }
+            // Inisialisasi objek userData
+            let userData = {};
+            if (req.user) {
+                // Jika pengguna sudah login, gunakan data pengguna dari req.user
+                userData = {
+                    name: req.user.username || req.user.displayName || '',
+                    profilePicture: req.user.profilePicture || '',
+                    _id: req.user._id
+                };
+            } else if (req.session.freshUserData) {
+                // Jika pengguna belum login, tetapi ada data pengguna dalam session
+                userData = req.session.freshUserData;
             }
     
-            // Render halaman "latest seen" dengan resep-resep yang terakhir dilihat
-            res.render('latestSeen', { 
-                latestSeenRecipes: latestSeenRecipes,
-                user: userData,
-                isAdmin: req.user.isAdmin,
-                title: 'Latest Seen',
-                layout: "mainlayout"
-            });
+            // Ambil ID pengguna dari sesi
+            const userId = req.user._id;
+    
+            let user;
+            if (req.user.googleId) {
+                user = await User.findById(userId).populate('savedRecipes'); // Jika pengguna Google
+            } else {
+                user = await LocalUser.findById(userId).populate('savedRecipes'); // Jika pengguna lokal
+            }
+    
+            if (user) {
+                // Temukan resep-resep yang terakhir dilihat oleh pengguna
+                const latestSeenRecipes = await Recipes.find({ 'lastSeenBy.user': userId })
+                    .sort({ 'lastSeenBy.lastSeenAt': -1 }) // Urutkan berdasarkan waktu terakhir dilihat secara menurun
+                    .populate('lastSeenBy.user')
+                    .limit(10); // Batasi jumlah resep terakhir yang dilihat
+    
+                const folders = user.folders;
+                // Render halaman "latest seen" dengan resep-resep yang terakhir dilihat
+                res.render('latestSeen', { 
+                    latestSeenRecipes: latestSeenRecipes,
+                    user: userData,
+                    folders: folders,
+                    isAdmin: req.user.isAdmin,
+                    title: 'Latest Seen',
+                    layout: "mainlayout"
+                });
+            } else {
+                res.status(404).send("User not found");
+            }
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
         }
     });
+    
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
