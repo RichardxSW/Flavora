@@ -10,6 +10,10 @@ const LocalUserSchema = new Schema({
         type: String,
         required: true
     },
+    hashedPassword: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true

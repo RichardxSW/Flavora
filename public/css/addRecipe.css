@@ -215,18 +215,132 @@
   }
 
   /* Konten */
-  .content {
+  /* .content {
     margin-top: 100px;
     padding-right: 100px;
     padding-left: 100px;
     padding-bottom: 20px;
-  }
+  } */
 
   h1 {
     font-size: 28px;
     font-weight: bolder;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
   }
 
+  .content {
+    max-width: 600px; 
+    margin-top: 120px; 
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 60px;
+    padding: 40px;
+    background-color: lightgoldenrodyellow;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* overflow-y: scroll; */
+}
+
+.input-box {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"]{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.input-box.food-name input[type="text"] {
+    width: 250px;
+}
+
+.input-box.small input[type="text"] {
+    width: 100px;
+}
+
+.input-box.long input[type="text"] {
+    width: 400px;
+}
+
+.input-box.food-image input[type="file"] {
+    width: 250px;
+}
+
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.radio-label {
+    margin-right: 10px;
+}
+
+#addIngredient,
+#addInstruction
+{
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#addIngredient:hover,
+#addInstruction:hover{
+    background-color: #45a049;
+}
+
+.delete-button {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-button:hover {
+    background-color: #da190b;
+} 
+
+.submitBtn {
+  background-color: #008CBA; /* Warna latar biru */
+    border: none; /* Tanpa border */
+    color: white; /* Warna teks putih */
+    padding: 15px 25px; /* Padding di dalam tombol */
+    text-align: center; /* Teks di tengah tombol */
+    text-decoration: none; /* Tanpa dekorasi teks */
+    display: inline-block; /* Menjadikan tombol sebagai elemen inline block */
+    font-size: 16px; /* Ukuran teks */
+    margin-top: 20px;
+    margin-left: 2px;
+    cursor: pointer; /* Ubah kursor menjadi tangan saat digulir */
+    border-radius: 5px; /* Rounding sudut */
+    transition: background-color 0.3s; /* Efek transisi untuk perubahan warna latar belakang */
+}
+
+.submitBtn:hover {
+    background-color: #005F6B; /* Warna latar belakang berubah saat hover */
+
+}
 
    /* Footer */
 .footer {

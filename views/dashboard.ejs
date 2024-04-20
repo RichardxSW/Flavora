@@ -2,6 +2,30 @@
     <div class="dashboard-title">
         <h1>Dashboard</h1>
     </div>
+    <% if (messages.noChangeMsg) { %>
+      <div class="alert alert-danger" role="alert">
+              <%= messages.noChangeMsg %>
+      </div>
+  <% } %>
+
+  <% if (messages.changeMsg) { %>
+      <div class="alert alert-success" role="alert">
+              <%= messages.changeMsg %>
+      </div>
+  <% } %>
+
+  <% if (messages.successAddMsg) { %>
+      <div class="alert alert-success" role="alert">
+              <%= messages.successAddMsg %>
+      </div>
+  <% } %>
+
+  <% if (messages.deletedMsg) { %>
+      <div class="alert alert-success" role="alert">
+              <%= messages.deletedMsg %>
+      </div>
+  <% } %>
+
     <div class="result">
         <div class="containerTotal">
           <p id="totalResults"><%= recipes.length %> Results</p>
@@ -12,17 +36,20 @@
               <%- include('layouts/cardDashboard', { recipe: recipe}) %>
             <% }); %>
           <% } else { %>
-            <p>No recipes found with that keyword</p>
+            <p>No recipe</p>
           <% } %>
         </div>
+        <button class="add">
+          <a href="/addRecipe">Add Recipe</a>
+      </button>
     </div>
-    <button class="add">
-        <a href="/addRecipe">Add Recipe</a>
-    </button>
 </div>
 <script>
     const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
 <script src="/js/index.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/searchDashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/dashboard.css">

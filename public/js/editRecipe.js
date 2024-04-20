@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const ingredientCount = ingredientsDiv.children.length;
 
         const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
+        newDiv.classList.add('input-box', 'long');
 
         const newLabel = document.createElement('label');
         newLabel.classList.add('input-label');
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const instructionCount = instructionsDiv.children.length;
 
         const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
+        newDiv.classList.add('input-box', 'long');
 
         const newLabel = document.createElement('label');
         newLabel.classList.add('input-label');
@@ -96,4 +96,54 @@ document.addEventListener("DOMContentLoaded", function() {
             parentDiv.parentNode.removeChild(parentDiv);
         });
     });
+
+
+    //confirmation
+    document.getElementById('editForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Hentikan perilaku bawaan dari form
+    
+        // Tampilkan SweetAlert untuk konfirmasi
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to submit the form',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, submit!',
+            cancelButtonText: 'Cancel'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Kirim form secara asynchronous
+                try {
+                    const form = event.target;
+                    const formData = new FormData(form);
+    
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+    
+                    // Tampilkan SweetAlert untuk memberi tahu pengguna bahwa form telah berhasil disubmit
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Your form has been submitted successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Refresh halaman
+                        window.location.href = '/dashboard';
+                    });
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                    alert('An error occurred while submitting the form'); // Tampilkan pesan kesalahan
+                }
+            }
+        });
+    });
+    
 })

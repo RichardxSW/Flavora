@@ -1,4 +1,9 @@
         <div class="recipe">
+            <% if (messages.successMsg) { %>
+                <div class="alert alert-success" role="alert">
+                        <%= messages.sucessMsg %>
+                </div>
+            <% } %>
             <div class="recipe-image">
                 <img src=" <%= recipes.img %>" alt="Gambar Nasgor">
                 <div class="desc">
@@ -35,17 +40,34 @@
                                 Your Review
                             </span>
                             <textarea class="review-textarea" rows="4" cols="40" placeholder="What do you think about this recipe?"></textarea>
-                            <button type="submit" class="submit-button">SUBMIT</button>
+                            <button type="button" class="submit-button">SUBMIT</button>
                         </div>
                     </form>
                     
                     <div class="comment-section">
-                    <% for (let i = 0; i < recipes.reviews.length; i++) { %>
-                        <div class="submission-container">
+                        <% for (let i = 0; i < recipes.reviews.length; i++) { %>
+                            <div class="submission-container">
                                 <div class="sub-img-name">
                                     <img class="sub-img" src="<%= recipes.reviews[i].photo %>">
-                                    <div class="sub-name"><%= recipes.reviews[i].name %></div>
+                                    
+                                    <div class="sub-name">
+                                        <%= recipes.reviews[i].name %>
+                                    </div>
+
+                                    <div class="button-wrapper">
+                                        <% if (user.name === recipes.reviews[i].name) { %>
+                                            <button onclick="editComment('<%= recipes.reviews[i]._id%>','<%= recipes.reviews[i].review %>')" class="edit-button">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </button>
+                                        <% } %>
+                                            <% if (isAdmin || user.name === recipes.reviews[i].name) { %>
+                                            <button onclick="deleteComment('<%= recipes.recipeID %>', '<%= recipes.reviews[i]._id %>')" class="delete-button">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                            <% } %>
+                                    </div>
                                 </div>
+
                                 <div class="rating-container">
                                     <% for (let j = 0; j < 5; j++) { %>
                                         <% if (j < recipes.reviews[i].rating) { %>
@@ -54,16 +76,16 @@
                                             <span class="sub-rating-date">&#9734;</span>
                                         <% } %>
                                     <% } %>
-                                    
                                     <span class="sub-date"><%= recipes.reviews[i].date %></span>
                                 </div>
+
                                 <p class="sub-review">
                                     <%= recipes.reviews[i].review %>
                                 </p>
-                        </div>
-                    
-                    <% } %>
+                            </div>
+                        <% } %>
                     </div>
+                    
             </div>
 
             <div class="recipe-info">
@@ -130,13 +152,6 @@
                         <% recipes.bahan.forEach(function(ingr) { %>
                             <li class="ingr-item"><%= ingr %></li>
                         <% }); %>
-
-                        <!-- // <li class="ingr-item">Rice</li>
-                        // <li class="ingr-item">Garlic</li>
-                        // <li class="ingr-item">Egg</li>
-                        // <li class="ingr-item">Sweet Soy Sauce</li>
-                        // <li class="ingr-item">Salt</li>
-                        // <li class="ingr-item">White Pepper</li> -->
                     </ul>
                 </details>
                 
@@ -149,12 +164,6 @@
                         <% recipes.cara.forEach(function(inst) { %>
                             <li class="inst-item"><%= inst %></li>
                         <% }); %>
-
-                        <!-- <li class="inst-item">Heat oil over medium heat.</li>
-                        <li class="inst-item">Saute spices until fragrant.</li>
-                        <li class="inst-item">Add rice and egg, stir until smooth.</li>
-                        <li class="inst-item">Add sweet soy sauce, stir again until smooth. </li>
-                        <li class="inst-item">Remove from heat and serve with complementary fried rice. </li> -->
                     </ol>
                 </details>
             </div>
@@ -182,4 +191,5 @@
 <script src="/js/detail.js"></script>
 <script src="/js/index.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/css/detail.css">

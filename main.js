@@ -75,6 +75,11 @@ mongoose.connect(MONGO_URL)
                     profilePicture: 'profilepic.jpg',
                     isAdmin: true
                 };
+
+                 // Hash kata sandi
+                const hashedPassword = await bcrypt.hash(adminData.password, 10);
+                // Simpan kedua versi kata sandi
+                adminData.hashedPassword = hashedPassword; // Simpan kata sandi yang di-hash
     
                 // Buat objek admin baru
                 const newAdmin = new LocalUser(adminData);
@@ -150,16 +155,21 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    
     const localuser = new LocalUser({ 
         email : req.body.email,
-        username: req.body.username, 
+        username: req.body.username,
+        hashedPassword: hashedPassword, 
         password: req.body.password,
         profilePicture: 'profilepic.jpg'});
     try {
       await localuser.save();
+      req.flash('successMsg', 'Successfully registered')
       res.redirect('/local');
     } catch (error){
-        console.error(error); 
+      req.flash('errorMsg', 'Registration failed')
       res.redirect('/register');
     }
   });
@@ -452,6 +462,7 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
         const recipes = await Recipes.findOne({ recipeID })
         const relatedRecipes = await Recipes.find({ category: recipes.category, _id: { $ne: recipes._id } });
         const resep = await Recipes.find()
+
         if (recipes) {
             let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
             if (!req.user) {
@@ -481,6 +492,25 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
                     userData.name = userData.username;
                 }
             }
+
+            // Perbarui properti lastSeenBy untuk pengguna saat ini
+            if (req.user) {
+                const user = req.user;
+
+                // Temukan atau buat entri lastSeenBy untuk pengguna saat ini
+                const userLastSeen = recipes.lastSeenBy.find(entry => entry.user.equals(user._id));
+                if (userLastSeen) {
+                    // Jika pengguna sudah ada dalam lastSeenBy, update lastSeenAt
+                    userLastSeen.lastSeenAt = new Date();
+                } else {
+                    // Jika pengguna belum ada dalam lastSeenBy, tambahkan entri baru
+                    recipes.lastSeenBy.push({ user: user._id, lastSeenAt: new Date() });
+                }
+
+                // Simpan perubahan ke database
+                await recipes.save();
+            }
+
             res.render('detail', {
                 resep: resep,
                 recipes: recipes ,
@@ -497,7 +527,7 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
     }
 })
 
-app.post('/detail/:recipeID', async (req, res) => {
+app.post('/postReview/:recipeID', async (req, res) => {
     try {
         const { recipeID } = req.params;
         const { rating, review, date, name , photo } = req.body;
@@ -541,6 +571,53 @@ app.post('/detail/:recipeID', async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+// Endpoint untuk menghapus komentar dari resep
+app.delete('/deleteComment/:recipeID/:commentID', async (req, res) => {
+    try {
+        // Ambil ID resep dan ID komentar dari parameter route
+        const recipeID = req.params.recipeID;
+        const commentID = req.params.commentID;
+
+        // Lakukan operasi penghapusan komentar dari resep di database
+        // Misalnya, menggunakan model Recipes
+        await Recipes.updateOne({ recipeID: recipeID }, { $pull: { reviews: { _id: commentID } } });
+
+        // Kirim respon yang berhasil
+        res.status(200).end();
+    } catch (error) {
+        // Tangani kesalahan jika terjadi
+        console.error('Error deleting comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.put('/editComment/:commentID', async (req, res) => {
+    try {
+        const commentID = req.params.commentID;
+        const { newComment } = req.body;
+
+        // Lakukan operasi pengeditan komentar di database (contoh: menggunakan model Recipes)
+        const updatedReview = await Recipes.findOneAndUpdate(
+            { 'reviews._id': commentID },
+            { $set: { 'reviews.$.review': newComment } },
+            { new: true }
+        );
+
+        if (!updatedReview) {
+            return res.status(404).json({ error: 'Review not found' });
+        }
+
+        // Kirim respon yang berhasil
+        res.status(200).json({ message: 'Comment updated successfully', updatedReview });
+    } catch (error) {
+        // Tangani kesalahan jika terjadi
+        console.error('Error editing comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 
 app.get('/recent' ,async (req, res) => {
     try {
@@ -1122,6 +1199,24 @@ app.get('/dashboard', async(req, res) => {
         }
     });
 
+    app.delete('/deleteRecipe/:recipeID', async (req, res) => {
+        try {
+            // Ambil ID resep dari parameter route
+            const recipeID = req.params.recipeID;
+    
+            // Lakukan operasi penghapusan resep di database (contoh: menggunakan model Recipes)
+            await Recipes.findOneAndDelete({recipeID: recipeID});
+    
+            // Kirim respon yang berhasil
+            req.flash('deletedMsg','Recipe deleted successfully');
+            res.status(200).end();
+        } catch (error) {
+            // Tangani kesalahan jika terjadi
+            console.error('Error deleting recipe:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+
 app.get('/addRecipe', async(req, res) => {
     try {
         const recipes = await Recipes.find();
@@ -1237,6 +1332,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
                 cara
             });
             await newRecipe.save();
+            req.flash('successAddMsg', 'Recipe Added')
             res.status(200).redirect('/dashboard/')
         } catch (error) {
             console.error(error);
@@ -1372,15 +1468,74 @@ const uploadRecipe = multer({ storage: storageRecipe });
             // Jika ada perubahan yang harus dilakukan, lakukan pembaruan
         if (Object.keys(updatedRecipeData).length > 0) {
             const updatedRecipe = await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
-            res.status(200).redirect('/dashboard/')
+            res.status(200).end()
         } else {
-            res.send('No changes to update');
+            req.flash('noChangeMsg','No changes to update');
         }
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
         }
     })
+
+    app.get('/latest-seen', isAuthenticated, async (req, res) => {
+        try {
+            // Pastikan pengguna sudah terotentikasi
+            if (!req.user) {
+                return res.redirect('/'); // Redirect ke halaman login jika pengguna belum terotentikasi
+            }
+    
+            // Ambil ID pengguna dari sesi
+            const userID = req.user._id;
+    
+            // Temukan resep-resep yang terakhir dilihat oleh pengguna
+            const latestSeenRecipes = await Recipes.find({ 'lastSeenBy.user': userID })
+                 .sort({ 'lastSeenBy.lastSeenAt': -1 }) // Urutkan berdasarkan waktu terakhir dilihat secara menurun
+                 .populate('lastSeenBy.user')
+                 .limit(10); // Populate field 'user' di dalam array 'lastSeenBy' untuk mendapatkan informasi pengguna
+    
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                }
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
+                } else {
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
+                }
+            }
+    
+            // Render halaman "latest seen" dengan resep-resep yang terakhir dilihat
+            res.render('latestSeen', { 
+                latestSeenRecipes: latestSeenRecipes,
+                user: userData,
+                isAdmin: req.user.isAdmin,
+                title: 'Latest Seen',
+                layout: "mainlayout"
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        }
+    });
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
