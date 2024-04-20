@@ -6,7 +6,7 @@
 body {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
   position: relative;
   padding-bottom: 190px;
 }
@@ -385,19 +385,19 @@ header {
   }
 
   /* CSS for selection container */
-.selection {
-  width: 250px; 
-  float: left; 
-  padding: 20px;
-  height: 146vh;
-  min-height: 100vh; 
-  /* max-height: 150vh;  */
-  background-color: rgb(247, 247, 247);
-  border-right: 2px solid #ddd;
-  z-index: 2;
-  padding-top: 2.5em;
-  margin: 0;
-}
+  .selection {
+    width: 250px; 
+    float: left; 
+    padding: 20px;
+    height: 145vh;
+    min-height: 100px; 
+    /* max-height: 150vh;  */
+    background-color: rgb(247, 247, 247);
+    border-right: 2px solid #ddd;
+    z-index: 2;
+    padding-top: 2.5em;
+    margin: 0;
+  }
 
 .selection .select{
   align-items: center;
@@ -441,7 +441,6 @@ header {
   height: fit-content;
   align-items: flex-start;
   justify-content: flex-start;
-  /* background-color: rgb(162, 126, 198); */
 }
 
 .my-folder p{
@@ -485,7 +484,6 @@ header {
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
-  /* background-color: royalblue; */
 }
 
 .created a {
@@ -504,10 +502,6 @@ header {
   background-color: rgb(230, 230, 230);
 }
 
-.created a.active {
-  font-weight: 700;
-}
-
 .created img {
   width: 40px;
   height: 40px; 
@@ -520,6 +514,9 @@ header {
 .content {
   justify-content: space-between;
   margin-top: 60px;
+  /* margin-bottom: 20px; */
+  /* margin-left: 4em;
+  margin-right: 4em; */
 }
 
 .card .time .row p {
@@ -634,7 +631,7 @@ button:focus{
   outline:none !important;
 }
 
-.add-button {
+.remove-button {
   background-color: #fff; 
   border: none;
   color: #000; 
@@ -650,7 +647,7 @@ button:focus{
   z-index: 1;
 }
 
-.add-button:hover{
+.remove-button:hover{
   background-color: rgb(192, 192, 192);
 }
 
@@ -661,60 +658,43 @@ button:focus{
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
+  padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 9999;
-  height: 505px;
-  width: 300px;
 }
 
 #folderPopup label {
   margin-right: 10px;
 }
 
-#folderPopup .addContent{
-  padding: 20px;
-  min-height: 390px;
-  max-height: 390px ;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border: 1px solid #ddd;
+.removePopup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
 }
 
-input[type="checkbox"] {
-  margin-right: 5px;
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
+.removePopup label {
+  margin-right: 10px;
 }
 
-.button-container a {
-  margin: 37px 10px 0px 5px;
-  color: #007bff; 
-  text-decoration: none; 
-  font-size: 14px;
-  cursor: pointer; 
+#doneButton {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
-.button-container a:hover {
-  color: #0056b3; /* warna tautan saat dihover */
-}
-
-#folderPopup label {
-  display: inline-block; /* Make labels inline with checkboxes */
-  margin-right: 10px; /* Add some spacing between labels */
-  font-size: 16px; /* Adjust font size as needed */
-  color: #333; /* Set label color */
-}
-
-.result {
-  position: relative; 
-  padding-bottom: 50px;
-  padding-left: 2em;
-  margin-top: 2.5em;
-  margin-left: 15em;
-  margin-right: 9em;
-  margin-bottom: 3em;
+#doneButton:hover {
+  background-color: #0056b3;
 }
 
 .pagination {
@@ -754,6 +734,48 @@ input[type="checkbox"] {
   font-size: 20px;
 }
 
+.result{
+  position: relative;
+  padding-bottom: 50px;
+  padding-left: 2em;
+  margin-top: 2.5em;
+  margin-left: 15em;
+  margin-right: 9em;
+  margin-bottom: 3em;
+}
+
+.result .button-container {
+  margin-top: 5px;
+  margin-right: 40px;
+}
+
+.edit-folder {
+  background-color: #4CAF50; /* Warna latar belakang hijau */
+  color: white; /* Warna teks */
+  border: none; /* Tidak ada border */
+  padding: 10px; /* Padding */
+  margin-right: 5px; /* Jarak kanan antara tombol */
+  border-radius: 5px; /* Radius sudut */
+  cursor: pointer; /* Kursor */
+  transition: background-color 0.3s; /* Transisi warna latar belakang */
+}
+
+.delete-folder {
+  background-color: #f44336; 
+  color: white; 
+  border: none; 
+  padding: 10px;
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+} 
+
+.edit-folder i,
+.delete-folder i {
+  margin-right: 0px; 
+} 
+
+
 .result h3{
   font-weight: 700;
   margin: 0px 15px;
@@ -762,6 +784,7 @@ input[type="checkbox"] {
 .result p{
   font-weight: 500;
   font-size: 16px;
+  margin-left: 15px;
 }
 
 .result .cardwrap{
@@ -781,84 +804,10 @@ input[type="checkbox"] {
   justify-content: space-between;
 }
 
-/* Customize the label (the container) */
-.custom-checkbox {
-  display: flex; /* Use flexbox */
-  align-items: center;
-  position: relative;
-  padding-left: 35px;
-  cursor: pointer;
-  user-select: none;
-  margin-bottom: 10px;
-}
-
-/* Hide the default checkbox */
-.custom-checkbox input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* Create a custom checkbox */
-.custom-checkbox .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 23px;
-  width: 23px;
-  background-color: #eee;
-  border-radius: 5px; /* Add border radius here */
-  border: 1px solid #747474;
-}
-
-/* On mouse-over, add a grey background color */
-.custom-checkbox:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-.custom-checkbox input:checked ~ .checkmark {
-  background-color: #ff7f50;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.custom-checkbox .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.custom-checkbox input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.custom-checkbox .checkmark:after {
-  left: 8px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  transform: rotate(45deg);
-}
-
-.folderPopup .button-container{
+.result .top-result{
   display: flex;
-  justify-content: flex-end;
-}
-
-#doneButton {
-  background-color: #ff7f50;
-  color: white;;
-  padding: 10px 25px;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  border-radius: 2px;
-  margin: 10px;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 /* Footer */

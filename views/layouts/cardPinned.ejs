@@ -1,0 +1,24 @@
+<div class="card">
+    <a href="<%= recipe.url %>/<%= recipe.recipeID %>">
+        <img src="<%= recipe.img %>">
+        <h5><%= recipe.title %></h5>
+        <div class="time">
+            <div class="row">
+                <i class="fa fa-clock-o" style="font-size:15px"><p><%= recipe.time %></p></i>
+                <i class="fa fa-cutlery" style="font-size:15px"><p><%= recipe.category %></p></i>
+                <% if (recipe.totalReviews > 0) { %>
+                    <i class="fa fa-star" style="color: #ff7f50; font-size: 15px;">
+                        <span><%= recipe.averageRating %></span>
+                        <span><%= '(' + recipe.totalReviews + ')'%></span>
+                    </i>
+                <% } else { %>
+                    <div class="avg-rating">
+                        <p>Be first to rate & review</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </a>
+    <button type="button" class="pin" data-id="<%= recipe._id %>"></button>
+    <button type="button" class="add-button" data-id="<%= recipe._id %>">+</button>
+</div>

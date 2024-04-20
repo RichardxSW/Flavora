@@ -15,7 +15,7 @@ const LocalUserSchema = new Schema({
         required: true
     },
     profilePicture: {
-        type: String, // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
+        type: String, 
     },
     isAdmin: {
         type: Boolean,
@@ -24,6 +24,24 @@ const LocalUserSchema = new Schema({
     savedRecipes: [{
         type: Schema.Types.ObjectId, 
         ref: "Recipe"
+    }],
+    folders: [{
+        name: {
+            type: String,
+            required: true,
+        },
+        desc: {
+            type: String
+        },
+        url: {
+            type: String,
+            required: true,
+            default: '/folder'
+        },
+        recipes: [{
+            type: Schema.Types.ObjectId,
+            ref: "Recipe"
+        }]
     }]
 })
 

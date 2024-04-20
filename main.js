@@ -375,58 +375,6 @@ app.get('/home', isAuthenticated, async (req, res) => {
     }
 });
 
-
-// app.get('/home', isAuthenticated, async (req, res) => {
-//     try {
-//         // Ambil ID pengguna dari req.user
-//         const userId = req.user._id;
-
-//         // Ambil data pengguna termasuk savedRecipes
-//         const user = await LocalUser.findById(userId).populate('savedRecipes');
-
-//         if (user) {
-//             // Ambil daftar resep yang disimpan oleh pengguna
-//             const savedRecipes = user.savedRecipes;
-
-//             // Ambil semua resep
-//             const recipes = await Recipes.find();
-
-//             // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
-//             const updatedRecipes = recipes.map(recipe => {
-//                 const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
-//                 return {
-//                     ...recipe._doc,
-//                     isPinned: isPinned
-//                 };
-//             });
-
-//             let name = '';
-//             let pic = '';
-//             if (req.user.username) { 
-//                 name = req.user.username || ''; 
-//                 pic = '/img/profilepic.jpg'; 
-//             } else {
-//                 name = req.user.displayName || '';
-//                 pic = req.user.profilePicture || '';
-//             }
-
-//             res.render('index', {
-//                 recipes: updatedRecipes, 
-//                 name: name, 
-//                 pic: pic, 
-//                 title: 'Home', 
-//                 layout: "mainlayout"
-//             });
-//         } else {
-//             res.status(404).send("User not found");
-//         }
-//     } catch (error) { 
-//         console.error(error);
-//         res.status(500).send("Internal Server Error");
-//     }
-// });
-
-
 app.get('/search', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
@@ -598,24 +546,41 @@ app.get('/recent' ,async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {
-            let name = '';
-            let pic = '';
-            if (req.user) { 
-                if (req.user.username) { 
-                    name = req.user.username || ''; 
-                    pic = '/img/profilepic.jpg'; 
+            let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+            if (!req.user) {
+                // Jika pengguna belum login, hapus session.freshUserData jika ada
+                if (req.session.freshUserData) {
+                    delete req.session.freshUserData;
+                };
+            } else {
+                // Jika pengguna sudah login
+                if (!userData || Object.keys(userData).length === 0) {
+                    // Jika userData kosong, isi dengan data pengguna dari req.user
+                    if (req.user.username) { 
+                        userData = {
+                            name: req.user.username || '', 
+                            profilePicture: req.user.profilePicture,
+                            _id: req.user._id
+                        };
+                    } else {
+                        userData = {
+                            name: req.user.displayName || '',
+                            profilePicture: req.user.profilePicture || '',
+                            _id: req.user._id
+                        };
+                    }
                 } else {
-                    name = req.user.displayName || '';
-                    pic = req.user.profilePicture || '';
+                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
+                    userData.name = userData.username;
                 }
             }
             res.render('recent', {
             recipes: recipes, 
-            title: 'Recent',  
-            name: name, 
-            pic: pic,
-            isAdmin: req.user.isAdmin, 
-            layout: "mainlayout"});
+            title: 'Dashboard', 
+            layout: "mainlayout",
+            user: userData,
+            isAdmin: req.user.isAdmin,
+});
         } else {
             res.status(404).send("Recipe not found")
         }
@@ -673,11 +638,31 @@ app.post('/unpinrecipe', async (req, res) => {
             user.savedRecipes.pull(recipeId);
             await user.save();
 
+            // Loop melalui setiap folder pengguna
+            for (const folder of user.folders) {
+                // Jika resep ada dalam folder, hapus dari folder
+                if (folder.recipes.includes(recipeId)) {
+                    folder.recipes.pull(recipeId);
+                }
+            }
+            // Simpan perubahan
+            await user.save();
+
             // Kirim balasan sukses
             res.status(200).json({ message: 'Recipe unpinned successfully' });
         } else if (gUser) {
             await Recipes.findByIdAndUpdate(recipeId, { $pull: { pinnedByGoogle: { user: userId } } });
             gUser.savedRecipes.pull(recipeId);
+            await gUser.save();
+
+            // Loop melalui setiap folder pengguna
+            for (const folder of gUser.folders) {
+                // Jika resep ada dalam folder, hapus dari folder
+                if (folder.recipes.includes(recipeId)) {
+                    folder.recipes.pull(recipeId);
+                }
+            }
+            // Simpan perubahan
             await gUser.save();
 
             // Kirim balasan sukses
@@ -733,7 +718,11 @@ app.get('/checkpinstatus/:recipeId', async (req, res) => {
 
 app.get('/pinned', isAuthenticated, async (req, res) => {
     try {
-        let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
+        let userData = req.session.freshUserData || {};
+        const page = parseInt(req.query.page) || 1;
+        const limit = 12;
+        const skip = (page - 1) * limit;
+
         if (!req.user) {
             // Jika pengguna belum login, hapus session.freshUserData jika ada
             if (req.session.freshUserData) {
@@ -776,9 +765,6 @@ app.get('/pinned', isAuthenticated, async (req, res) => {
             user = await LocalUser.findById(userId).populate('savedRecipes'); // Jika pengguna lokal
         }
 
-        // // Ambil data pengguna termasuk savedRecipes
-        // const user = await LocalUser.findById(userId).populate('savedRecipes');
-
         if (user) {
             // Ambil daftar resep yang disimpan oleh pengguna
             const savedRecipes = user.savedRecipes;
@@ -786,28 +772,306 @@ app.get('/pinned', isAuthenticated, async (req, res) => {
             // Ambil semua resep
             const allRecipes = await Recipes.find();
 
-            // Tandai resep yang disimpan oleh pengguna dengan isPinned: true
-            const recipes = allRecipes.map(recipe => {
-                const isPinned = savedRecipes.some(savedRecipe => savedRecipe.equals(recipe._id));
-                return {
-                    ...recipe._doc,
-                    isPinned: isPinned
-                };
-            });
+            // Hitung jumlah total halaman
+            const totalPages = Math.ceil( (savedRecipes.length) / limit);
+
+            const folders = user.folders;
+
+            // Ambil resep untuk halaman saat ini menggunakan skip dan limit
+            const paginatedRecipes = savedRecipes.slice(skip, skip + limit);
 
             res.render('pinned', {
-                savedRecipes: savedRecipes,
-                recipes: recipes,
+                savedRecipes: paginatedRecipes,
+                savedRecipesCount: savedRecipes,
+                folders: folders,
+                recipes: allRecipes,
                 title: 'Pinned',
                 layout: "mainlayout",
                 user: userData,
                 isAdmin: req.user.isAdmin,
+                totalPages: totalPages,
+                limit: limit,
+                currentPage: page
             });
         } else {
             res.status(404).send("Recipe not found")
         }
     } catch (error) { 
         res.status(500).send("Internal Server Error")
+    }
+});
+
+// Endpoint untuk menyimpan folder baru
+app.post('/folders', isAuthenticated, async (req, res) => {
+    try {
+        const { folderName, description } = req.body;
+        let userId;
+        if (req.user.googleId) {
+            userId = req.user._id; // Jika pengguna Google
+        } else {
+            userId = req.user._id; // Jika pengguna lokal
+        }
+
+        // Temukan pengguna berdasarkan ID
+        let user;
+        if (req.user.googleId) {
+            user = await User.findById(userId);
+        } else {
+            user = await LocalUser.findById(userId);
+        }
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Tambahkan folder ke daftar folder pengguna
+        user.folders.push({ name: folderName, desc: description });
+        await user.save();
+
+        // Kirim respons sukses
+        res.status(201).json({ message: 'Folder created successfully', folder: user.folders[user.folders.length - 1] });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/addToFolder', isAuthenticated, async (req, res) => {
+    try {
+        const { recipeId, folders } = req.body;
+        let userId;
+        if (req.user.googleId) {
+            userId = req.user._id; // Jika pengguna Google
+        } else {
+            userId = req.user._id; // Jika pengguna lokal
+        }
+
+        // Temukan pengguna berdasarkan ID
+        let user;
+        if (req.user.googleId) {
+            user = await User.findById(userId);
+        } else {
+            user = await LocalUser.findById(userId);
+        }
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Perbarui setiap folder yang dipilih dengan menambahkan recipeId ke dalam array recipes
+        for (const folderId of folders) {
+            const folder = user.folders.find(folder => folder._id == folderId);
+            if (folder) {
+                folder.recipes.addToSet(recipeId);
+            }
+        }
+
+        // Simpan perubahan pada pengguna
+        await user.save();
+
+        // Kirim respons sukses
+        res.status(200).json({ message: 'Recipe added to folder(s) successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/folder/:folderId', isAuthenticated, async (req, res) => {
+    try {
+        const folderId = req.params.folderId;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 12;
+        const skip = (page - 1) * limit;
+        const resep = await Recipes.find();
+        let userId;
+        if (req.user.googleId) {
+            userId = req.user._id; // Jika pengguna Google
+        } else {
+            userId = req.user._id; // Jika pengguna lokal
+        }
+
+        // Temukan pengguna berdasarkan ID
+        let user;
+        if (req.user.googleId) {
+            user = await User.findById(userId);
+        } else {
+            user = await LocalUser.findById(userId);
+        }
+
+        const folders = user.folders;
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Temukan folder dengan ID yang sesuai dalam daftar folder pengguna
+        const folder = user.folders.find(folder => folder._id.toString() === folderId);
+        if (!folder) {
+            return res.status(404).send("Folder not found");
+        }
+
+        // Dapatkan detail resep yang terkait dengan folder
+        const recipeIds = folder.recipes;
+        const recipes = await Recipes.find({ _id: { $in: recipeIds } });
+
+        // Persiapkan data pengguna
+        let userData = {};
+        if (req.user) {
+            // Jika pengguna sudah login, gunakan data pengguna dari req.user
+            userData = {
+                name: req.user.username || req.user.displayName || '',
+                profilePicture: req.user.profilePicture || '',
+                _id: req.user._id
+            };
+        } else if (req.session.freshUserData) {
+            // Jika pengguna belum login, tetapi ada data pengguna dalam session
+            userData = req.session.freshUserData;
+        }
+
+        // Hitung jumlah total halaman
+        const totalPages = Math.ceil(recipes.length / limit);
+
+        // Ambil resep untuk halaman saat ini menggunakan skip dan limit
+        const paginatedRecipes = recipes.slice(skip, skip + limit);
+
+        // Kirimkan detail folder dan resep ke tampilan
+        res.render('folder', {
+            selectedFolder: folder,
+            resep: resep,
+            folders: folders,
+            title: folder.name,
+            recipes: paginatedRecipes,
+            layout: "mainlayout",
+            user: userData,
+            isAdmin: req.user.isAdmin,
+            totalPages: totalPages,
+            currentPage: page,
+            limit: limit
+        });
+    } catch (error) {
+        // Tangani kesalahan internal server
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+// Endpoint untuk menyimpan perubahan pada folder ke MongoDB
+app.put('/folder/:folderId', isAuthenticated, async (req, res) => {
+    try {
+        const folderId = req.params.folderId;
+        let userId;
+        if (req.user.googleId) {
+            userId = req.user._id; // Jika pengguna Google
+        } else {
+            userId = req.user._id; // Jika pengguna lokal
+        }
+
+        // Temukan pengguna berdasarkan ID
+        let user;
+        if (req.user.googleId) {
+            user = await User.findById(userId);
+        } else {
+            user = await LocalUser.findById(userId);
+        }
+
+        // Temukan folder dengan ID yang sesuai dalam daftar folder pengguna
+        const folderIndex = user.folders.findIndex(folder => folder._id.toString() === folderId);
+        if (folderIndex === -1) {
+            return res.status(404).send("Folder not found");
+        }
+
+        // Update data folder dengan data yang dikirimkan dari client
+        user.folders[folderIndex].name = req.body.folderName || user.folders[folderIndex].name;
+        user.folders[folderIndex].desc = req.body.description || user.folders[folderIndex].description;
+
+        // Simpan perubahan ke MongoDB
+        await user.save();
+
+        res.json({ message: 'Folder updated successfully' });
+    } catch (error) {
+        // Tangani kesalahan internal server
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+// Endpoint untuk menghapus folder dari MongoDB
+app.delete('/folder/:folderId', isAuthenticated, async (req, res) => {
+    try {
+        const folderId = req.params.folderId;
+        let userId;
+        if (req.user.googleId) {
+            userId = req.user._id; // Jika pengguna Google
+        } else {
+            userId = req.user._id; // Jika pengguna lokal
+        }
+
+        // Temukan pengguna berdasarkan ID
+        let user;
+        if (req.user.googleId) {
+            user = await User.findById(userId);
+        } else {
+            user = await LocalUser.findById(userId);
+        }
+
+        // Temukan folder dengan ID yang sesuai dalam daftar folder pengguna
+        const folderIndex = user.folders.findIndex(folder => folder._id.toString() === folderId);
+        if (folderIndex === -1) {
+            return res.status(404).send("Folder not found");
+        }
+
+        // Hapus folder dari daftar folder pengguna
+        user.folders.splice(folderIndex, 1);
+
+        // Simpan perubahan ke MongoDB
+        await user.save();
+
+        res.json({ message: 'Folder deleted successfully' });
+    } catch (error) {
+        // Tangani kesalahan internal server
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+app.delete('/removeFromFolder', isAuthenticated, async (req, res) => {
+    try {
+        const { recipeId, folderId } = req.body;
+        let userId;
+        if (req.user.googleId) {
+            userId = req.user._id; // Jika pengguna Google
+        } else {
+            userId = req.user._id; // Jika pengguna lokal
+        }
+
+        // Temukan pengguna berdasarkan ID
+        let user;
+        if (req.user.googleId) {
+            user = await User.findById(userId);
+        } else {
+            user = await LocalUser.findById(userId);
+        }
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Temukan folder yang sesuai dengan ID
+        const folder = user.folders.find(folder => folder._id == folderId);
+        if (!folder) {
+            return res.status(404).json({ error: 'Folder not found' });
+        }
+
+        // Hapus recipeId dari array recipes di folder
+        folder.recipes.pull(recipeId);
+
+        // Simpan perubahan
+        await user.save();
+
+        // Kirim respons sukses
+        res.status(200).json({ message: 'Recipe removed from folder successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 

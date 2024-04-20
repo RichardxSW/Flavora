@@ -1,0 +1,457 @@
+  <div class="content">
+    <div class="popup" id="editPopup">
+      <div class="top">
+        <i class="fa-solid fa-pencil-alt fa-lg fa-lg" style="color: #ffffff;"></i><p>Edit Folder</p>
+        <span class="close" onclick="closeEditPopup()"><i class="fa fa-close" style="color: #ffffff;"></i></span>
+      </div>
+      <div class="popup-content">
+        <form id="editFolderForm">
+            <!-- Input tersembunyi untuk menyimpan ID folder yang akan diedit -->
+            <input type="hidden" id="editFolderId" name="folderId" value="<%= selectedFolder._id %>">
+            
+            <div class="name">
+                <label for="editFolderName">Folder Name</label><br>
+                <input type="text" id="editFolderName" name="folderName" maxlength="10" placeholder="Give your folder a name"><br>
+            </div>
+            <div class="desc">
+                <label for="editDescription">Description</label><br>
+                <textarea id="editDescription" name="description" maxlength="300" placeholder="Describe your folder"></textarea><br>
+                <div class="count" id="editCharCount">0/300 characters</div>
+            </div>
+            <div class="button-container">
+                <a href="#" class="cancel" onclick="closeEditPopup()">Cancel</a>
+                <button type="submit" id="editDoneButton">Done</button>
+            </div> 
+        </form>
+      </div>
+    </div>
+    <div class="popup" id="popup">
+      <div class="top">
+        <i class="fa-solid fa-folder-plus fa-lg" style="color: #ffffff;"></i><p>New Folder</p>
+        <span class="close" onclick="closePopup()"><i class="fa fa-close" style="color: #ffffff;"></i></span>
+      </div>
+      <div class="popup-content">
+        <form id="folderForm">
+          <div class="name">
+            <label for="folderName">Folder Name</label><br>
+            <input type="text" id="folderName" name="folderName" maxlength="10" placeholder="Give your folder a name"><br>
+          </div>
+          <div class="desc">
+          <label for="description">Description (optional)</label><br>
+            <textarea id="description" name="description" maxlength="300" placeholder="Describe your folder"></textarea><br>
+            <div class="count" id="charCount">0/300 characters</div>
+          </div>
+          <div class="button-container">
+            <a href="#" class="cancel" onclick="closePopup()">Cancel</a>
+            <button type="submit" id="confirmButton">Create Folder</button>
+          </div> 
+        </form>
+      </div>
+    </div>
+    <div class="selection">
+      <div class="select">
+        <a href="/pinned" id="savedBtn"><i class="fa-solid fa-bookmark"></i>Pinned Recipes</a>
+        <a href="/recent" id="recentBtn"><i class="fa-regular fa-clock"></i>Recently Viewed</a>
+      </div>
+      <div class="my-folder">
+        <p>MY FOLDERS</p>
+        <button onclick="openPopup()">
+          <i class="fa-solid fa-plus"></i>
+          <p>New Folder</p>
+        </button>
+        <div class="created">
+          <% folders.forEach(folder => { %>
+            <a class="folder" href="/folder/<%= folder._id %>">
+              <img src="/img/recipe-add-photo.png"/>
+              <%= folder.name %>
+            </a>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+    <div class="result">
+      <div class="top-result">
+        <div class="title-desc">
+          <h3><%= selectedFolder.name %></h3>
+          <p><%= selectedFolder.desc %></p>
+        </div>
+        <div class="button-container">
+          <button class="edit-folder" onclick="openEditPopup()">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button class="delete-folder" onclick="showDeleteFolderConfirmation()">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+      <div class="cardwrap">
+        <% if (recipes.length > 0) { %>
+            <% recipes.forEach((recipe) => { %>
+                <%- include('layouts/cardFolder', { recipe: recipe}) %>
+            <% }); %>
+        <% } else { %>
+            <h4>No recipes in this folder yet.</h4>
+        <% } %>
+      </div>
+      <% if (totalPages > 1) { %>
+        <div class="pagination">
+            <a href="<%= currentPage > 1 ? '/folder/' + selectedFolder._id + '?page=' + (currentPage - 1) : '#' %>" class="<%= currentPage > 1 ? 'prev' : 'prev disabled' %>"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="current-page"><%= currentPage %></span>
+            <a href="<%= currentPage < totalPages ? '/folder/' + selectedFolder._id + '?page=' + (currentPage + 1) : '#' %>" class="<%= currentPage < totalPages ? 'next' : 'next disabled' %>"><i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    <% } %>  
+    </div>
+  </div>
+  
+  <div id="overlay"></div>
+  <input type="hidden" id="deleteFolderId" name="folderId" value="<%= selectedFolder._id %>">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/folder.css">
+  <script src="/js/pinned.js"></script>
+  <script src="/js/index.js"></script>
+  <script>
+    const recipes = `<%- JSON.stringify(recipes) %>`;
+  </script>
+  <script src="/js/search.js"></script>
+  <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+  <script>
+  function openPopup() {
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+    document.body.classList.add('popup-open'); 
+  }
+  
+  function closePopup() {
+    document.getElementById('folderName').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    document.body.classList.remove('popup-open'); 
+  }
+
+  function openEditPopup() {
+  const folderName = '<%= selectedFolder.name %>';
+  const folderDesc = '<%= selectedFolder.desc %>';
+
+  // Mengisi nilai input dengan nilai dari folder yang dipilih
+  document.getElementById('editFolderName').value = folderName;
+  document.getElementById('editDescription').value = folderDesc;
+
+     // Memeriksa apakah deskripsi sudah ada isi
+     if (folderDesc.trim() !== '') {
+        // Jika deskripsi sudah ada isi, hitung jumlah karakter dan tampilkan count-nya
+        const charCount = folderDesc.length;
+        $('#editCharCount').text(charCount + '/300 characters');
+    } else {
+        // Jika deskripsi masih kosong, tidak perlu menampilkan count
+        $('#editCharCount').text('0/300 characters');
+    }
+
+  document.getElementById('editPopup').style.display = 'block';
+  document.getElementById('overlay').style.display = 'block';
+  document.body.classList.add('popup-open'); 
+}
+
+  function closeEditPopup() { 
+    document.getElementById('editFolderName').value = '';
+    document.getElementById('editDescription').value = '';
+    document.getElementById('editPopup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    document.body.classList.remove('popup-open'); 
+  }
+
+  // Ganti pemanggilan fungsi openPopup() menjadi openEditPopup()
+  $('.edit-folder').click(function() {
+    openEditPopup();
+  });
+
+  $('.remove-button').click(function() {
+    // Ambil recipeId dari tombol yang diklik
+    var recipeId = $(this).data('id');
+
+    // Tampilkan popup konfirmasi
+    $('#removePopup').show().data('id', recipeId);
+});
+  
+  document.getElementById('folderForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let folderName = document.getElementById('folderName').value;
+    let description = document.getElementById('description').value;
+  });
+  
+  // Mengambil elemen textarea dan elemen untuk menampilkan jumlah karakter
+  const descriptionInput = document.getElementById('description');
+  const charCountDisplay = document.getElementById('charCount');
+  
+  // Menambahkan event listener untuk input pada textarea
+  descriptionInput.addEventListener('input', function() {
+    // Mengambil jumlah karakter yang diketik
+    const charCount = descriptionInput.value.length;
+    // Menampilkan jumlah karakter di dalam elemen
+    charCountDisplay.textContent = charCount + '/300 characters' ;
+  });
+  
+// Menggunakan jQuery untuk melakukan AJAX request, Anda dapat menyesuaikan dengan metode lain jika diperlukan
+$('#folderForm').submit(function(event) {
+    event.preventDefault();
+    let folderName = $('#folderName').val();
+    let description = $('#description').val();
+    
+    // Mendapatkan daftar nama folder yang sudah ada
+    let existingFolders = $('.created .folder').map(function() {
+        return $(this).text().trim();
+    }).get();
+
+    // Memeriksa apakah nama folder sudah ada sebelumnya
+    if (existingFolders.includes(folderName)) {
+        // Jika nama folder sudah ada, tampilkan SweetAlert untuk memberitahu pengguna
+        Swal.fire({
+            title: 'Error!',
+            text: 'Folder with the same name already exists.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // Hapus nilai input nama folder dan deskripsi
+            $('#folderName').val('');
+            $('#description').val('');
+        });
+        return; // Menghentikan eksekusi selanjutnya
+    } else if (folderName.trim() === '') {
+        // Jika kosong, tampilkan alert
+        Swal.fire({
+            title: 'Error!',
+            text: 'Please enter a folder name.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    // Jika nama folder belum ada sebelumnya, lanjutkan proses pembuatan folder
+    $.ajax({
+        type: 'POST',
+        url: '/folders', // Ganti URL dengan endpoint Anda yang sesuai
+        data: { folderName, description },
+        success: function(response) {
+            closePopup();
+            // Tampilkan SweetAlert2 setelah folder berhasil dibuat
+            Swal.fire({
+                title: 'Folder Created!',
+                text: 'Your folder has been created.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Refresh halaman setelah menutup SweetAlert2
+                window.location.reload();
+            });
+        },
+        error: function(error) {
+            console.error(error);
+            // Handle error jika ada
+        }
+    });
+});
+// Fungsi untuk mengirim data folder yang diperbarui ke server
+$('#editFolderForm').submit(async function(event) {
+    event.preventDefault();
+    
+    // Dapatkan folderId dari input tersembunyi dalam form
+    let folderId = $('#editFolderId').val(); // Pastikan input id="editFolderId" sudah ada pada form
+    let folderName = $('#editFolderName').val();
+    let description = $('#editDescription').val();
+    
+    try {
+        const response = await $.ajax({
+            type: 'PUT',
+            url: `/folder/${folderId}`, // Ganti URL dengan endpoint Anda yang sesuai
+            data: { folderName, description }
+        });
+
+        // Tutup popup sebelum menampilkan SweetAlert2
+        closeEditPopup();
+
+        // Tampilkan SweetAlert2 setelah folder berhasil diperbarui
+        Swal.fire({
+            title: 'Folder Edited!',
+            text: 'Your folder has been edited.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // Refresh halaman setelah menutup SweetAlert2
+            location.reload(true);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+
+// Fungsi untuk menampilkan SweetAlert2 konfirmasi penghapusan folder
+function showDeleteFolderConfirmation() {
+    // Tampilkan konfirmasi SweetAlert2
+    document.getElementById('overlay').style.display = 'block';
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this folder!',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika pengguna menekan tombol "Yes", kirim permintaan DELETE
+            deleteFolder();
+        }
+        document.getElementById('overlay').style.display = 'none';
+    });
+}
+
+// Fungsi untuk menghapus folder
+function deleteFolder() {
+    const folderId = $('#deleteFolderId').val(); // Mendapatkan folderId dari input tersembunyi
+
+    // Kirim permintaan AJAX DELETE
+    $.ajax({
+        type: 'DELETE',
+        url: `/folder/${folderId}`, // Ganti URL dengan endpoint Anda yang sesuai
+        success: function(response) {
+            console.log('Folder deleted successfully');
+            // Tampilkan SweetAlert2 setelah folder dihapus dan halaman direfresh
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Your folder has been deleted.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Refresh halaman setelah menutup SweetAlert2
+                window.location.href = '/pinned'; // true untuk melakukan reload dari server, false atau tanpa argumen untuk cache
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            // Tangani kesalahan jika ada
+        }
+    });
+}
+
+// Menambahkan event listener untuk input pada textarea untuk menghitung jumlah karakter
+$('#editDescription').on('input', function() {
+    // Mengambil jumlah karakter yang diketik
+    const charCount = $(this).val().length;
+    // Menampilkan jumlah karakter di dalam elemen
+    $('#editCharCount').text(charCount + '/300 characters');
+});
+
+  $('.add-button').click(function() {
+      // Ambil recipeId dari tombol yang diklik
+      var recipeId = $(this).data('id');
+  
+      // Tampilkan popup
+      $('#folderPopup').show().data('id', recipeId);
+  });
+  
+  $('#doneButton').click(async function() {
+      // Ambil recipeId dari data-id pada popup
+      var recipeId = $('#folderPopup').data('id');
+  
+      // Ambil folder yang dipilih
+      var selectedFolders = [];
+      $('input[type=checkbox]:checked').each(function() {
+          selectedFolders.push($(this).val());
+      });
+  
+      try {
+          // Kirim data ke server
+          const response = await fetch('/addToFolder', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ recipeId: recipeId, folders: selectedFolders })
+          });
+  
+          if (response.ok) {
+              // Handle sukses
+              console.log('Recipe added to folder(s) successfully');
+          } else {
+              // Handle error
+              console.error('Error:', response.statusText);
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  
+      // Sembunyikan popup setelah selesai
+      $('#folderPopup').hide();
+  });
+
+  // Fungsi untuk membuka popup penghapusan
+function openRemovePopup() {
+    $('#removePopup').show();
+}
+
+// Fungsi untuk menutup popup penghapusan
+function closeRemovePopup() {
+    $('#removePopup').hide();
+}
+
+// Tangkap klik tombol hapus
+$('.remove-button').on('click', function() {
+    const recipeId = $(this).data('id');
+    const folderId = $(this).data('folder-id');
+
+    // Tampilkan konfirmasi SweetAlert2
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this recipe!',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika pengguna menekan tombol "Yes", kirim permintaan DELETE
+            deleteRecipeFromFolder(recipeId, folderId);
+        }
+    });
+});
+
+// Fungsi untuk menghapus resep dari folder
+function deleteRecipeFromFolder(recipeId, folderId) {
+    // Data yang akan dikirimkan
+    const data = {
+        recipeId: recipeId,
+        folderId: folderId
+    };
+
+    // Kirim permintaan AJAX
+    $.ajax({
+        type: 'DELETE',
+        url: '/removeFromFolder',
+        data: data,
+        success: function(response) {
+            console.log(response.message); // Tampilkan pesan sukses
+            // Tampilkan SweetAlert2 setelah resep dihapus dan halaman direfresh
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Your recipe has been deleted.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Refresh halaman setelah menutup SweetAlert2
+                location.reload();
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error); // Tampilkan pesan kesalahan
+            // Tangani kesalahan jika ada
+        }
+    });
+}
+  </script>
