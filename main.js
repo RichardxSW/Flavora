@@ -517,7 +517,7 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
                 relatedRecipes: relatedRecipes, 
                 user: userData,
                 isAdmin: req.user.isAdmin,
-                title: 'Detail', 
+                title: 'Detail' + ` ${recipes.title}`, 
                 layout: "mainlayout"})
         } else {
             res.status(404).send("Recipe not found")
@@ -1379,7 +1379,7 @@ const uploadRecipe = multer({ storage: storageRecipe });
                     recipes: recipes ,
                     user: userData,
                     isAdmin: req.user.isAdmin,
-                    title: 'Edit Recipe', 
+                    title: 'Edit Recipe' + ` ${recipes.title}`, 
                     layout: "mainlayout"})
             } else {
                 res.status(404).send("Recipe not found")
