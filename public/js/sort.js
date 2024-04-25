@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#sortSelect').change(function() {
       const selectedSort = $(this).val();
-      const searchQuery = getParameterByName('q');
+      const searchQuery = getParameterByName('q') || '';
       let sortParam = '';
       switch (selectedSort) {
         case '2':
@@ -16,7 +16,11 @@ $(document).ready(function() {
         default:
           sortParam = ''; 
       }
+      if (searchQuery === '') {
+        window.location.href = sortParam ? `/search?sort=${sortParam}` : '/search';
+      } else {
       window.location.href = sortParam ? `/search?q=${searchQuery}&sort=${sortParam}` : `/search?q=${searchQuery}`;
+      }
     });
   
     // Menentukan opsi sort berdasarkan nilai 'sort' pada URL saat halaman dimuat
@@ -38,4 +42,3 @@ $(document).ready(function() {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
-  
