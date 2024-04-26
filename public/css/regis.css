@@ -29,6 +29,7 @@ body{
     /* margin: 0 10px; */
     display: flex;
     align-items: center;
+    border: 15px solid #ff7f50;
 }
 
 .image-container {
@@ -45,7 +46,6 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 15px solid #ff7f50;
 }
 
 .regiscontainer form {
@@ -86,7 +86,7 @@ body{
 }
 
 .regiscontainer .input-box .input-field input::placeholder{
-    color: #fff;
+    color: black;
     opacity: 0.4;
 }
 
@@ -105,7 +105,7 @@ body{
 }
 
 .regiscontainer label input{
-    accent-color: #fff;
+    accent-color: black;
     margin-right: 5px;
 }
 

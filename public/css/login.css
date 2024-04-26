@@ -70,7 +70,7 @@ body {
     background-color: yellow;
     border: 3px solid yellow;
   }
-  .email{
+  .email:hover{
     background-color: #df4930;
     border: 3px solid #df4930;
   }
