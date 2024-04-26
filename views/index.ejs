@@ -5,25 +5,50 @@
 </div>
 
 <div class="content">
+
+  <% if (recommendedRecipe) {%>
   <div class="recommended">
     <div class="imgwrap">
-      <a href="/detail/7">
-          <img src="/img/banh mi.png">
+      <a href="/detail/<%= recommendedRecipe.recipeID %>">
+          <img src="<%= recommendedRecipe.img %>">
       </a>
     </div>
     <div class="text">
       <h4>Recommended recipe</h4>
-      <a href="/detail/7">
-        <h5>Banh mi</h5>
+      <a href="/detail/<%= recommendedRecipe.recipeID %>">
+        <h5><%= recommendedRecipe.title %></h5>
       </a>
-      <p>An airy and crunchy French-style baguette, stuffed with an every varying combination of meats, vegetables, and sauces.</p>
-      <div class ="time row">
+      <p><%= recommendedRecipe.desc %></p>
+      <div class="time row">
         <div class="row">
-          <i class="fa fa-clock" style="font-size:15px"><p>50 Minutes</p></i>   <i class="fa fa-cutlery" style="font-size:15px"><p>Lunch</p></i>
+          <i class="fa fa-clock" style="font-size:15px"><p><%= recommendedRecipe.time %></p></i>   
+          <i class="fa fa-cutlery" style="font-size:15px"><p><%= recommendedRecipe.category %></p></i>
         </div>
       </div>
     </div>
+</div>
+  <% } else {%>
+    <div class="recommended">
+      <div class="imgwrap">
+        <a href="/detail/<%= popularRecipes.recipeID %>">
+            <img src="<%= popularRecipes.img %>">
+        </a>
+      </div>
+      <div class="text">
+        <h4>Recommended recipe</h4>
+        <a href="/detail/<%= popularRecipes.recipeID %>">
+          <h5><%= popularRecipes.title %></h5>
+        </a>
+        <p><%= popularRecipes.desc %></p>
+        <div class="time row">
+          <div class="row">
+            <i class="fa fa-clock" style="font-size:15px"><p><%= popularRecipes.time %></p></i>   
+            <i class="fa fa-cutlery" style="font-size:15px"><p><%= popularRecipes.category %></p></i>
+          </div>
+        </div>
+      </div>
   </div>
+  <% } %>
   <div class="categories">
     <ul class="categories__list">
       <li class="categories__item active"><a href="javascript:void(0)" data-id="All" onclick="changeCategory('All')">All</a></li>
