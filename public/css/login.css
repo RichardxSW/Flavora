@@ -9,7 +9,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('/img/banner.png') no-repeat;
+    background: url('/img/detail-bg.jpg') no-repeat;
     background-size: cover;
     background-position: center;
     font-family: Arial, sans-serif;
@@ -17,12 +17,13 @@ body {
 
 .wrapper {
     width: 750px; /* Mengubah lebar wrapper agar sesuai dengan konten */
-    background: #41557e;
-    color: #fff;
-    border-radius: 10px;
+    background: lightgoldenrodyellow;
+    color: black;
+    border-radius: 50px;
     padding: 30px;
     display: flex;
     align-items: center; /* Menengahkan konten secara horizontal */
+    border: 15px solid #ff7f50
 }
 
 .image-container {
@@ -41,6 +42,9 @@ body {
 .wrapper h1 {
     font-size: 27px; /* Mengurangi ukuran font h1 */
     margin-bottom: 20px;
+    font-size: 30px;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
 }
 
 .wrapper p {
@@ -59,13 +63,16 @@ body {
     margin-bottom: 15px;
     cursor: pointer;
     position: relative;
+    border: 3px solid #ff7f50;
   }
   
-  .google{
-    background-color: white;
+  .google:hover{
+    background-color: yellow;
+    border: 3px solid yellow;
   }
   .email{
     background-color: #df4930;
+    border: 3px solid #df4930;
   }
   
   .loginButton i{
@@ -80,13 +87,13 @@ body {
 }
 
 .register-link a {
-    color: #fff;
+    color: #ff7f50;
     text-decoration: none;
     font-weight: 600;
 }
 
 .register-link a:hover {
-    text-decoration: underline;
+    color: red;
 }
 
 @media (max-width: 576px) {

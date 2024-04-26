@@ -9,7 +9,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('/img/banner.png') no-repeat;
+    background: url('/img/detail-bg.jpg') no-repeat;
     background-size: cover;
     background-position: center;
     font-family: Arial, sans-serif;
@@ -18,9 +18,10 @@ body {
 .wrapper {
     width: 550px;
     height: 450px;
-    background: #41557e;
-    color: #fff;
-    border-radius: 10px;
+    background: lightgoldenrodyellow;
+    color: black;
+    border-radius: 50px;
+    border: 15px solid #ff7f50;
     padding: 30px;
     text-align: center;
     margin: 0 auto; /* Menengahkan wrapper horizontal */
@@ -112,9 +113,10 @@ table td{
 .wrapperedit {
     width: 540px;
     height: 580px;
-    background: #41557e;
-    color: #fff;
-    border-radius: 10px;
+    background: lightgoldenrodyellow;
+    color: black;
+    border-radius: 50px;
+    border: 15px solid #ff7f50;
     padding: 30px;
     text-align: center;
     margin: 0 auto; /* Menengahkan wrapper horizontal */
@@ -165,10 +167,10 @@ input[type="password"] {
     margin-bottom: 5px; /* Jarak antara input box */
     box-sizing: border-box;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
+    border: 2px solid black;
     outline: none;
     font-size: 16px;
-    color: #fff;
+    color: black;
     border-radius: 6px;
     padding: 15px 15px;
 }
@@ -176,7 +178,7 @@ input[type="password"] {
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
 input[type="password"]::placeholder{
-    color: #fff;
+    color: black;
     opacity: 0.4;
 }
 

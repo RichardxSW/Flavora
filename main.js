@@ -370,20 +370,103 @@ app.get('/home', isAuthenticated, async (req, res) => {
                 }
             }
 
-            res.render('index', {
-                recipes: recipes, 
-                user: userData,
-                isAdmin: req.user.isAdmin,
-                title: 'Home', 
-                layout: "mainlayout"
-            });
-        } else {
+            // Tentukan kategori resep yang akan ditampilkan berdasarkan waktu sekarang
+            let categoryFilter= [];
+            const hour = new Date().getHours();
+
+            if (hour >= 6 && hour < 12) { // Pagi (06:00 - 11:59)
+                categoryFilter = ["Breakfast"];
+            } else if (hour >= 12 && hour < 18) { // Siang (12:00 - 17:59)
+                categoryFilter = ["Lunch"];
+            } else if (hour >= 18 || hour < 6) { // Malam (18:00 - 05:59)
+                categoryFilter = ["Dinner"];
+            }
+
+            const recommendedRecipe = await Recipes.aggregate([
+                {
+                    $match: {
+                        category: { $in: categoryFilter }
+                    }
+                },
+                {
+                    $project: {
+                        recipeID: 1,
+                        title: 1,
+                        desc: 1,
+                        img: 1,
+                        time: 1,
+                        category: 1,
+                        averageRating: 1,
+                        pinnedCount: { $size: { $concatArrays: ['$pinnedBy', '$pinnedByGoogle'] } },
+                        lastSeenCount: { $size: '$lastSeenBy' }
+                    }
+                },
+                {
+                    $sort: {
+                        averageRating: -1,
+                        pinnedCount: -1,
+                        lastSeenCount: -1
+                    }
+                },
+                {
+                    $limit: 1
+                }
+            ]);
+
+            // Cek apakah ada resep yang direkomendasikan
+            if (recommendedRecipe.length === 0) {
+                // Jika tidak ada resep yang ditemukan, gunakan resep paling populer secara umum
+                const popularRecipes = await Recipes.aggregate([
+                    {
+                        $project: {
+                            recipeID: 1,
+                            title: 1,
+                            desc: 1,
+                            img: 1,
+                            time: 1,
+                            category: 1,
+                            averageRating: 1,
+                            pinnedCount: { $size: { $concatArrays: ['$pinnedBy', '$pinnedByGoogle'] } },
+                            lastSeenCount: { $size: '$lastSeenBy' }
+                        }
+                    },
+                    {
+                        $sort: {
+                            averageRating: -1,
+                            pinnedCount: -1, // Mengurutkan berdasarkan jumlah pinnedBy+pinnedByGoogle terbanyak
+                            lastSeenCount: -1 // Mengurutkan berdasarkan jumlah lastSeenBy terbanyak
+                        }
+                    },
+                    {
+                        $limit: 1
+                    }
+                ]);
+                res.render('index', {
+                    recipes: recipes,
+                    recommendedRecipe: recommendedRecipe[0], // Mengambil resep yang direkomendasikan
+                    popularRecipes: popularRecipes[0], // Mengambil resep paling populer
+                    user: userData,
+                    isAdmin: req.user.isAdmin,
+                    title: 'Home', 
+                    layout: "mainlayout"
+                });
+            } else {
+                res.render('index', {
+                    recipes: recipes,
+                    recommendedRecipe: recommendedRecipe[0], // Mengambil resep yang direkomendasikan
+                    user: userData,
+                    isAdmin: req.user.isAdmin,
+                    title: 'Home', 
+                    layout: "mainlayout"
+                });
+            }
+            } else {
             res.status(404).send("User not found");
-        }
-    } catch (error) { 
-        res.status(500).send("Internal Server Error");
-    }
-});
+            }
+            } catch (error) { 
+            res.status(500).send("Internal Server Error");
+            }
+            });
 
 app.get('/search', isAuthenticated, async (req, res) => {
     try {

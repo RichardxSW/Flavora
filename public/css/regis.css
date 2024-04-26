@@ -9,7 +9,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(/img/banner.png) no-repeat;
+    background: url('/img/detail-bg.jpg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -22,9 +22,9 @@ body{
 
 .wrapper{
     width: 750px;
-    background: #41557e;
-    border-radius: 10px;
-    color: #fff;
+    background: lightgoldenrodyellow;
+    border-radius: 50px;
+    color: black;
     padding: 30px;
     /* margin: 0 10px; */
     display: flex;
@@ -45,6 +45,7 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
+    border: 15px solid #ff7f50;
 }
 
 .regiscontainer form {
@@ -56,6 +57,8 @@ body{
     text-align: center;
     margin-bottom: 20px;
 }
+
+
 
 .regiscontainer .input-box{
     display: flex;
@@ -74,10 +77,10 @@ body{
     width: 100%;
     height: 100%;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
+    border: 2px solid rgba(0, 0, 0, 0.2);
     outline: none;
     font-size: 16px;
-    color: #fff;
+    color: black;
     border-radius: 6px;
     padding: 15px 15px 15px 40px;
 }
@@ -127,13 +130,13 @@ body{
 }
 
 .login-link a {
-    color: #fff;
+    color: #ff7f50;
     text-decoration: none;
     font-weight: 600;
 }
 
 .login-link a:hover {
-    text-decoration: underline;
+    color: red;
 }
 
 @media (max-width: 576px) {
