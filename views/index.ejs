@@ -5,7 +5,6 @@
 </div>
 
 <div class="content">
-
   <% if (recommendedRecipe) {%>
   <div class="recommended">
     <div class="imgwrap">
@@ -26,7 +25,7 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
   <% } else {%>
     <div class="recommended">
       <div class="imgwrap">
@@ -139,3 +138,13 @@
 <script src="/js/search.js"></script>
 <script src="/js/index.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var descriptions = document.querySelectorAll(".recommended .text p");
+  descriptions.forEach(function(desc) {
+    var sentences = desc.innerHTML.split("."); // Memecah deskripsi menjadi kalimat-kalimat
+    var firstTwoSentences = sentences.slice(0, 2).join("."); // Mengambil dua kalimat pertama dan menggabungkannya kembali
+    desc.innerHTML = firstTwoSentences;
+  });
+});
+</script>

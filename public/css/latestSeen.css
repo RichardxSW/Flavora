@@ -11,6 +11,20 @@ position: relative;
 padding-bottom: 190px;
 }
 
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/img/detail-bg.jpg');
+  background-size: contain;
+  background-position: center; /* posisi gambar di tengah */
+  filter: blur(1.5px); /* Adjust the blur radius as needed */
+  z-index: -1; /* Ensure the pseudo-element is behind other content */
+}  
+
 #overlay{
 position: fixed; 
 top: 0; 
@@ -484,7 +498,7 @@ margin-left: 3px;
 
 .result .card {
 overflow: hidden;
-border: 1px solid #c0bfbf;
+border: 2px solid #b0aeae;
 flex: 1 0 300px;
 margin: 0.5em 1em;
 max-width: 228px;
@@ -612,6 +626,7 @@ margin-bottom: 3em;
 .result h3{
 font-weight: 700;
 margin: 0px 15px;
+text-shadow: 2px 2px 2px #bebebe; 
 }
 
 .result p{
@@ -634,6 +649,12 @@ font-weight: 600;
 display: flex;
 margin-left: 15px;
 justify-content: space-between;
+}
+
+.result .containerTotal p {
+  font-weight: 700;
+  font-size: 17px;
+  text-shadow: 2px 2px 2px #bebebe; 
 }
 
 /* Footer */
