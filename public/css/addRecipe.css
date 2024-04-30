@@ -2,6 +2,26 @@
     margin: 0;
     padding: 0;
   }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/img/detail-bg.jpg');
+    background-size: contain;
+    background-position: center; 
+    filter: blur(1.8px); /* Adjust the blur radius as needed */
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
+  }  
   
   /* Navbar  */
   .navbar {
@@ -239,9 +259,10 @@
     margin-bottom: 60px;
     padding: 40px;
     background-color: lightgoldenrodyellow;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* overflow-y: scroll; */
+    border-radius: 30px;
+    border: 2px solid #ff7f50;
+    padding: 45px;
+    box-shadow: 10px 10px 5px 0px #ff7f50aa;
 }
 
 .input-box {

@@ -9,9 +9,6 @@ body {
   min-height: 100vh;
   position: relative;
   padding-bottom: 200px;
-  /* background-image: url('/img/detail-bg.jpg'); */
-  /* background-size: contain; agar gambar latar belakang menutupi seluruh halaman */
-  /* background-repeat: no-repeat;  */
 }
 
 body::before {
