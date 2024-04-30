@@ -31,44 +31,5 @@ router.post('/', async (req, res) => {
     }
 })
 
-// router.put('/home', async (req, res) => {
-//     try {
-//         const recipes = await Recipes.findById(req.body.recipeID);
-//         const user = await User.findById(req.body.googleId);
-//         user.savedRecipes.push(recipes);
-//         await user.save();
-//         res.json({savedRecipes: user.savedRecipes});
-//         // if (recipes) {
-//         //     res.render('index', {recipes: recipes, name: req.user.displayName, pic: req.user.profilePicture , title: 'Home', layout: "mainlayout"})
-//         // } else {
-//         //     res.status(404).send("Recipe not found")
-//         // }
-//     } catch (error) { 
-//         res.status(500).send("Internal Server Error")
-//     }
-// })
-
-// router.get("/savedRecipes/ids", async(req, res)=>{
-//     try{
-//         const user = await User.findById(req.body.userID);
-//         res.json({savedRecipes: user?.savedRecipes});
-//     } catch (err){
-//         res.json(err)
-//     }
-// })
-
-// router.get("/savedRecipes", async(req, res)=>{
-//     try{
-//         const user = await User.findById(req.body.userID);
-//         const savedRecipes =  await Recipes.find({
-//             _id: { $in: user.savedRecipes},
-//         });
-//         res.json({savedRecipes});
-//     } catch (err){
-//         res.json(err)
-//     }
-// })
-
-
 module.exports = router
 
