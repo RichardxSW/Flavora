@@ -16,9 +16,16 @@ body{
 
 .alert {
     position: fixed;
+    top: 20px; /* Atur jarak dari bagian atas layar */
+    left: 50%; /* Pusatkan alert secara horizontal */
+    transform: translateX(-50%); /* Pusatkan alert secara horizontal */
     z-index: 1000;
     width: 490px;
+    padding: 20px; /* Kurangi padding untuk tampilan yang lebih kompak */
+    border-radius: 10px; /* Perkecil radius sudut untuk tampilan yang lebih rapi */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan untuk efek elevasi */
 }
+
 
 .wrapper{
     width: 750px;
