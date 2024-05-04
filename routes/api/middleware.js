@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const LocalUser = require("../../models/localuserModel");
+const User = require("../../models/userModel");
 
+// Function to create an admin user
 async function createAdmin() {
     try {
         // Check if there is an existing admin
@@ -30,6 +32,7 @@ async function createAdmin() {
     }
 }
 
+// Middleware to check if user is logged in
 function checkUser(req, res, next) {
     // Check if the user is accessing login or register page
     if (req.path === '/' || req.path === '/local' || req.path === '/register') {
@@ -61,6 +64,7 @@ function checkUser(req, res, next) {
     next();
 }
 
+// Middleware to redirect trailing slashes
 function redirectTrailingSlash(req, res, next) {
     if (req.path.slice(-1) === '/' && req.path.length > 1) {
         const query = req.url.slice(req.path.length);
@@ -81,8 +85,27 @@ function isAuthenticated(req, res, next) {
     }
 }
 
+// Middleware untuk memeriksa apakah pengguna terautentikasi
 function isLoggedIn(req,res,next){
     req.user? next(): res.sendStatus(401);
 }
 
-module.exports = { createAdmin, checkUser, redirectTrailingSlash, isAuthenticated, isLoggedIn};
+// Middleware untuk mencari pengguna berdasarkan ID
+async function findUser(req, res, next) {
+    let userId = req.user._id;
+    let user;
+    if (req.user.googleId) {
+        user = await User.findById(userId);
+    } else {
+        user = await LocalUser.findById(userId);
+    }
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    req.user = user;
+    next();
+}
+
+module.exports = { createAdmin, checkUser, redirectTrailingSlash, isAuthenticated, isLoggedIn, findUser};
