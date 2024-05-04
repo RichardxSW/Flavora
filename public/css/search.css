@@ -361,8 +361,8 @@ button:focus{
 .result{
   padding-bottom: 30px;
   margin-top: 10px;
-  margin-left: 5em;
-  margin-right: 5em;
+  margin-left: 3.3em;
+  margin-right: 3.3em;
   margin-bottom: 3em;
 }
 
@@ -469,5 +469,25 @@ label {
   .card {
     width: 95%;
     max-width: 400px;
+  }
+
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar__brand {
+    font-size: 28px; 
+  }
+
+  .navbar__item {
+    margin-right: 10px;
+  }
+
+  .navbar__link {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .banner .container {
+    width: 500px;
   }
 }

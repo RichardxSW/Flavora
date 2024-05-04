@@ -703,3 +703,80 @@ button:focus{
     max-width: 400px;
   }
 }
+
+@media only screen and (max-width: 1024px) {
+  .navbar__brand {
+    font-size: 28px; 
+  }
+
+  .navbar__item {
+    margin-right: 10px;
+  }
+  
+  .navbar__link {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .banner .container {
+    width: 500px;
+  }
+  
+  .flavora{
+    font-size: 65px; 
+  }
+
+  .recommended{
+    height: 450px;
+  }
+
+  .content {
+    margin-left: 3em;
+    margin-right: 3em;
+  }
+  
+  .recommended .imgwrap img{
+    height: 450px;
+  }
+
+  .recommended .text h5{
+    font-size: 35px;
+  }
+
+  
+  .recommended .text h4{
+    font-size: 16px;
+  }
+  
+  .recommended .text p{
+    font-size: 15px;
+  }
+  
+  .recommended .text .time{
+    margin-left: 35px;
+    margin-top: 10px;
+  }
+
+  .card {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    margin-top: 0.2em;
+    height: 305px;
+  }
+
+  .card img {
+    height: 210px;
+  }
+
+  .card h5 {
+    font-size: 16px;
+  }
+  
+  .card .time .row p {
+    font-size: 13px;
+  }
+  
+  .card .time .row span {
+    font-size: 14px;  
+  }
+}

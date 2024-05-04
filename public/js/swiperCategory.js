@@ -17,10 +17,21 @@ document.addEventListener("DOMContentLoaded", function () {
     function initializeSwiper() {
         var productSwiper = new Swiper(".swiper-product", {
             // autoHeight: true,
-            slidesPerView: 4,
+            slidesPerView: 1,
             spaceBetween: 3,
             runCallbacksOnInit: true,
             observer: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                },
+                1440: {
+                    slidesPerView: 4
+                }
+            }
         });
     
         // Update Swiper dan scrollbar
@@ -37,24 +48,68 @@ document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi Swiper setelah memperbarui konten swiper-wrapper
     var swiper1 = new Swiper(".swiper1", {
         //autoHeight: true,
-        slidesPerView: 4,
+        slidesPerView: 1,
         spaceBetween: 3,
+        breakpoints: {
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            },
+            1440: {
+                slidesPerView: 4
+            }
+        }
     });
     var swiper2 = new Swiper(".swiper2", {
         //autoHeight: true,
-        slidesPerView: 4,
+        slidesPerView: 1,
         spaceBetween: 3,
+        breakpoints: {
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            },
+            1440: {
+                slidesPerView: 4
+            }
+        }
     });
     var swiper3 = new Swiper(".swiper3", {
         //autoHeight: true,
-        slidesPerView: 4,
+        slidesPerView: 1,
         spaceBetween: 3,
+        breakpoints: {
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            },
+            1440: {
+                slidesPerView: 4
+            }
+        }
     });
     var swiper4 = new Swiper(".swiper4", {
         //autoHeight: true,
-        slidesPerView: 4,
+        slidesPerView: 1,
         spaceBetween: 3,
-    });
+        breakpoints: {
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            },
+            1440: {
+                slidesPerView: 4
+            }
+        }
+    });    
 });
 
 // Fungsi untuk mengubah kategori
