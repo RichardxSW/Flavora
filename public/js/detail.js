@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+        // instruction and ingredient detail
         var detailsElements = document.querySelectorAll('details');
 
         detailsElements.forEach(function(detailsElement) {
@@ -81,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }
 
               try {
-                const response = await fetch(`/postReview/${recipeID}`, {
+                const response = await fetch(`/review/postReview/${recipeID}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -121,7 +123,7 @@ async function deleteComment(recipeID, commentID) {
   }).then(async (result) => {
       if (result.isConfirmed) {
           try {
-              const response = await fetch(`/deleteComment/${recipeID}/${commentID}`, {
+              const response = await fetch(`/review/deleteComment/${recipeID}/${commentID}`, {
                   method: 'DELETE'
               });
 
@@ -161,7 +163,7 @@ async function editComment(commentID, currentReview) {
       showLoaderOnConfirm: true,
       preConfirm: (newComment) => {
           // Kirim permintaan PUT ke server untuk memperbarui komentar
-          return fetch(`/editComment/${commentID}`, {
+          return fetch(`/review/editComment/${commentID}`, {
               method: 'PUT',
               headers: {
                   'Content-Type': 'application/json'
