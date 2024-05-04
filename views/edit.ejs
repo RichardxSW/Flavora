@@ -5,7 +5,7 @@
     <form action="/edit" method="POST" enctype="multipart/form-data" class="form-grid">
         <input type="file" name="image">
         <input type="hidden" name="user_id" value="<%= user._id %>">
-        <button type="button" onclick="deleteProfilePic()">Delete Profile Picture</button>
+        <button class="dlt" type="button" onclick="deleteProfilePic()">Delete Profile Picture</button>
 
         <div class="form-grid-split">
             <div class="form-grid-item">

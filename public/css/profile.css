@@ -74,6 +74,10 @@ table td{
     width: 400px; /* Adjust as needed */
 }
 
+.dlt{
+    margin-bottom: 10px;
+}
+
 #backForm a,
 #editForm a,
 #logoutForm a{
