@@ -102,13 +102,13 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
         const id = req.body.user_id;
 
         if (req.file) {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            // const hashedPassword = await bcrypt.hash(req.body.password, 10);
             // Jika ada file yang diunggah, simpan informasi file ke dalam userData
             userData = {
                 username: req.body.name,
                 email: req.body.email,
-                password: req.body.password,
-                hashedPassword: hashedPassword, 
+                // password: req.body.password,
+                // hashedPassword: hashedPassword, 
                 profilePicture: req.file.filename // Gunakan req.file.filename untuk mendapatkan nama file yang disimpan oleh multer
             };
 
@@ -123,12 +123,12 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
             }
         } else {
             // Jika tidak ada file yang diunggah, hanya simpan informasi pengguna
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            // const hashedPassword = await bcrypt.hash(req.body.password, 10);
             userData = {
                 username: req.body.name,
                 email: req.body.email,
-                password: req.body.password,
-                hashedPassword: hashedPassword, 
+                // password: req.body.password,
+                // hashedPassword: hashedPassword, 
             };
         }
 
@@ -145,6 +145,66 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
         req.flash('successMsg', 'Account updated successfully.');
         res.redirect('/profile');
 
+    } catch (error) { 
+        console.log(error.message);
+    }
+});
+
+profileRouter.get('/editPassword', async(req, res) => {
+    let errorMsg = req.flash('error');
+    try {
+        const id = req.query.id;
+        const userData = await LocalUser.findById(id);
+
+        if(userData){
+            res.render('editPassword', {
+                user: userData,
+                title: 'Edit Password', 
+                errorMsg: errorMsg,
+                layout: "accountLayout"});
+        }
+        else{
+            // Menampilkan pesan akun tidak bisa dimodifikasi untuk google user
+            req.flash('editErrorMsg', 'Account can not be modified.');
+            res.redirect('/profile');
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+profileRouter.post('/editPassword', async(req, res) => {
+    try {
+        let userData = {};
+        const id = req.body.user_id;
+        const newPassword = req.body.password;
+        const confirmPassword = req.body.confirm_password;
+
+        if (newPassword !== confirmPassword) {
+            console.log(newPassword);
+            console.log(confirmPassword);
+            req.flash('errorMsg', 'Password and confirm password do not match.');
+            res.redirect(`/editPassword?id=${id}`);
+        } else{
+            // Menyimpan password yang telah diubah
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+            userData.password = req.body.password;
+            userData.hashedPassword = hashedPassword;
+
+            // Update data pengguna di MongoDB
+            const updatedUserData = await LocalUser.findByIdAndUpdate(id, { $set: userData }, { new: true });
+
+            // Ambil data terbaru dari MongoDB
+            const freshUserData = await LocalUser.findById(id);
+
+            // Simpan freshUserData di dalam sesi atau cookie
+            req.session.freshUserData = freshUserData;
+
+            // Menampilkan pesan akun berhasil diupdate dan redirect ke halaman profil
+            req.flash('successMsg', 'Password updated successfully.');
+            res.redirect('/profile');
+        }
     } catch (error) { 
         console.log(error.message);
     }

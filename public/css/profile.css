@@ -46,11 +46,26 @@ table {
     margin-top: 20px;
     vertical-align: middle;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 table td{
     width: 50%;
+}
+
+.password-link {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.password-link a {
+    color: #ff7f50;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.password-link a:hover {
+    color: red;
 }
 
 .button-container {
@@ -193,6 +208,94 @@ input[type="submit"]{
     margin-top: 20px;
     padding: 15px 10px;
     width: 130px;
+    height: 50px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* editPassword */
+.wrappereditp {
+    width: 450px;
+    height: 400px;
+    background: lightgoldenrodyellow;
+    color: black;
+    border-radius: 50px;
+    border: 15px solid #ff7f50;
+    padding: 30px;
+    text-align: center;
+    margin: 0 auto; /* Menengahkan wrapper horizontal */
+    display: flex; /* Menggunakan flexbox untuk menengahkan elemen */
+    flex-direction: column; /* Mengatur arah flexbox menjadi vertikal */
+    align-items: center; /* Menengahkan elemen secara horizontal */
+    justify-content: center;
+}
+
+.wrappereditp h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    width: 100%;
+    max-width: 400px; /* Untuk membatasi lebar form */
+    margin-top: 20px; /* Jarak antara gambar dan form */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-grid-split {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-grid-item label {
+    flex-basis: 30%; /* Lebar label */
+    text-align: left;
+    margin-right: 10px; /* Jarak antara label dan input */
+    white-space: nowrap;
+}
+
+input[type="password"] {
+    flex: 1; /* Mengisi ruang yang tersedia */
+    margin-bottom: 5px; /* Jarak antara input box */
+    box-sizing: border-box;
+    background: transparent;
+    border: 2px solid black;
+    outline: none;
+    font-size: 16px;
+    color: black;
+    border-radius: 6px;
+    padding: 15px 15px;
+}
+
+input[type="password"]::placeholder{
+    color: black;
+    opacity: 0.4;
+}
+
+input[type="submit"]{
+    margin-top: 40px;
+    padding: 15px 10px;
+    width: 200px;
     height: 50px;
     background: #fff;
     border: none;

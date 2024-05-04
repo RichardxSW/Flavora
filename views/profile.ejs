@@ -1,3 +1,9 @@
+<% if (messages.editErrorMsg) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= messages.editErrorMsg %>
+    </div>
+<% } %>
+
 <% if (messages.errorMsg) { %>
     <div class="alert alert-danger" role="alert">
         <%= messages.errorMsg %>
@@ -24,6 +30,11 @@
                 <td><%= user.email%></td>
             </tr>
         </table>
+
+    <div class="password-link">
+        <p>Change Password? <a href="/editPassword?id=<%= user._id%>">Change</a></p>
+    </div>  
+
     <div class="button-container">
         <form id="backForm">
             <a href="/home">Back</a>
