@@ -3,6 +3,7 @@ const multer = require('multer');
 const LocalUser = require("../../models/localuserModel");
 const profileRouter = Router();
 
+// Route untuk redirect ke page profile
 profileRouter.get('/profile', (req, res) => {
     let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
     let errorMsg = req.flash('error');
@@ -18,6 +19,7 @@ profileRouter.get('/profile', (req, res) => {
         if (!userData || Object.keys(userData).length === 0) {
             // Jika userData kosong, isi dengan data pengguna dari req.user
             if (req.user.username) { 
+                // Data local user
                 userData = {
                     name: req.user.username || '', 
                     profilePicture: req.user.profilePicture,
@@ -26,6 +28,7 @@ profileRouter.get('/profile', (req, res) => {
                     _id: req.user._id
                 };
             } else {
+                // Data google user
                 userData = {
                     name: req.user.displayName || '',
                     profilePicture: req.user.profilePicture || '',
@@ -50,10 +53,12 @@ profileRouter.get('/profile', (req, res) => {
     });
 });
 
+// Fungsi untuk mengubah password menjadi *
 function maskPassword(password) {
     return '*'.repeat(password.length);
 }
 
+// Route untuk redirect ke page edit
 profileRouter.get('/edit', async(req, res) => {
     try {
         const id = req.query.id;
@@ -66,6 +71,7 @@ profileRouter.get('/edit', async(req, res) => {
                 layout: "accountLayout"});
         }
         else{
+            // Menampilkan pesan akun tidak bisa dimodifikasi untuk google user
             req.flash('errorMsg', 'Account can not be modified.');
             res.redirect('/profile');
         }
@@ -74,7 +80,7 @@ profileRouter.get('/edit', async(req, res) => {
     }
 });
 
-// Konfigurasi penyimpanan file dengan multer
+// Konfigurasi penyimpanan file user profile dengan multer
 const storage = multer.diskStorage({
     destination:  './public/userImages', // Menentukan direktori penyimpanan file
     filename: function (req, file, cb) {
@@ -86,6 +92,7 @@ const storage = multer.diskStorage({
 // Inisialisasi multer dengan konfigurasi penyimpanan
 const upload = multer({ storage: storage });
 
+// Route untuk handle edit profile
 profileRouter.post('/edit', upload.single('image'), async(req, res) => {
     try {
         let userData = {};
@@ -127,7 +134,7 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
         // Simpan freshUserData di dalam sesi atau cookie
         req.session.freshUserData = freshUserData;
 
-        // Redirect ke halaman profil setelah berhasil update
+        // Menampilkan pesan akun berhasil diupdate dan redirect ke halaman profil
         req.flash('successMsg', 'Account updated successfully.');
         res.redirect('/profile');
 

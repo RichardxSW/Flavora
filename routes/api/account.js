@@ -58,7 +58,7 @@ accRouter.post('/local', passport.authenticate('local',{
 
 accRouter.delete('/', isLoggedIn, async (req, res) => {
     try {
-        // await User.findByIdAndDelete(req.user._id);
+        // Fungsi untuk logout dan menghapus session
         req.logout();
         if (req.session.freshUserData) {
             delete req.session.freshUserData;
@@ -69,6 +69,5 @@ accRouter.delete('/', isLoggedIn, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
 
 module.exports = accRouter;

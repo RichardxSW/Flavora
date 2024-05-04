@@ -3,6 +3,7 @@ const multer = require('multer');
 const adminRouter = Router();
 const Recipes = require('../../models/recipesModel');
 
+// Route untuk redirect ke page dashboard
 adminRouter.get('/dashboard', async(req, res) => {
     try {
         const recipes = await Recipes.find();
@@ -22,6 +23,7 @@ adminRouter.get('/dashboard', async(req, res) => {
         }
     });
 
+// Route untuk handle delete recipe
 adminRouter.delete('/deleteRecipe/:recipeID', async (req, res) => {
     try {
         // Ambil ID resep dari parameter route
@@ -40,6 +42,7 @@ adminRouter.delete('/deleteRecipe/:recipeID', async (req, res) => {
     }
 });
 
+// Route untuk redirect ke page add recipe
 adminRouter.get('/addRecipe', async(req, res) => {
     try {
         const recipes = await Recipes.find();
@@ -60,6 +63,7 @@ adminRouter.get('/addRecipe', async(req, res) => {
     }
 });
 
+// Konfigurasi penyimpanan file recipe photo dengan multer
 const storageRecipe = multer.diskStorage({
     destination: './public/img', // Menentukan direktori penyimpanan file
     filename: function (req, file, cb) {
@@ -71,7 +75,7 @@ const storageRecipe = multer.diskStorage({
 // Inisialisasi multer dengan konfigurasi penyimpanan
 const uploadRecipe = multer({ storage: storageRecipe });
     
-
+// Route untuk handle penambahan resep
 adminRouter.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => {
     try {
 
@@ -90,6 +94,7 @@ adminRouter.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => 
         // Jika tidak ada recipe, set recipeID menjadi 1
         recipeID = 1;
     }
+        // Masukkan data dari input admin
         const {
             title,
             category,
@@ -125,6 +130,7 @@ adminRouter.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => 
             cara
         });
         await newRecipe.save();
+        // Menampilkan pesan recipe berhasil ditambahkan
         req.flash('successAddMsg', 'Recipe Added')
         res.status(200).end();
     } catch (error) {
@@ -133,6 +139,7 @@ adminRouter.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => 
     }
 })
 
+// Route untuk redirect ke page edit recipe
 adminRouter.get('/editRecipe/:recipeID', async (req, res) => {
     try {
         const recipeID = req.params.recipeID
@@ -154,6 +161,7 @@ adminRouter.get('/editRecipe/:recipeID', async (req, res) => {
     }
 })
 
+// Route untuk handle pengeditan resep
 adminRouter.post('/editRecipe/:recipeID', uploadRecipe.single('img') , async (req, res) => {
     try {
         const { recipeID } = req.params;
