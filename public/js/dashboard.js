@@ -23,7 +23,7 @@ const alertElement = document.querySelector('.alert');
             if (result.isConfirmed) {
                 // Kirim permintaan DELETE ke server
                 try {
-                    const response = await fetch(`/deleteRecipe/${recipeID}`, {
+                    const response = await fetch(`/admin/deleteRecipe/${recipeID}`, {
                         method: 'DELETE'
                     });
     

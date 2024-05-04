@@ -2,7 +2,8 @@ const {Router} = require('express');
 const accRouter = Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const LocalUser = require("./models/localuserModel");
+const LocalUser = require("../../models/localuserModel");
+const { isLoggedIn } = require('./middleware');
 
 //Route to redirect to login page
 accRouter.get('/', (req, res) => {
@@ -40,7 +41,7 @@ accRouter.post('/register', async (req, res) => {
 });
 
 //Route to redirect to email login page
-app.get('/local', (req, res) => {
+accRouter.get('/local', (req, res) => {
     res.render('loginEmail.ejs', {
         title: 'Login', 
         layout: "accountlayout",
@@ -49,10 +50,25 @@ app.get('/local', (req, res) => {
 });
 
 //Route to redirect to home page after successful login with email
-app.post('/local', passport.authenticate('local',{
+accRouter.post('/local', passport.authenticate('local',{
     successRedirect: '/home',
     failureRedirect: '/local',
     failureFlash: true
 }));
+
+accRouter.delete('/', isLoggedIn, async (req, res) => {
+    try {
+        // await User.findByIdAndDelete(req.user._id);
+        req.logout();
+        if (req.session.freshUserData) {
+            delete req.session.freshUserData;
+        };
+        res.sendStatus(200);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
 
 module.exports = accRouter;

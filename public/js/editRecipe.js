@@ -35,19 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
         ingredientsDiv.appendChild(newDiv);
     });
 
-    // const deleteButtons = document.querySelectorAll('.delete-button');
-    // deleteButtons.forEach(button => {
-    //     button.addEventListener('click', function() {
-    //         removeInputBox(this);
-    //     });
-    // });
-
-    // function removeInputBox(button) {
-    //     const ingredientsDiv = document.getElementById('ingredients');
-    //     const inputBox = button.parentNode;
-    //     ingredientsDiv.removeChild(inputBox);
-    // }
-
     //insruction
     document.getElementById('addInstruction').addEventListener('click', function() {
         const instructionsDiv = document.getElementById('instructions');
@@ -82,12 +69,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         instructionsDiv.appendChild(newDiv);
     });
-
-    // function removeInputBox(button) {
-    //     const instructionsDiv = document.getElementById('instructions');
-    //     const inputBox = button.parentNode;
-    //     instructionsDiv.removeChild(inputBox);
-    // }
 
     const deleteButtons = document.querySelectorAll('.delete-button');
     deleteButtons.forEach(button => {
@@ -136,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         confirmButtonText: 'OK'
                     }).then(() => {
                         // Refresh halaman
-                        window.location.href = '/dashboard';
+                        window.location.href = '/admin/dashboard';
                     });
                 } catch (error) {
                     console.error('There was a problem with the fetch operation:', error);

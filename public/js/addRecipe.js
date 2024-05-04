@@ -100,7 +100,7 @@ form.addEventListener('submit', async (event) => {
 
             try {
                 // Kirim data formulir menggunakan fetch
-                const response = await fetch('/addRecipe', {
+                const response = await fetch('/admin/addRecipe', {
                     method: 'POST',
                     body: formData
                 });
@@ -117,7 +117,7 @@ form.addEventListener('submit', async (event) => {
                     confirmButtonText: 'OK'
                 }).then(() => {
                     // Arahkan ke halaman dashboard setelah menekan tombol "OK"
-                    window.location.href = '/dashboard';
+                    window.location.href = '/admin/dashboard';
                 });
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
