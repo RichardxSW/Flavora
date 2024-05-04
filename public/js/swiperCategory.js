@@ -1,6 +1,7 @@
 "use strict";
 
-const swiperWrapper = document.querySelector(".swiper-wrapper"); // Menambahkan ini di sini untuk mengakses elemen swiper-wrapper
+// Inisialisasi Swiper untuk konten default saat halaman home dimuat
+const swiperWrapper = document.querySelector(".swiper-wrapper"); 
 document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi Swiper untuk konten default saat halaman dimuat
     initializeSwiper();
@@ -112,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });    
 });
 
-// Fungsi untuk mengubah kategori
+// Fungsi untuk mengubah kategori makanan pada halaman home
 function changeCategory(category) {
     // Ubah menjadi array jika kategori merupakan string
     const categories = typeof category === 'string' ? [category] : category;

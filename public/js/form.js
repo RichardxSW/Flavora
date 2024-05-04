@@ -1,9 +1,11 @@
+// Fungsi untuk membuka popup tambah folder
 function openPopup() {
   document.getElementById('popup').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
   document.body.classList.add('popup-open'); 
 }
 
+// Fungsi untuk menutup popup tambah folder
 function closePopup() {
   document.getElementById('folderName').value = '';
   document.getElementById('description').value = '';
@@ -12,6 +14,7 @@ function closePopup() {
   document.body.classList.remove('popup-open'); 
 }
 
+// Fungsi untuk membuka popup add to folder
 function closeAddPopup() {
   uncheckAll();
   document.getElementById('folderPopup').style.display = 'none';
@@ -19,6 +22,7 @@ function closeAddPopup() {
   document.body.classList.remove('popup-open'); 
 }
 
+// Fungsi untuk membuka popup edit
 function openEditPopup() {
     const selectedFolderData = document.getElementById('editFolderForm');
     const folderName = selectedFolderData.getAttribute('data-name');
@@ -43,6 +47,7 @@ function openEditPopup() {
     document.body.classList.add('popup-open'); 
 }
 
+// Fungsi untuk menutup popup edit
 function closeEditPopup() { 
     document.getElementById('editFolderName').value = '';
     document.getElementById('editDescription').value = '';
@@ -61,6 +66,7 @@ function closeRemovePopup() {
     $('#removePopup').hide();
 }
 
+// Fungsi untuk menghilangkan ceklis pada semua checkbox
 function uncheckAll() {
   // Dapatkan semua elemen input dengan tipe 'checkbox' di dalam div 'addContent'
   var checkboxes = document.querySelectorAll('.folderPopup .addContent input[type="checkbox"]');
@@ -305,6 +311,7 @@ $('#editDescription').on('input', function() {
     $('#editCharCount').text(charCount + '/300 characters');
 });
 
+// Fungsi untuk menampilkan popup add to folder
 $('.add-button').click(function() {
     // Periksa apakah ada folder yang tersedia
     if ($('.addContent input[type="checkbox"]').length === 0) {
@@ -325,6 +332,7 @@ $('.add-button').click(function() {
     document.getElementById('overlay').style.display = 'block';
 });
 
+// Fungsi untuk menangani klik pada tombol "Done" pada popup add to folder
 $('#doneButton').click(async function() {
     // Ambil recipeId dari data-id pada popup
     var recipeId = $('#folderPopup').data('id');

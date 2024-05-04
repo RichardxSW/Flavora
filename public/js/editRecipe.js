@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ingredientsDiv.appendChild(newDiv);
     });
 
-    //insruction
+    //instruction
     document.getElementById('addInstruction').addEventListener('click', function() {
         const instructionsDiv = document.getElementById('instructions');
         const instructionCount = instructionsDiv.children.length;

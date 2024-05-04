@@ -1,3 +1,4 @@
+// Fungsi untuk mengatur opsi sort pada halaman search
 $(document).ready(function() {
     $('#sortSelect').change(function() {
       const selectedSort = $(this).val();
@@ -34,6 +35,7 @@ $(document).ready(function() {
     }
   });
 
+  // Fungsi untuk mendapatkan nilai parameter dari URL
   function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');
     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');

@@ -1,3 +1,4 @@
+// Fungsi menghapus resep yang di-pin dari halaman saat tombol pin ditekan lagi di halaman pinned
 document.querySelectorAll('.pin').forEach(button => {
     button.addEventListener('click', () => {
         // Dapatkan ID resep dari atribut dataset tombol

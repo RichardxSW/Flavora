@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose')
 
+// Skema untuk pengguna google
 const userSchema = new Schema({
     googleId: {
         type: String,
@@ -12,7 +13,7 @@ const userSchema = new Schema({
         type: String,
     },
     profilePicture: {
-        type: String, // Anda dapat menggunakan tipe String untuk menyimpan URL gambar profil
+        type: String, 
     },
     isAdmin: {
         type: Boolean,

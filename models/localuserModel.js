@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose')
 
+// Skema untuk pengguna lokal
 const LocalUserSchema = new Schema({
     email: {
         type: String,

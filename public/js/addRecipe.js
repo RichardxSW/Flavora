@@ -1,3 +1,4 @@
+// Mengatur tampilan formulir penambahan resep
 document.getElementById('addIngredient').addEventListener('click', function() {
     const ingredientsDiv = document.getElementById('ingredients');
     const ingredientCount = ingredientsDiv.children.length;
@@ -32,12 +33,14 @@ document.getElementById('addIngredient').addEventListener('click', function() {
     ingredientsDiv.appendChild(newDiv);
 });
 
+// Fungsi untuk menghapus kotak input ingredient
 function removeInputBox(button) {
     const ingredientsDiv = document.getElementById('ingredients');
     const inputBox = button.parentNode;
     ingredientsDiv.removeChild(inputBox);
 }
 
+// Menambah kotak input untuk instruksi
 document.getElementById('addInstruction').addEventListener('click', function() {
     const instructionsDiv = document.getElementById('instructions');
     const instructionCount = instructionsDiv.children.length;
@@ -72,6 +75,7 @@ document.getElementById('addInstruction').addEventListener('click', function() {
     instructionsDiv.appendChild(newDiv);
 });
 
+// Fungsi untuk menghapus kotak input instruksi
 function removeInputBox(button) {
     const instructionsDiv = document.getElementById('instructions');
     const inputBox = button.parentNode;

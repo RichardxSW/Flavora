@@ -1,3 +1,4 @@
+// Fungsi untuk memperbarui status pin pada tombol pin di session storage 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.pin').forEach(button => {
         const recipeId = button.dataset.id;
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Fungsi memanggil API untuk menambah atau menghapus resep yang di-pin
 document.querySelectorAll('.pin').forEach(button => {
     button.addEventListener('click', async () => {
         const recipeId = button.dataset.id;
@@ -54,6 +56,7 @@ function updateCard(recipeId, isPinned) {
     });
 }
 
+// Fungsi memanggil API untuk memeriksa status pin resep saat halaman dimuat
 document.addEventListener('DOMContentLoaded', async () => {
     const recipeButtons = document.querySelectorAll('.pin');
     recipeButtons.forEach(async button => {
