@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require("cors");
-const passportSetup = require("./passport");
 const passport = require("passport");
 const authGoogle = require("./routes/auth")
 const authLocal = require("./routes/authLocal")
@@ -19,21 +18,51 @@ const LocalUser = require("./models/localuserModel");
 const bcrypt = require("bcrypt");
 const multer = require('multer');
 const path = require('path');
-const { profile } = require('console');
-const { userInfo } = require('os');
 dotenv.config();
 
+// Import middleware from routes/api
+const { createAdmin, checkUser, redirectTrailingSlash, isAuthenticated, isLoggedIn } = require('./routes/api/middleware');
+
+// Port dan URL MongoDB
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL
 
+// Middleware
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(expressLayouts); 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(flash());
-app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
 
+// Konfigurasi cookie dan session
+app.use(
+    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
+);
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routes
+app.use('/api/recipes' ,require("./routes/api/recipesAPI"))
+app.use("/auth", authGoogle);
+app.use("/auth", authLocal);
+
+// Custom middleware
+app.use(redirectTrailingSlash);
+app.use(checkUser);
+
+// MongoDB Connection
 mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
@@ -62,115 +91,10 @@ mongoose.connect(MONGO_URL)
     })
     .catch(err => console.log(err))
 
-    async function createAdmin() {
-        try {
-            // Cek apakah sudah ada admin
-            const existingAdmin = await LocalUser.findOne({ isAdmin: true });
-            if (!existingAdmin) {
-                // Jika tidak ada admin, buat satu
-                const adminData = {
-                    email: 'admin@admin',
-                    password: 'admin', // Gunakan kata sandi mentah
-                    username: 'Admin',
-                    profilePicture: 'profilepic.jpg',
-                    isAdmin: true
-                };
-
-                 // Hash kata sandi
-                const hashedPassword = await bcrypt.hash(adminData.password, 10);
-                // Simpan kedua versi kata sandi
-                adminData.hashedPassword = hashedPassword; // Simpan kata sandi yang di-hash
-    
-                // Buat objek admin baru
-                const newAdmin = new LocalUser(adminData);
-    
-                // Simpan objek admin ke database
-                await newAdmin.save();
-            }
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async function checkUser(req, res, next) {
-        let userData = req.session.freshUserData || {}; // Inisialisasi objek userData
-            if (!req.user) {
-                return res.redirect('/');
-                // Jika pengguna belum login, hapus session.freshUserData jika ada
-                if (req.session.freshUserData) {
-                    delete req.session.freshUserData;
-                };
-            } else {
-                // Jika pengguna sudah login
-                if (!userData || Object.keys(userData).length === 0) {
-                    // Jika userData kosong, isi dengan data pengguna dari req.user
-                    if (req.user.username) { 
-                        userData = {
-                            name: req.user.username || '', 
-                            profilePicture: req.user.profilePicture,
-                            _id: req.user._id
-                        };
-                    } else {
-                        userData = {
-                            name: req.user.displayName || '',
-                            profilePicture: req.user.profilePicture || '',
-                            _id: req.user._id
-                        };
-                    }
-                } else {
-                    // Jika userData sudah terisi, ubah nama-nama properti sesuai keinginan
-                    userData.name = userData.username;
-                }
-            }
-            req.userData = userData;
-            next();
-    }
-
-app.use(
-    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000 })
-);
-
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}))
-
-app.use(express.urlencoded({ extended: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use("/auth", authGoogle);
-app.use("/auth", authLocal);
-app.use(express.static('public'));
-
-app.use(
-    cors({
-      origin: "http://localhost:3000",
-      methods: "GET,POST,PUT,DELETE",
-      credentials: true,
-    })
-);
-
-app.use((req, res, next) => {
-    if (req.path.slice(-1) === '/' && req.path.length > 1) {
-      const query = req.url.slice(req.path.length)
-      const safepath = req.path.slice(0, -1).replace(/\/+/g, '/')
-      res.redirect(301, safepath + query)
-    } else {
-      next()
-    }
-  })
-
-  app.use(checkUser); 
 
 app.get('/', (req, res) => {
     res.render('login.ejs', {title: 'Login', layout: "accountlayout"});
 });
-
-
-function isLoggedIn(req,res,next){
-    req.user? next(): res.sendStatus(401);
-}
 
 app.delete('/', isLoggedIn, async (req, res) => {
     try {
@@ -223,17 +147,6 @@ app.post('/local', passport.authenticate('local',{
     failureRedirect: '/local',
     failureFlash: true
 }));
-
-// Middleware untuk memeriksa apakah pengguna terautentikasi dan jenis otentikasi
-function isAuthenticated(req, res, next) {
-    if (req.user) {
-        // Jika pengguna terautentikasi dan objek req.user ada
-        return next();
-    } else {
-    // Jika pengguna tidak terautentikasi atau req.user tidak ada, redirect ke halaman login
-    res.redirect('/');
-    }
-}
 
 app.get('/profile', (req, res) => {
     let name = '';
@@ -373,7 +286,7 @@ app.post('/edit', upload.single('image'), async(req, res) => {
     }
 });
 
-app.get('/home', isAuthenticated, async (req, res) => {
+app.get('/home', checkUser, isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
         if (recipes) {

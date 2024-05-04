@@ -240,7 +240,7 @@ header{
 /* Banner */
 
 .banner {
-  background: url(/img/banner.png) no-repeat;
+  background: url(/img/FlavoraBanner.png) no-repeat;
   background-position: center;
   background-size: cover;
   height: 100vh; 
@@ -252,20 +252,36 @@ header{
 
 .banner .container {
   text-align: center;
+  width: 550px;
   font-weight: 700;
+  position: relative;
+  left: 10%; /* Adjust this value to move the container more or less to the right */
+  top: 15%;
+  transform: translateY(-50%);
 }
 
-.banner .container h1 {
-  margin: 0;
-  font-size: 30px;
-  animation: blink 1s infinite;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+.flavora{
+  padding: 0;
+  font-size: 80px; 
+  text-align: center;
+  color: #9F191F;
+  font-weight: bolder; 
+  margin-bottom: 0; /* Add this line to remove the bottom margin */
 }
 
-@keyframes blink {
-  0% { color: #ff6b81; } 
-  50% { color: #ffd166; } 
-  100% { color: #8B4513; } 
+hr {
+  width: 100%; /* Adjust this value to change the length of the line */
+  margin: 0 auto; /* This centers the line */
+  border: none; /* Remove the default border */
+  height: 3px; /* Adjust this value to change the thickness of the line */
+  background-color: black; /* Change the color of the line */
+  font-weight: bold; /* Make the line bold */
+  margin-top: 0; /* Add this line to remove the top margin */
+}
+
+.banner .container h2 {
+  margin-top: 15px;
+  font-size: 16px;
 }
 
 /* Card  */
