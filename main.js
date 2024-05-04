@@ -11,22 +11,19 @@ const flash = require("express-flash");
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const fs = require('fs');
 const Recipes = require('./models/recipesModel');
 const User = require("./models/userModel");
 const LocalUser = require("./models/localuserModel");
-const bcrypt = require("bcrypt");
-const multer = require('multer');
-const path = require('path');
 const pinRouter = require('./routes/api/pinRecipe');
 const folderRouter = require('./routes/api/folder');
 const adminRouter = require('./routes/api/admin'); 
 const reviewRouter = require('./routes/api/review'); 
+const accountRouter = require('./routes/api/account');
+const profileRouter = require('./routes/api/profile');
 dotenv.config();
 
 // Import middleware from routes/api
-const { createAdmin, checkUser, redirectTrailingSlash, isAuthenticated, isLoggedIn } = require('./routes/api/middleware');
-const profileRouter = require('./routes/api/profile');
+const { createAdmin, initializeDatabase, checkUser, redirectTrailingSlash, isAuthenticated } = require('./routes/api/middleware');
 
 // Port dan URL MongoDB
 const PORT = process.env.PORT || 3000;
@@ -58,15 +55,16 @@ app.use(cors({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use('/api/recipes' ,require("./routes/api/recipesAPI"));
+// Passport routes
 app.use("/auth", authGoogle);
 app.use("/auth", authLocal);
 
 // Custom middleware
 app.use(redirectTrailingSlash);
 app.use(checkUser);
-app.use('/', require('./routes/api/account'));
+
+// Routes
+app.use('/', accountRouter);
 app.use('/admin', adminRouter);
 app.use('/', pinRouter);
 app.use('/', folderRouter);
@@ -77,31 +75,17 @@ app.use('/', profileRouter);
 mongoose.connect(MONGO_URL)
     .then(async () => {
         console.log(`MongoDB connected at ${MONGO_URL}`);
-
         try {
             await createAdmin();
+            await initializeDatabase();
         } catch (error) {
             console.error('Error creating admin account:', error);
         }
 
-        const count = await Recipes.countDocuments();
-        if (count == 0) {
-            const dataJSON = fs.readFileSync('public/recipes.json');
-            const data = JSON.parse(dataJSON);
-            
-            // Masukkan data ke MongoDB
-            try {
-                await Recipes.insertMany(data);
-                console.log('Data berhasil dimasukkan ke MongoDB');
-            } catch (err) {
-                console.error(err);
-            }
-        } else {
-            console.log('Database sudah berisi data');
-        }
     })
     .catch(err => console.log(err))
 
+// Menampilkan halaman home
 app.get('/home', checkUser, isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
@@ -196,14 +180,15 @@ app.get('/home', checkUser, isAuthenticated, async (req, res) => {
                     layout: "mainlayout"
                 });
             }
-            } else {
+        } else {
             res.status(404).send("User not found");
-            }
-            } catch (error) { 
-            res.status(500).send("Internal Server Error");
-            }
-            });
+        }
+    } catch (error) { 
+        res.status(500).send("Internal Server Error");
+    }
+});
 
+// Menampilkan halaman search
 app.get('/search', isAuthenticated, async (req, res) => {
     try {
         const recipes = await Recipes.find();
@@ -247,6 +232,7 @@ app.get('/search', isAuthenticated, async (req, res) => {
     }
 });
 
+// Menampilkan halaman detail
 app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
     try {
         const recipeID = req.params.recipeID
@@ -288,6 +274,8 @@ app.get('/detail/:recipeID', isAuthenticated, async (req, res) => {
         res.status(500).send("Internal Server Error")
     }
 })
+
+// Menampilkan halaman latest seen
 app.get('/latest-seen', isAuthenticated, async (req, res) => {
     try {
         // Ambil ID pengguna dari sesi
@@ -326,7 +314,6 @@ app.get('/latest-seen', isAuthenticated, async (req, res) => {
     }
 });
     
-
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

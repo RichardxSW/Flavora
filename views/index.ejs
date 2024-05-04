@@ -65,7 +65,7 @@
       <div class="swiper-wrapper">
         <% recipes.forEach(function(recipe) { %>
           <div class="swiper-slide" data-category="<%= recipe.category %>">
-              <%- include('layouts/card', { recipe: recipe}) %>
+              <%- include('layouts/cards/card', { recipe: recipe}) %>
           </div>
       <% }); %>
       </div>
@@ -79,7 +79,7 @@
         <% recipes.forEach((recipe) => { %>
           <% if (recipe.featured === 'yes') { %>
             <div class="swiper-slide">
-              <%- include('layouts/card', { recipe: recipe}) %>
+              <%- include('layouts/cards/card', { recipe: recipe}) %>
             </div>
           <% } %>
       <% }); %>
@@ -94,7 +94,7 @@
         <% recipes.forEach((recipe) => { %>
           <% if (recipe.nationality === 'Asian') { %>
             <div class="swiper-slide">
-              <%- include('layouts/card', { recipe: recipe}) %>
+              <%- include('layouts/cards/card', { recipe: recipe}) %>
             </div>
           <% } %>
       <% }); %>
@@ -109,7 +109,7 @@
         <% recipes.forEach((recipe) => { %>
           <% if (recipe.nationality === 'Western') { %>
             <div class="swiper-slide">
-              <%- include('layouts/card', { recipe: recipe}) %>
+              <%- include('layouts/cards/card', { recipe: recipe}) %>
             </div>
           <% } %>
       <% }); %>
@@ -124,7 +124,7 @@
         <% recipes.forEach((recipe) => { %>
           <% if (recipe.minutes <= 5) { %>
             <div class="swiper-slide">
-              <%- include('layouts/card', { recipe: recipe}) %>
+              <%- include('layouts/cards/card', { recipe: recipe}) %>
             </div>
           <% } %>
       <% }); %>
@@ -136,12 +136,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="/js/tes.js"></script>
+<script src="/js/swiperCategory.js"></script>
 <script>
    const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
 <script src="/js/search.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/pinStatus.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {

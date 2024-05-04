@@ -30,7 +30,7 @@
     <div class="cardwrap">
       <% if (savedRecipesCount.length > 0) { %>
         <% savedRecipes.forEach((recipe) => { %>
-          <%- include('layouts/cardPinned', { recipe: recipe}) %>
+          <%- include('layouts/cards/cardPinned', { recipe: recipe}) %>
         <% }); %>
       <% } else { %>
         <h4>You haven't saved anything yet. Start browsing!</h4>
@@ -55,7 +55,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/pinned.css">
 <script src="/js/pinned.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/pinStatus.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/form.js"></script>
 <script>

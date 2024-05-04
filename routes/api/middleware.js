@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const LocalUser = require("../../models/localuserModel");
+const fs = require('fs');
+const Recipes = require('../../models/recipesModel');
 const User = require("../../models/userModel");
 
 // Function to create an admin user
@@ -29,6 +31,25 @@ async function createAdmin() {
         }
     } catch (error) {
         throw error;
+    }
+}
+
+// Function to initialize database with recipes data
+async function initializeDatabase() {
+    const count = await Recipes.countDocuments();
+    if (count == 0) {
+        const dataJSON = fs.readFileSync('public/recipes.json');
+        const data = JSON.parse(dataJSON);
+
+        // Masukkan data ke MongoDB
+        try {
+            await Recipes.insertMany(data);
+            console.log('Data berhasil dimasukkan ke MongoDB');
+        } catch (err) {
+            console.error(err);
+        }
+    } else {
+        console.log('Database sudah berisi data');
     }
 }
 
@@ -108,4 +129,4 @@ async function findUser(req, res, next) {
     next();
 }
 
-module.exports = { createAdmin, checkUser, redirectTrailingSlash, isAuthenticated, isLoggedIn, findUser};
+module.exports = { createAdmin, initializeDatabase, checkUser, redirectTrailingSlash, isAuthenticated, isLoggedIn, findUser};

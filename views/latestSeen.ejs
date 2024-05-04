@@ -29,7 +29,7 @@
     <div class="cardwrap">
       <% if (latestSeenRecipes.length  > 0) { %>
         <% latestSeenRecipes.forEach((recipe) => { %>
-          <%- include('layouts/card', { recipe: recipe}) %>
+          <%- include('layouts/cards/card', { recipe: recipe}) %>
         <% }); %>
       <% } else { %>
         <h4>No recipe opened yet</h4>
@@ -45,7 +45,7 @@
   const latestSeenRecipes = `<%- JSON.stringify(latestSeenRecipes) %>`;
 </script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
-<script src="/js/index.js"></script>
+<script src="/js/pinStatus.js"></script>
 <script src="/js/form.js"></script>
 <script src="/js/searchRecent.js"></script>
 <link rel="stylesheet" href="/css/latestSeen.css">

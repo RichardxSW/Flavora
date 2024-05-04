@@ -33,7 +33,7 @@
         <div class="cardwrap" id="searchResults">
           <% if (recipes.length > 0) { %>
             <% recipes.forEach((recipe) => { %>
-              <%- include('layouts/cardDashboard', { recipe: recipe}) %>
+              <%- include('layouts/cards/cardDashboard', { recipe: recipe}) %>
             <% }); %>
           <% } else { %>
             <p>No recipe</p>
@@ -47,7 +47,7 @@
 <script>
     const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
-<script src="/js/index.js"></script>
+<script src="/js/pinStatus.js"></script>
 <script src="/js/dashboard.js"></script>
 <script src="/js/searchDashboard.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

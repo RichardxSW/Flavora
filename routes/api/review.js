@@ -2,6 +2,7 @@ const {Router} = require('express');
 const reviewRouter = Router();
 const Recipes = require('../../models/recipesModel');
 
+// Endpoint untuk menambahkan review ke resep
 reviewRouter.post('/postReview/:recipeID', async (req, res) => {
     try {
         const { recipeID } = req.params;
@@ -67,6 +68,7 @@ reviewRouter.delete('/deleteComment/:recipeID/:commentID', async (req, res) => {
     }
 });
 
+// Endpoint untuk mengedit komentar pada resep
 reviewRouter.put('/editComment/:commentID', async (req, res) => {
     try {
         const commentID = req.params.commentID;

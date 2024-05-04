@@ -40,7 +40,7 @@
     <div class="cardwrap">
       <% if (recipes.length > 0) { %>
           <% recipes.forEach((recipe) => { %>
-              <%- include('layouts/cardFolder', { recipe: recipe}) %>
+              <%- include('layouts/cards/cardFolder', { recipe: recipe}) %>
           <% }); %>
       <% } else { %>
           <h4>No recipes in this folder yet.</h4>
