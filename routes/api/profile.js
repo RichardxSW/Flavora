@@ -1,5 +1,8 @@
 const {Router} = require('express');
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const bcrypt = require("bcrypt");
 const LocalUser = require("../../models/localuserModel");
 const profileRouter = Router();
 
@@ -99,11 +102,13 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
         const id = req.body.user_id;
 
         if (req.file) {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
             // Jika ada file yang diunggah, simpan informasi file ke dalam userData
             userData = {
                 username: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
+                hashedPassword: hashedPassword, 
                 profilePicture: req.file.filename // Gunakan req.file.filename untuk mendapatkan nama file yang disimpan oleh multer
             };
 
@@ -118,10 +123,12 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
             }
         } else {
             // Jika tidak ada file yang diunggah, hanya simpan informasi pengguna
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
             userData = {
                 username: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                hashedPassword: hashedPassword, 
             };
         }
 
