@@ -102,13 +102,10 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
         const id = req.body.user_id;
 
         if (req.file) {
-            // const hashedPassword = await bcrypt.hash(req.body.password, 10);
             // Jika ada file yang diunggah, simpan informasi file ke dalam userData
             userData = {
                 username: req.body.name,
                 email: req.body.email,
-                // password: req.body.password,
-                // hashedPassword: hashedPassword, 
                 profilePicture: req.file.filename // Gunakan req.file.filename untuk mendapatkan nama file yang disimpan oleh multer
             };
 
@@ -123,12 +120,9 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
             }
         } else {
             // Jika tidak ada file yang diunggah, hanya simpan informasi pengguna
-            // const hashedPassword = await bcrypt.hash(req.body.password, 10);
             userData = {
                 username: req.body.name,
                 email: req.body.email,
-                // password: req.body.password,
-                // hashedPassword: hashedPassword, 
             };
         }
 
@@ -176,6 +170,7 @@ profileRouter.post('/delete-profilepic', async(req, res) => {
     }
 });
 
+// Route untuk redirect ke page change password
 profileRouter.get('/editPassword', async(req, res) => {
     let errorMsg = req.flash('error');
     try {
@@ -199,6 +194,7 @@ profileRouter.get('/editPassword', async(req, res) => {
     }
 });
 
+// Route untuk handle pengubahan password
 profileRouter.post('/editPassword', async(req, res) => {
     try {
         let userData = {};
@@ -207,14 +203,12 @@ profileRouter.post('/editPassword', async(req, res) => {
         const confirmPassword = req.body.confirm_password;
 
         if (newPassword !== confirmPassword) {
-            console.log(newPassword);
-            console.log(confirmPassword);
+            // Apabila password beda, tampilkan flash message
             req.flash('errorMsg', 'Password and confirm password do not match.');
             res.redirect(`/editPassword?id=${id}`);
         } else{
             // Menyimpan password yang telah diubah
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
             userData.password = req.body.password;
             userData.hashedPassword = hashedPassword;
 
