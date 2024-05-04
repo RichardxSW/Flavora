@@ -1,0 +1,19 @@
+<div class="folderPopup" id="folderPopup" style="display: none;">
+    <div class="top">
+        <i class="fa-solid fa-folder-plus fa-lg" style="color: #ffffff;"></i><p>Add Recipe to Folder</p>
+        <span class="close" onclick="closeAddPopup()"><i class="fa fa-close" style="color: #ffffff;"></i></span>
+    </div>
+    <div class="addContent">
+      <% folders.forEach(folder => { %>
+        <label class="custom-checkbox">
+          <input type="checkbox" id="<%= folder._id %>" value="<%= folder._id %>" hidden>
+          <span class="checkmark"></span>
+          <span class="name"><%= folder.name %></span>
+        </label><br>
+      <% }); %>
+    </div>
+    <div class="button-container">
+      <a href="#" onclick="uncheckAll()">Uncheck All</a>
+      <button id="doneButton">Done</button>
+    </div>
+</div>

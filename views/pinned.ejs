@@ -1,29 +1,64 @@
 <div class="content">
+  <%- include('layouts/form/addToFolder') %>
+  <%- include('layouts/form/newFolder') %>
+  <div class="selection">
+    <div class="select">
+      <a href="#" id="savedBtn" class="active"><i class="fa-solid fa-bookmark"></i>Pinned Recipes</a>
+      <a href="/latest-seen" id="recentBtn"><i class="fa-regular fa-clock"></i>Recently Viewed</a>
+    </div>
+    <div class="my-folder">
+      <p>MY FOLDERS</p>
+      <button onclick="openPopup()">
+        <i class="fa-solid fa-plus"></i>
+        <p>New Folder</p>
+      </button>
+      <div class="created">
+        <% folders.forEach(folder => { %>
+          <a class="folder" href="/folder/<%= folder._id %>">
+            <img src="/img/recipe-add-photo.png"/>
+            <%= folder.name %>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  </div>
   <div class="result">
     <h3>Pinned Recipes</h3>
     <div class="containerTotal">
-      <p id="totalResults"><%= savedRecipes.length %> recipes</p>
+      <p id="totalResults"><%= savedRecipesCount.length %> recipes</p>
     </div>
     <div class="cardwrap">
-      <% if (savedRecipes.length > 0) { %>
+      <% if (savedRecipesCount.length > 0) { %>
         <% savedRecipes.forEach((recipe) => { %>
-          <%- include('layouts/card', { recipe: recipe}) %>
+          <%- include('layouts/cardPinned', { recipe: recipe}) %>
         <% }); %>
       <% } else { %>
-        <p>You haven't saved anything yet. Start browsing!</p>
+        <h4>You haven't saved anything yet. Start browsing!</h4>
       <% } %>
     </div>
+    <% if (savedRecipesCount.length > limit) { %>
+      <div class="pagination">
+          <a href="<%= currentPage > 1 ? '/pinned?page=' + (currentPage - 1) : '#' %>" class="<%= currentPage > 1 ? 'prev' : 'prev disabled' %>">
+              <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <span class="current-page"><%= currentPage %></span>
+          <a href="<%= currentPage < totalPages ? '/pinned?page=' + (currentPage + 1) : '#' %>" class="<%= currentPage < totalPages ? 'next' : 'next disabled' %>">
+              <i class="fa-solid fa-arrow-right"></i>
+          </a>
+      </div>
+  <% } %>
   </div>
 </div>
 
+<div id="overlay"></div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/pinned.css">
 <script src="/js/pinned.js"></script>
 <script src="/js/index.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/form.js"></script>
 <script>
   const recipes = `<%- JSON.stringify(recipes) %>`;
 </script>
-<script src="/js/search.js"></script>
 <script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
-

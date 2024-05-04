@@ -11,6 +11,20 @@ body {
   padding-bottom: 200px;
 }
 
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/img/detail-bg.jpg');
+  background-size: contain;
+  background-position: center; /* posisi gambar di tengah */
+  filter: blur(1.8px); /* Adjust the blur radius as needed */
+  z-index: -1; /* Ensure the pseudo-element is behind other content */
+}  
+
 /* Navbar */
 
 .navbar {
@@ -241,7 +255,7 @@ header{
 
 .result .card {
  overflow: hidden;
-  border: 1px solid #c0bfbf;
+ border: 2px solid #b0aeae;
   flex: 1 0 300px;
   margin: 0.3em;
   max-width: 228px;
@@ -355,6 +369,7 @@ button:focus{
 .result h3{
   font-weight: 700;
   margin: 0px 5px;
+  text-shadow: 2px 2px 2px #bebebe; 
 }
 
 .result p{
@@ -373,26 +388,33 @@ button:focus{
   justify-content: space-between;
 }
 
+.result .containerTotal p{
+  font-weight: 700;
+  font-size: 17px;
+  margin-left: 5px;
+  text-shadow: 2px 2px 2px #bebebe; 
+}
+
 .sort {
   margin-right: 10px;
 }
 
-
 .sort select {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
   width: fit-content;
 }
 
 .sort option {
   text-align: left;
-  font-size: 15px; 
+  font-size: 17px;
   font-weight: 500;
 }
 
 label {
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 17px;
+  text-shadow: 2px 2px 2px #bebebe; 
+  font-weight: 600;
 }
 
 /* Footer  */

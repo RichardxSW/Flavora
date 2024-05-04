@@ -1,20 +1,22 @@
-    <div class="wrapper">
-            <h1>Login</h1>
-            <p>Choose a login method</p>
-            <div class="loginButton google" onclick="window.open('http://localhost:3000/auth/google', '_self');">
-                <i class='bx bxl-google'></i>
-                Google
-              </div>
-              <div class="loginButton email" onclick="window.open('http://localhost:3000/local', '_self');">
-                <i class='bx bx-envelope'></i>
-                Email
-              </div>
-
-            <div class="register-link">
-                <p>Don't have an account? <a href="/register">Register</a>
-                </p>
-            </div>
+<div class="wrapper">
+  <div class="image-container">
+    <img src="/img/login.svg">
+  </div>
+  <div class="logincontainer">
+    <h1>Login</h1>
+    <p>Choose a login method</p>
+    <div class="loginButton google" onclick="window.open('http://localhost:3000/auth/google', '_self');">
+        <i class='bx bxl-google'></i>
+        Google
     </div>
-
-    <link rel="stylesheet" href="css/login.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <div class="loginButton email" onclick="window.open('http://localhost:3000/local', '_self');">
+      <i class='bx bx-envelope'></i>
+      Email
+    </div>
+    <div class="register-link">
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" href="css/login.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

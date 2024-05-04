@@ -1,8 +1,8 @@
 <div class="content">
     <h1>Add new recipe</h1>
 
-    <form action="/addRecipe" method="POST" enctype="multipart/form-data">
-        <div class="input-box">
+    <form action="/admin/addRecipe" method="POST" enctype="multipart/form-data">
+        <div class="input-box food-name">
             <label class="input-label" for="title">
                 Food Name
             </label>
@@ -14,7 +14,7 @@
                 />
         </div>  
 
-        <div class="input-box">
+        <div class="input-box food-image">
             <label class="input-label" for="img">
                 Food Image
             </label>
@@ -119,56 +119,58 @@
             </label>
                 <textarea
                     name="desc" 
+                    cols="50"
+                    rows="8"
                     placeholder="Enter food description" 
                     required
                 ><%= recipes.desc %></textarea>
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="serving">
                 Food Serving
             </label>
                 <input 
                     type="text" 
                     name="serving" 
-                    placeholder="Enter food serving" 
+                    placeholder="Food serving" 
                     required
                 >
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="length">
                 Total Ingredients
             </label>
                 <input 
                     type="text" 
                     name="length" 
-                    placeholder="Enter Total Ingredients" 
+                    placeholder="Total Ingredients" 
                     required
                 >
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="minutes">
                 Cooking Time
             </label>
                 <input 
                     type="text" 
                     name="minutes" 
-                    placeholder="Enter Cooking Time"  
+                    placeholder="Cooking Time"  
                     required
                 >
         </div>
-        <div class="input-box">
+        <div class="input-box small">
             <label class="input-label" for="calories">
                 Calories
             </label>
                 <input 
                     type="text" 
                     name="calories" 
-                    placeholder="Enter food calories" 
+                    placeholder="Calories" 
                     required
                 >
         </div>
         <div id="ingredients">
-            <div class="input-box">
+            <div class="input-box long">
                 <label class="input-label" for="bahan1">
                     Ingredient 1
                 </label>
@@ -186,7 +188,7 @@
         <button type="button" id="addIngredient">Add Ingredient</button>
 
         <div id="instructions">
-            <div class="input-box">
+            <div class="input-box long">
                 <label class="input-label" for="cara1">
                     Instruction 1
                 </label>
@@ -203,88 +205,9 @@
         </div>
         <button type="button" id="addInstruction">Add Instruction</button>
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit" class="submitBtn">Submit</button>
 </div>
 
-<script>
-    document.getElementById('addIngredient').addEventListener('click', function() {
-        const ingredientsDiv = document.getElementById('ingredients');
-        const ingredientCount = ingredientsDiv.children.length;
-
-        const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
-
-        const newLabel = document.createElement('label');
-        newLabel.classList.add('input-label');
-        newLabel.textContent = 'Ingredient ' + (ingredientCount + 1);
-        newLabel.htmlFor = 'bahan' + (ingredientCount + 1);
-
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'bahan[]';
-        newInput.id = 'bahan' + (ingredientCount + 1);
-        newInput.placeholder = 'Enter ingredient';
-        newInput.required = true;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.classList.add('delete-button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function() {
-        ingredientsDiv.removeChild(newDiv);
-        });
-
-        newDiv.appendChild(newLabel);
-        newDiv.appendChild(newInput);
-        newDiv.appendChild(deleteButton);
-
-        ingredientsDiv.appendChild(newDiv);
-    });
-
-    function removeInputBox(button) {
-        const ingredientsDiv = document.getElementById('ingredients');
-        const inputBox = button.parentNode;
-        ingredientsDiv.removeChild(inputBox);
-    }
-
-    document.getElementById('addInstruction').addEventListener('click', function() {
-        const instructionsDiv = document.getElementById('instructions');
-        const instructionCount = instructionsDiv.children.length;
-
-        const newDiv = document.createElement('div');
-        newDiv.classList.add('input-box');
-
-        const newLabel = document.createElement('label');
-        newLabel.classList.add('input-label');
-        newLabel.textContent = 'Instruction ' + (instructionCount + 1);
-        newLabel.htmlFor = 'cara' + (instructionCount + 1);
-
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'cara[]';
-        newInput.id = 'cara' + (instructionCount + 1);
-        newInput.placeholder = 'Enter instruction';
-        newInput.required = true;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.classList.add('delete-button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function() {
-            instructionsDiv.removeChild(newDiv);
-        });
-
-        newDiv.appendChild(newLabel);
-        newDiv.appendChild(newInput);
-        newDiv.appendChild(deleteButton);
-
-        instructionsDiv.appendChild(newDiv);
-    });
-
-    function removeInputBox(button) {
-        const instructionsDiv = document.getElementById('instructions');
-        const inputBox = button.parentNode;
-        instructionsDiv.removeChild(inputBox);
-    }
-</script>
+<script src="/js/addRecipe.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/css/addRecipe.css">

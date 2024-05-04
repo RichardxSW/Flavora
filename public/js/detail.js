@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }
 
               try {
-                const response = await fetch(`/detail/${recipeID}`, {
+                const response = await fetch(`/postReview/${recipeID}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -92,14 +92,110 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!response.ok) {
                     throw new Error('Failed to submit review');
                 } else {
-                  console.log('succes')
+                  Swal.fire({
+                    title: 'Success',
+                    text: 'Your review has been submitted successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                  }).then(() => {
+                    // Refresh halaman untuk memperbarui daftar review
+                    location.reload();
+                  })
                 }
-
-                // Refresh halaman untuk memperbarui daftar review
-                window.location.reload();
               } catch (error) {
                   console.error(error);
                   alert('Failed to submit review');
               }
+            });
+})
+async function deleteComment(recipeID, commentID) {
+  Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: "Anda tidak akan dapat mengembalikan ini!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus saja!',
+      cancelButtonText: 'Batal'
+  }).then(async (result) => {
+      if (result.isConfirmed) {
+          try {
+              const response = await fetch(`/deleteComment/${recipeID}/${commentID}`, {
+                  method: 'DELETE'
               });
+
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              // Menampilkan alert bahwa komentar telah dihapus
+              Swal.fire({
+                  title: "Deleted!",
+                  text: "The comment has been deleted.",
+                  icon: "success"
+              }).then(() => {
+                  // Reload halaman setelah menutup alert kedua
+                  location.reload(); // Reload halaman setelah menghapus komentar
+              });
+          } catch (error) {
+              console.error('There was a problem with the fetch operation:', error);
+              Swal.fire(
+                  'Gagal!',
+                  'Terjadi kesalahan saat menghapus komentar.',
+                  'error'
+              );
+          }
+      }
+  });
+}
+
+async function editComment(commentID, currentReview) {
+  Swal.fire({
+      title: 'Edit Your Comment',
+      input: 'text',
+      inputPlaceholder: 'Enter your new comment',
+      inputValue: currentReview, // Nilai awal input teks
+      showCancelButton: true,
+      confirmButtonText: 'Edit',
+      cancelButtonText: 'Cancel',
+      showLoaderOnConfirm: true,
+      preConfirm: (newComment) => {
+          // Kirim permintaan PUT ke server untuk memperbarui komentar
+          return fetch(`/editComment/${commentID}`, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ newComment })
           })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              // Jika berhasil, perbarui tampilan atau lakukan tindakan lain
+              return response.json();
+          })
+          .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+              Swal.showValidationMessage('An error occurred while editing the comment');
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+      if (result.isConfirmed) {
+          Swal.fire({
+              title: 'Success',
+              text: 'Your comment has been edited successfully!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+          }).then(() => {
+              // Reload halaman untuk memperbarui daftar komentar
+              window.location.reload();
+          });
+      }
+  });
+}
+
+
+
+

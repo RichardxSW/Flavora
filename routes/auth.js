@@ -40,7 +40,7 @@ async function(request, accessToken, refreshToken, profile, cb) {
 
 //google 
 router.get("/google", 
-  passport.authenticate("google", { scope: ['email','profile'] })
+  passport.authenticate("google", { scope: ['email','profile'], prompt: 'select_account'})
 );
 
 router.get("/google/callback",

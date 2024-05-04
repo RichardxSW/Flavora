@@ -1,0 +1,25 @@
+<div class="popup" id="editPopup">
+    <div class="top">
+      <i class="fa-solid fa-pencil-alt fa-lg fa-lg" style="color: #ffffff;"></i><p>Edit Folder</p>
+      <span class="close" onclick="closeEditPopup()"><i class="fa fa-close" style="color: #ffffff;"></i></span>
+    </div>
+    <div class="popup-content">
+      <form id="editFolderForm" data-name="<%= selectedFolder.name %>" data-desc="<%= selectedFolder.desc %>">
+          <input type="hidden" id="editFolderId" name="folderId" value="<%= selectedFolder._id %>">
+          
+          <div class="name">
+              <label for="editFolderName">Folder Name</label><br>
+              <input type="text" id="editFolderName" name="folderName" maxlength="10" placeholder="Give your folder a name" ><br>
+          </div>
+          <div class="desc">
+              <label for="editDescription">Description</label><br>
+              <textarea id="editDescription" name="description" maxlength="300" placeholder="Describe your folder"></textarea><br>
+              <div class="count" id="editCharCount">0/300 characters</div>
+          </div>
+          <div class="button-container">
+              <a href="#" class="cancel" onclick="closeEditPopup()">Cancel</a>
+              <button type="submit" id="editDoneButton">Done</button>
+          </div> 
+      </form>
+    </div>
+</div>

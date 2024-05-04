@@ -1,0 +1,51 @@
+<div class="content">
+  <%- include('layouts/form/newFolder') %>
+  <div class="selection">
+    <div class="select">
+      <a href="/pinned" id="savedBtn"><i class="fa-solid fa-bookmark"></i>Pinned Recipes</a>
+      <a href="#" id="recentBtn" class="active"><i class="fa-regular fa-clock"></i>Recently Viewed</a>
+    </div>
+    <div class="my-folder">
+      <p>MY FOLDERS</p>
+      <button onclick="openPopup()">
+        <i class="fa-solid fa-plus"></i>
+        <p>New Folder</p>
+      </button>
+      <div class="created">
+        <% folders.forEach(folder => { %>
+          <a class="folder" href="/folder/<%= folder._id %>">
+            <img src="/img/recipe-add-photo.png"/>
+            <%= folder.name %>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+  <div class="result">
+    <h3>Latest Seen</h3>
+    <div class="containerTotal">
+      <p id="totalResults"><%= latestSeenRecipes.length %> results</p>
+    </div>
+    <div class="cardwrap">
+      <% if (latestSeenRecipes.length  > 0) { %>
+        <% latestSeenRecipes.forEach((recipe) => { %>
+          <%- include('layouts/card', { recipe: recipe}) %>
+        <% }); %>
+      <% } else { %>
+        <h4>No recipe opened yet</h4>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<div id="overlay"></div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  const latestSeenRecipes = `<%- JSON.stringify(latestSeenRecipes) %>`;
+</script>
+<script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>
+<script src="/js/index.js"></script>
+<script src="/js/form.js"></script>
+<script src="/js/searchRecent.js"></script>
+<link rel="stylesheet" href="/css/latestSeen.css">

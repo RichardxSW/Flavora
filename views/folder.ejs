@@ -1,0 +1,69 @@
+<div class="content">
+  <%- include('layouts/form/editFolder') %>
+  <%- include('layouts/form/newFolder') %>
+  <div class="selection">
+    <div class="select">
+      <a href="/pinned" id="savedBtn"><i class="fa-solid fa-bookmark"></i>Pinned Recipes</a>
+      <a href="/latest-seen" id="recentBtn"><i class="fa-regular fa-clock"></i>Recently Viewed</a>
+    </div>
+    <div class="my-folder">
+      <p>MY FOLDERS</p>
+      <button onclick="openPopup()">
+        <i class="fa-solid fa-plus"></i>
+        <p>New Folder</p>
+      </button>
+      <div class="created">
+        <% folders.forEach(folder => { %>
+          <a class="folder" href="/folder/<%= folder._id %>">
+            <img src="/img/recipe-add-photo.png"/>
+            <%= folder.name %>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+  <div class="result">
+    <div class="top-result">
+      <div class="title-desc">
+        <h3><%= selectedFolder.name %></h3>
+        <p><%= selectedFolder.desc %></p>
+      </div>
+      <div class="button-container">
+        <button class="edit-folder" onclick="openEditPopup()">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button class="delete-folder" onclick="showDeleteFolderConfirmation()">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+    <div class="cardwrap">
+      <% if (recipes.length > 0) { %>
+          <% recipes.forEach((recipe) => { %>
+              <%- include('layouts/cardFolder', { recipe: recipe}) %>
+          <% }); %>
+      <% } else { %>
+          <h4>No recipes in this folder yet.</h4>
+      <% } %>
+    </div>
+    <% if (totalPages > 1) { %>
+      <div class="pagination">
+          <a href="<%= currentPage > 1 ? '/folder/' + selectedFolder._id + '?page=' + (currentPage - 1) : '#' %>" class="<%= currentPage > 1 ? 'prev' : 'prev disabled' %>"><i class="fa-solid fa-arrow-left"></i></a>
+          <span class="current-page"><%= currentPage %></span>
+          <a href="<%= currentPage < totalPages ? '/folder/' + selectedFolder._id + '?page=' + (currentPage + 1) : '#' %>" class="<%= currentPage < totalPages ? 'next' : 'next disabled' %>"><i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+  <% } %>  
+  </div>
+</div>
+
+<div id="overlay"></div>
+<input type="hidden" id="deleteFolderId" name="folderId" value="<%= selectedFolder._id %>">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/folder.css">
+<script src="/js/form.js"></script>
+<script>
+  const recipes = `<%- JSON.stringify(recipes) %>`;
+</script>
+<script src="/js/search.js"></script>
+<script src="https://kit.fontawesome.com/0c466b3931.js" crossorigin="anonymous"></script>

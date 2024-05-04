@@ -21,9 +21,9 @@
         </div>
     </a>
     <button class="editbtn">
-        <a href="editRecipe/<%= recipe.recipeID %>">Edit</a>
+        <a href="/admin/editRecipe/<%= recipe.recipeID %>">Edit</a>
     </button>
-    <button class="delbtn">
-        <a href="/deleteRecipe">Delete</a>
+    <button class="delbtn" onclick="deleteRecipe('<%= recipe.recipeID %>')">
+        Delete
     </button>
 </div>
