@@ -5,6 +5,7 @@
     <form action="/edit" method="POST" enctype="multipart/form-data" class="form-grid">
         <input type="file" name="image">
         <input type="hidden" name="user_id" value="<%= user._id %>">
+        <button type="button" onclick="deleteProfilePic()">Delete Profile Picture</button>
 
         <div class="form-grid-split">
             <div class="form-grid-item">
@@ -26,5 +27,46 @@
         <input type="submit" value="Update Profile">
     </form>
 </div>
+<script>
+    // Fungsi untuk melakukan POST delete-profile-pic
+    // Fungsi untuk menampilkan SweetAlert konfirmasi penghapusan dan melakukan penghapusan
+async function deleteProfilePic() {
+    const userId = "<%= user._id %>";
+    const confirmed = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover your profile picture!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+    });
 
+    if (confirmed.isConfirmed) {
+        try {
+            const response = await fetch('/delete-profilepic', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id: userId })
+            });
+
+            if (response.ok) {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Your profile picture has been deleted.',
+                    icon: 'success',
+                }).then(() => {
+                    window.location.reload();
+                });
+            } else {
+                throw new Error('Failed to delete profile picture');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="css/profile.css">

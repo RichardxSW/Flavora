@@ -87,7 +87,7 @@ profileRouter.get('/edit', async(req, res) => {
 const storage = multer.diskStorage({
     destination:  './public/userImages', // Menentukan direktori penyimpanan file
     filename: function (req, file, cb) {
-        const name = Date.now() + '-' + file.originalname;
+        const name = file.originalname;
         cb(null, name) // Menentukan nama file yang diunggah
     }
 });
@@ -115,7 +115,7 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
             // Menghapus foto lama jika ada dan bukan 'profilepic.jpg'
             const oldUserData = await LocalUser.findById(id);
             if (oldUserData.profilePicture && oldUserData.profilePicture !== 'profilepic.jpg') {
-                const oldImagePath = path.join(__dirname, '/public/userImages', oldUserData.profilePicture);
+                const oldImagePath = 'public/userImages/' + oldUserData.profilePicture;
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);
                     console.log(`File ${oldUserData.profilePicture} telah dihapus.`);
@@ -146,6 +146,32 @@ profileRouter.post('/edit', upload.single('image'), async(req, res) => {
         res.redirect('/profile');
 
     } catch (error) { 
+        console.log(error.message);
+    }
+});
+
+// Route untuk menghapus foto profil
+profileRouter.post('/delete-profilepic', async(req, res) => {
+    try {
+        const id = req.body.user_id;
+
+        // Menghapus foto profil jika ada dan bukan 'profilepic.jpg'
+        const userData = await LocalUser.findById(id);
+        if (userData.profilePicture && userData.profilePicture !== 'profilepic.jpg') {
+            const imagePath = './public/userImages/' + userData.profilePicture;
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+                console.log(`File ${userData.profilePicture} telah dihapus.`);
+            }
+        }
+
+        // Set foto profil pengguna kembali ke 'profilepic.jpg'
+        await LocalUser.findByIdAndUpdate(id, { $set: { profilePicture: 'profilepic.jpg' } });
+
+        // Menampilkan pesan sukses dan redirect ke halaman profil
+        req.flash('successMsg', 'Profile picture deleted successfully.');
+        res.redirect('/edit');
+    } catch (error) {
         console.log(error.message);
     }
 });
