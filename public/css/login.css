@@ -96,9 +96,15 @@ body {
     color: red;
 }
 
-@media (max-width: 576px) {
+@media screen and (max-width: 1024px) {
     .input-box .input-field{
-        width: 100%;
+        width: 90%;
         margin: 10px 0;
+    }
+    .logincontainer{
+        width: 100%;
+    }
+    .wrapper {
+        width: 700px;
     }
 }

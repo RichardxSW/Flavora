@@ -356,9 +356,8 @@ border-radius: 15px;
 width: 250px; 
 float: left; 
 padding: 20px;
-height: 146vh;
-min-height: 100vh; 
-/* max-height: 150vh;  */
+height: 190vh;
+min-height: 130vh; 
 background-color: rgb(247, 247, 247);
 border-right: 2px solid #ddd;
 z-index: 2;
@@ -619,7 +618,7 @@ padding-bottom: 50px;
 padding-left: 2em;
 margin-top: 2.5em;
 margin-left: 15em;
-margin-right: 9em;
+margin-right: 6em;
 margin-bottom: 3em;
 }
 
@@ -703,4 +702,65 @@ height: 190px;
   display: inline-block;
   margin: 0 10px;
   font-size: 24px;
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar__brand {
+    font-size: 28px; 
+  }
+
+  .navbar__item {
+    margin-right: 10px;
+  }
+  
+  .navbar__link {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .banner .container {
+    width: 500px;
+  }
+  
+  .flavora{
+    font-size: 65px; 
+  }
+
+  .selection{
+    height: 250vh;
+    width: 240px; 
+    padding: 20px;
+    padding-top: 2.5em;
+  }
+
+  .result {
+    margin-left: 14em;
+  }
+
+  .card .time .row p {
+    font-size: 13px;
+  }
+  
+  .result .card {
+    flex: 1 0 200px;
+    margin: 0.3em 0.5em;
+    max-width: 200px;
+  }
+  
+  .card h5 {
+    font-size: 14px;
+  }
+  
+  .result .card .time{
+    width: 170px;
+  }
+  
+  .card .time .row p {
+    font-size: 12px;  
+  }
+  
+  .card .time .row span {
+    font-size: 13px;  
+  }
+  
 }

@@ -414,3 +414,22 @@
     margin: 0 10px;
     font-size: 24px;
 }
+
+@media screen and (max-width: 1024px) {
+  .navbar__brand {
+    font-size: 28px; 
+  }
+
+  .navbar__item {
+    margin-right: 10px;
+  }
+
+  .navbar__link {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .banner .container {
+    width: 500px;
+  }
+}
