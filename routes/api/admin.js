@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const multer = require('multer');
+const fs = require('fs');
 const adminRouter = Router();
 const Recipes = require('../../models/recipesModel');
 
@@ -29,8 +30,21 @@ adminRouter.delete('/deleteRecipe/:recipeID', async (req, res) => {
         // Ambil ID resep dari parameter route
         const recipeID = req.params.recipeID;
 
-        // Lakukan operasi penghapusan resep di database (contoh: menggunakan model Recipes)
-        await Recipes.findOneAndDelete({recipeID: recipeID});
+        // Cari resep di database
+        const recipe = await Recipes.findOne({recipeID: recipeID});
+
+        if (!recipe) {
+            return res.status(404).send("Recipe not found");
+        }
+
+        // Hapus file gambar
+        const imagePath = './public' + recipe.img;
+        if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+        }
+
+        // Hapus resep dari database
+        await Recipes.deleteOne({recipeID: recipeID});
 
         // Kirim respon yang berhasil
         req.flash('deletedMsg','Recipe deleted successfully');
@@ -85,33 +99,23 @@ adminRouter.post('/addRecipe', uploadRecipe.single('img') , async (req, res) => 
         
         const lastRecipe = await Recipes.findOne().sort({ recipeID: -1 });
 
-    let recipeID;
-
-    if (lastRecipe) {
-        // Jika ada recipe terakhir, tambahkan 1 ke recipeID terakhir
-        recipeID = lastRecipe.recipeID + 1;
-    } else {
-        // Jika tidak ada recipe, set recipeID menjadi 1
-        recipeID = 1;
-    }
+        const recipeID = lastRecipe ? lastRecipe.recipeID + 1 : 1;
         // Masukkan data dari input admin
         const {
             title,
             category,
             nationality,
             featured,
+            img = '/img/' + req.file.filename,
             desc,
             serving,
             length,
             minutes,
+            time = minutes + ' Minutes',
             calories,
             bahan,
             cara 
         } = req.body;
-
-        const img = '/img/' + req.file.filename;
-
-        const time = minutes + ' Minutes';
 
         const newRecipe = new Recipes({
             recipeID,
@@ -173,37 +177,15 @@ adminRouter.post('/editRecipe/:recipeID', uploadRecipe.single('img') , async (re
             return res.status(404).send("Recipe not found");
         }
 
-        // Persiapan data pembaruan resep
         const updatedRecipeData = {};
-
-        // Periksa perubahan untuk setiap bidang
-        if (req.body.title && req.body.title !== existingRecipe.title) {
-            updatedRecipeData.title = req.body.title;
-        }
-        if (req.body.category && req.body.category !== existingRecipe.category) {
-            updatedRecipeData.category = req.body.category;
-        }
-        if (req.body.nationality && req.body.nationality !== existingRecipe.nationality) {
-            updatedRecipeData.nationality = req.body.nationality;
-        }
-        if (req.body.featured && req.body.featured !== existingRecipe.featured) {
-            updatedRecipeData.featured = req.body.featured;
-        }
-        if (req.body.desc && req.body.desc !== existingRecipe.desc) {
-            updatedRecipeData.desc = req.body.desc;
-        }
-        if (req.body.serving && req.body.serving !== existingRecipe.serving) {
-            updatedRecipeData.serving = req.body.serving;
-        }
-        if (req.body.length && req.body.length !== existingRecipe.length) {
-            updatedRecipeData.length = req.body.length;
-        }
-        if (req.body.minutes && req.body.minutes !== existingRecipe.minutes) {
-            updatedRecipeData.minutes = req.body.minutes;
-        }
-        if (req.body.calories && req.body.calories !== existingRecipe.calories) {
-            updatedRecipeData.calories = req.body.calories;
-        }
+        
+        // Check changes for each field
+        ['title', 'category', 'nationality', 'featured', 'desc', 'serving', 'length', 'minutes', 'calories'].forEach(field => {
+            if (req.body[field] && req.body[field] !== existingRecipe[field]) {
+                updatedRecipeData[field] = req.body[field];
+            }
+        });
+        
         // Temukan bahan yang ditambahkan
         const addedBahan = req.body.bahan.filter(bahan => !existingRecipe.bahan.includes(bahan));
         // Temukan bahan yang dihapus
@@ -235,12 +217,16 @@ adminRouter.post('/editRecipe/:recipeID', uploadRecipe.single('img') , async (re
         }
 
         if (req.file) {
+            const oldImagePath = './public' + existingRecipe.img;
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
             updatedRecipeData.img = '/img/' + req.file.filename;
         }
 
         // Jika ada perubahan yang harus dilakukan, lakukan pembaruan
     if (Object.keys(updatedRecipeData).length > 0) {
-        const updatedRecipe = await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
+         await Recipes.findOneAndUpdate({recipeID}, updatedRecipeData, { new: true });
         res.status(200).end()
     } else {
         req.flash('noChangeMsg','No changes to update');

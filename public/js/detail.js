@@ -110,6 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             });
 })
+
+//Fungsi untuk menghapus review
 async function deleteComment(recipeID, commentID) {
   Swal.fire({
       title: 'Apakah Anda yakin?',
@@ -151,6 +153,7 @@ async function deleteComment(recipeID, commentID) {
   });
 }
 
+//Fungsi untuk edit review
 async function editComment(commentID, currentReview) {
   Swal.fire({
       title: 'Edit Your Comment',

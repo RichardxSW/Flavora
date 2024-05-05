@@ -1,3 +1,4 @@
+//tutup flash message
 const alertElement = document.querySelector('.alert');
 
     // Periksa apakah elemen ada sebelum melanjutkan
@@ -8,6 +9,7 @@ const alertElement = document.querySelector('.alert');
         }, 3000); // Waktu dalam milidetik (3 detik)
     }
 
+    // Fungsi untuk menghapus resep
     async function deleteRecipe(recipeID) {
         // Tampilkan SweetAlert untuk konfirmasi
         Swal.fire({
