@@ -28,7 +28,7 @@ accRouter.post('/register', async (req, res) => {
         email : req.body.email,
         username: req.body.username,
         hashedPassword: hashedPassword, 
-        password: req.body.password,
+        // password: req.body.password,
         profilePicture: 'profilepic.jpg'});
     try {
         await localuser.save();
