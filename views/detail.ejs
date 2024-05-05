@@ -1,5 +1,5 @@
 <div class="recipe">
-    // flash message
+    <!-- flash message -->
     <% if (messages.successMsg) { %>
         <div class="alert alert-success" role="alert">
                 <%= messages.sucessMsg %>
@@ -11,7 +11,7 @@
             <%= recipes.desc %>
         </div>
 
-            //Kotak review 
+            <!-- Kotak review  -->
             <form class="review-box">
                 <div class="review-box-title">
                     <h1>Reviews</h1>
@@ -46,7 +46,7 @@
                 </div>
             </form>
             
-            //Kotak list review
+            <!-- Kotak list review -->
             <div class="comment-section">
                 <% for (let i = 0; i < recipes.reviews.length; i++) { %>
                     <div class="submission-container">
@@ -171,7 +171,7 @@
     </div>
 </div> 
 
-// rekomendasi resep
+<!-- Rekomendasi resep -->
 <div class="related-recipes">
     <h1>You'll Also Like</h1>
     <div class="related-grid">
