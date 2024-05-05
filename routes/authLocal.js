@@ -3,8 +3,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const router = require("express").Router();
 const passport = require("passport");
 const bcrypt = require('bcrypt');
-// const { hashPassword, comparePassword } = require("../utils/authUtil");
 
+//auth local user
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
     try {
         const user = await LocalUser.findOne({ email: email });
