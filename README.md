@@ -3,7 +3,7 @@
 535220042 - Richard Souwiko  
 535220052 - Jason Sutanto  
 
-# Flavora - Website Resep Makanan
+# Flavora - Recipe Catalog App
 
 ![Flavora Logo](public/img/flavora.png)
 
